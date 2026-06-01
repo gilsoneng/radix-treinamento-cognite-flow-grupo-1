@@ -101,7 +101,7 @@ function AppContent() {
         <Card>
           <div className="p-15 gap-16">
             <CardHeader>
-              <CardTitle as="h1">Welcome to Flows custom apps</CardTitle>
+              <CardTitle as="h1">Welcome to Flows custom apps!</CardTitle>
               <CardDescription>{INTRO_COPY}</CardDescription>
             </CardHeader>
 
