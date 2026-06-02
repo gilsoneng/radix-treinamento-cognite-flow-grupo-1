@@ -153,5 +153,56 @@ Antes de criar o módulo real, preencher em `SPEC.md` e no `spec.md` da feature:
   `inspections` (execução em campo) — só viram módulos separados se forem
   capacidades independentes com casos de uso próprios.
 
-Enquanto o domínio não está formalizado, este documento descreve a **forma**, não o
-conteúdo. A estrutura é estável independente do nome final.
+Enquanto o domínio de checklist não está formalizado, este documento descreve a **forma**, não o
+conteúdo completo de produto. A estrutura é estável independente do nome final.
+
+---
+
+## 6. Estado atual da implementação (exemplo arquitetural)
+
+Árvore **existente** hoje como **prova de conceito** da estrutura-alvo (branch de arquitetura; spec `001` inalterada):
+
+```txt
+src/
+  main.tsx
+  App.tsx
+  styles.css
+
+  app/
+    config/app-config.ts
+    providers/app-providers.tsx
+    providers/query-client.ts
+
+  core/
+    dm/core-dm.constants.ts
+    query/retry-policy.ts
+    sdk/cdf-client.ts
+
+  design-system/
+    assets/ip-brand.ts
+    components/ip-hero-banner/
+    components/ip-spinner/
+    components/powered-by-radix/
+    layout/app-footer/
+    layout/page-shell/
+    layout/states/
+
+  modules/health/
+    domain/core-asset.model.ts
+    domain/core-asset.repository.ts
+    infrastructure/cdf-core-asset.repository.ts
+    infrastructure/core-asset.mock-repository.ts
+    infrastructure/dto/asset-instance.dto.ts
+    infrastructure/mappers/asset.mapper.ts
+    infrastructure/queries/
+    presentation/components/core-asset-list/
+    presentation/pages/health/
+    presentation/view-models/
+    health.providers.tsx
+
+  shared/utils/semaphore.ts
+  shared/utils/cn.ts
+  types/
+```
+
+**Ainda não criado:** `app/host/`, `app/routing/`, `core/errors/`, `design-system/tokens/` (tokens vivem em `styles.css`), sidebar, charts, módulos checklist.

@@ -147,10 +147,8 @@ Restrições inegociáveis:
 
 ## 7. Status
 
-- **Fase:** planejamento de arquitetura (estrutura-primeiro).
-- **Bounded context inicial (provisório):** `checklists` — nome definitivo será travado
-  quando `SPEC.md` for preenchido (ver [`adr/0001`](adr/0001-angular-base-to-react-flows.md)
-  e a seção "Domain discovery" em [`folder-structure.md`](folder-structure.md)).
-- **Código atual:** `src/lib/App.tsx` é o scaffold de boas-vindas (feature `001`), ainda
-  não reorganizado nesta estrutura. A migração para a estrutura-alvo será conduzida por
-  features SDD futuras.
+- **Fase:** exemplo de implementação da estrutura-alvo (treinamento / validação arquitetural).
+- **Exemplo em código:** módulo `health` — smoke test listando `CogniteAsset` via Core DM; **não** faz parte da entrega da spec `001-checklist-management`.
+- **Bounded context de produto (futuro):** checklist / inspeções — nome e views DMS a definir em `002+` e `SPEC.md`.
+- **Código atual:** `src/` segue domain / infrastructure / presentation em `modules/health/`; shell IP em `design-system/layout/page-shell/`; composição em `App.tsx` + `app/providers/`.
+- **Ainda planejado (não implementado):** `app/host/` (host-synced), `app/routing/`, sidebar IP, módulos de negócio checklist.

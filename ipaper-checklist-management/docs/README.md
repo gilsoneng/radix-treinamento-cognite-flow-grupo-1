@@ -36,7 +36,7 @@ Documentação visual e contrato de interface IP integrada à documentação do 
 
 | Documento | Para quem | O que é |
 | --- | --- | --- |
-| [`Design.md`](Design.md) | Desenvolvedores Flows / agentes | Mapeamento **IP → Aura**: tokens em `src/lib/styles.css`, regras de componentes, checklist de PR |
+| [`Design.md`](Design.md) | Desenvolvedores Flows / agentes | Mapeamento **IP → Aura**: tokens em `src/styles.css`, shell IP, regras de componentes |
 | [`design/README.md`](design/README.md) | Índice design | Estrutura, sincronização com `references/app/`, assets de marca |
 | [`design/IP-DESIGN-SYSTEM.md`](design/IP-DESIGN-SYSTEM.md) | Plataforma Angular IP + referência visual | Contrato completo v1.0 (tokens, Material M3, catálogo, shell, gráficos, a11y) |
 
