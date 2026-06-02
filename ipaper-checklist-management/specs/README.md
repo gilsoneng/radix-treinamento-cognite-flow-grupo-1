@@ -9,12 +9,26 @@
 
 ---
 
+## Requisitos e protótipo
+
+| Documento | Conteúdo |
+| --- | --- |
+| [`../docs/requirements/APPLICATION-REQUIREMENTS.md`](../docs/requirements/APPLICATION-REQUIREMENTS.md) | Requisitos de aplicação (AR-001…AR-310) |
+| [`../docs/requirements/TASKS-DIVISION.md`](../docs/requirements/TASKS-DIVISION.md) | Épicos e Issues GitHub sugeridas |
+| [`../docs/prototype/LOVABLE-PROTOTYPE.md`](../docs/prototype/LOVABLE-PROTOTYPE.md) | Protótipo Lovable — referência UX por rota |
+
+---
+
 ## Índice de features
 
-| ID | Slug | Status | Owner | Rigor | PR |
-| --- | --- | --- | --- | --- | --- |
-| 002 | example-test | not-started | João Hermida | completo | — |
-| 001 | checklist-management | in-progress | time-grupo-1 | completo | — |
+| ID | Slug | Epic owner | Status | Rigor |
+| --- | --- | --- | --- | --- |
+| 004 | alerts-notifications | Caio | not-started | completo |
+| 003 | task-result-trends | Caio | not-started | completo |
+| 002 | checklist-kpis | João | not-started | completo |
+| 001 | checklist-management (app foundation) | Guilherme | in-progress | completo |
+
+Cada feature **completo** inclui: `spec.md`, `research.md`, `plan.md`, `tasks.md`, `progress.md`.
 
 ---
 
