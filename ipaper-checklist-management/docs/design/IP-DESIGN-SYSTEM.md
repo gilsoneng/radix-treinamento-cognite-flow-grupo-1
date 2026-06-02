@@ -1,7 +1,7 @@
 # IP Design System
 ### Padrão de Interface para Aplicações Industriais — International Paper
 
-> **Documentação indexada:** cópia espelhada em [`docs/design/IP-DESIGN-SYSTEM.md`](../../docs/design/IP-DESIGN-SYSTEM.md). Apps **Flows** deste repo: ver também [`docs/Design.md`](../../docs/Design.md) (Aura + tokens).
+> **Origem:** sincronizado de [`references/app/IP-DESIGN-SYSTEM.md`](../../references/app/IP-DESIGN-SYSTEM.md). Apps **Flows** (`ipaper-checklist-management`): implementação via Aura — [`../Design.md`](../Design.md).
 >
 > **Contrato de Design:** Este documento define as regras visuais e técnicas obrigatórias para qualquer aplicação web desenvolvida no ecossistema IP. Toda decisão de interface deve estar ancorada aqui. Desvios exigem justificativa explícita e alinhamento com o time de design.
 
