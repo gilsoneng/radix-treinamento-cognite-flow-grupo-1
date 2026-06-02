@@ -1,6 +1,6 @@
 # Conclusões da revisão SDD — Guilherme
 
-> Documento de síntese para o **conciliador do grupo** usar no prompt final de avaliação da proposta Spec Driven Development (`docs/proposta-spec-driven-development.md`).
+> Documento de síntese para o **conciliador do grupo** usar no prompt final de avaliação da proposta Spec Driven Development (`docs/SDD-workflow-definition/proposta-spec-driven-development.md`).
 >
 > **Autor da revisão:** Guilherme  
 > **Data:** 2026-06-02  
@@ -162,7 +162,7 @@ PRÓXIMO PASSO: fechar seção 9 → emendar proposta → PR processo → PR fea
 
 ## Referências
 
-- Proposta avaliada: `docs/proposta-spec-driven-development.md`
+- Proposta avaliada: `docs/SDD-workflow-definition/proposta-spec-driven-development.md`
 - Padrões de engenharia: `AGENTS.md`
 - Spec macro (estado atual): `SPEC.md` (placeholders)
 - CI atual: `.github/workflows/ci.yml` (sem spec gate)
@@ -171,3 +171,4 @@ PRÓXIMO PASSO: fechar seção 9 → emendar proposta → PR processo → PR fea
 ---
 
 *Documento gerado para conciliação do grupo. Não substitui votação do time; consolida a posição técnica do revisor Guilherme para a avaliação final do SDD.*
+

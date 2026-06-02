@@ -1,10 +1,10 @@
 # Avaliação e adoção SDD — `ipaper-checklist-management`
 
 > Documento operacional para humanos e **agentes de código**. Contém decisões e ações por fase: **0** (decisões), **1** (governança), **2** (estrutura `specs/`), **3** (gate CI + scripts), **4** (piloto e strict).
-> Proposta de referência: [`docs/proposta-spec-driven-development.md`](docs/proposta-spec-driven-development.md).
+> Proposta de referência: [`proposta-spec-driven-development.md`](proposta-spec-driven-development.md).
 
 **Última atualização:** 2026-06-02  
-**Status:** Fases **0–4 documentadas** (§1–11 Fase 0; §12–23 Fase 1; §24–31 Fase 2; §32–38 Fase 3; §39–46 Fase 4). Implementação no repo só quando o usuário pedir “implementar Fase N”.
+**Status:** Fases **0-2 implementadas** no repo (governança, `specs/`, `001` baseline). Fase 3 (scripts + CI gate) a implementar sob demanda. Fase 4 (piloto) após Fase 3.
 
 ---
 
@@ -296,11 +296,11 @@ Objetivo: tornar o SDD **encontrável**, **sem duplicar** certificação Flows, 
 
 ---
 
-## 12. Documento `docs/sdd-governance.md`
+## 12. Documento `docs/SDD-workflow-definition/sdd-governance.md`
 
 ### Definição
 
-- Criar **`docs/sdd-governance.md`** como entrada **curta** para humanos: resumo de 1 página + links.
+- Criar **`docs/SDD-workflow-definition/sdd-governance.md`** como entrada **curta** para humanos: resumo de 1 página + links.
 - Conteúdo canônico detalhado permanece em **`avaliacao_sdd.md`** (este arquivo) para agentes.
 - `sdd-governance.md` deve conter: decisões Fase 0, tabela completo/leve/exceção, link para certificação, link para proposta, e “quando ler o quê”.
 - Evitar dois documentos longos com texto duplicado — governance = índice; avaliacao_sdd = playbook.
@@ -309,28 +309,28 @@ Objetivo: tornar o SDD **encontrável**, **sem duplicar** certificação Flows, 
 
 | Passo | Ação |
 | --- | --- |
-| 1 | **Verificar** se `docs/sdd-governance.md` existe. |
+| 1 | **Verificar** se `docs/SDD-workflow-definition/sdd-governance.md` existe. |
 | 2 | Se **não existir** e o usuário pedir “implementar Fase 1”, **criar** o arquivo com: título, link para `../avaliacao_sdd.md`, tabela de rigor (copiar da seção 3), fluxo de certificação (diagrama ou lista da seção 18), decisões Fase 0. |
 | 3 | **Não** copiar todas as 300+ linhas de `avaliacao_sdd.md` — manter governance com **≤ 120 linhas**. |
 | 4 | Ao alterar regras SDD, **atualizar primeiro** `avaliacao_sdd.md`; depois ajustar o resumo em `sdd-governance.md` se o resumo estiver desatualizado. |
 
 ---
 
-## 13. Atualizar `docs/proposta-spec-driven-development.md`
+## 13. Atualizar `docs/SDD-workflow-definition/proposta-spec-driven-development.md`
 
 ### Definição
 
 - A proposta deixa de ser “rascunho com pontos em aberto” e passa a **refletir decisões adotadas** (Fase 0).
 - Substituir referências `spec/` por **`specs/`** em diagramas, tabelas e exemplos de script (`spec-check`).
 - Seção 9 (“Pontos em aberto”) → renomear para **“Decisões adotadas”** com tabela alinhada à seção “Decisões Fase 0” deste arquivo.
-- Adicionar nota no topo: *Implementação operacional: `avaliacao_sdd.md` + `docs/sdd-governance.md`*.
+- Adicionar nota no topo: *Implementação operacional: `avaliacao_sdd.md` + `docs/SDD-workflow-definition/sdd-governance.md`*.
 - Manter a proposta como documento de **contexto e motivação**; não duplicar todas as ações de agente.
 
 ### Ação do agente
 
 | Passo | Ação |
 | --- | --- |
-| 1 | **Ler** `docs/proposta-spec-driven-development.md` e **buscar** `spec/` (sem ‘s’) — substituir por `specs/` onde for caminho de pasta. |
+| 1 | **Ler** `docs/SDD-workflow-definition/proposta-spec-driven-development.md` e **buscar** `spec/` (sem ‘s’) — substituir por `specs/` onde for caminho de pasta. |
 | 2 | **Atualizar** o diagrama mermaid “Depois - SDD”: nó `spec/NNN` → `specs/NNN`. |
 | 3 | **Reescrever** seção 9 com decisões fechadas (pasta, gate 2 níveis, etapas, matriz, adoção, markdownlint adiado). |
 | 4 | **Ajustar** exemplo `spec-check.mjs`: paths `specs/` e `src/` relativos à raiz do app (não prefixo `ipaper-checklist-management/` no diff, se CI roda dentro do app). |
@@ -346,7 +346,7 @@ Objetivo: tornar o SDD **encontrável**, **sem duplicar** certificação Flows, 
 - Inserir **`## 10. Spec Driven Development workflow`** antes da seção atual §9 Commits (renumerar Commits para **§11**).
 - §10 deve ser **curto** (≤ 25 linhas) e apontar para:
   - `avaliacao_sdd.md` — regras e ações de agente;
-  - `docs/sdd-governance.md` — resumo humano;
+  - `docs/SDD-workflow-definition/sdd-governance.md` — resumo humano;
   - `specs/` — toda mudança de **comportamento** em `src/` começa por feature spec (completo ou leve).
 - Regras mínimas embutidas em §10:
   - Ler `SPEC.md` + spec da feature antes de implementar.
@@ -574,6 +574,36 @@ Para tarefa só de **documentação SDD**: passos 1, 3, 5.
 
 ---
 
+## 22b. Hierarquia de documentos (conflito de fonte de verdade)
+
+### Definição
+
+Em caso de conflito entre dois documentos, prevalece a hierarquia abaixo (maior número = menor precedência):
+
+| Prioridade | Documento | Escopo |
+| --- | --- | --- |
+| 1 | `AGENTS.md` | Padrões de implementação (código, testes, TS, DI, ViewModel) |
+| 2 | `specs/CONSTITUTION.md` | Processo SDD, DoR/DoD, princípios invioláveis |
+| 3 | `SPEC.md` | Produto inteiro: visão, FRs macro, modelo de dados CDF |
+| 4 | `specs/<NNN>/spec.md` | Escopo desta entrega: FRs locais, aceites, SC |
+| 5 | `specs/<NNN>/plan.md` | Decisão técnica subordinada ao spec da feature |
+| 6 | `avaliacao_sdd.md` | Playbook operacional e instruções de agente |
+
+**Regras práticas:**
+- `AGENTS.md` nunca é sobrescrito por `plan.md` ou `CONSTITUTION.md` — em conflito, o agente segue `AGENTS.md` e registra a divergência em `research.md`.
+- `SPEC.md` macro nunca é contrariado por spec de feature — se houver conflito, abrir clarificação antes de implementar.
+- `avaliacao_sdd.md` e `docs/SDD-workflow-definition/sdd-governance.md` são *como fazer* — não definem *o quê* construir.
+
+### Ação do agente
+
+| Passo | Ação |
+| --- | --- |
+| 1 | Ao detectar conflito entre documentos, **identificar** a camada de maior precedência e segui-la. |
+| 2 | **Registrar** o conflito em `research.md` da feature como clarificação resolvida. |
+| 3 | **Não** resolver conflito silenciosamente — sempre documentar a decisão. |
+
+---
+
 ## 23. Critérios de conclusão da Fase 1 (implementação)
 
 ### Definição
@@ -582,8 +612,8 @@ Fase 1 está **implementada** quando todos existem e estão alinhados:
 
 | # | Entregável | Critério |
 | --- | --- | --- |
-| 1 | `docs/sdd-governance.md` | Existe, ≤ ~120 linhas, linka `avaliacao_sdd.md` |
-| 2 | `docs/proposta-spec-driven-development.md` | `specs/`, seção decisões, status aprovado |
+| 1 | `docs/SDD-workflow-definition/sdd-governance.md` | Existe, ≤ ~120 linhas, linka `avaliacao_sdd.md` |
+| 2 | `docs/SDD-workflow-definition/proposta-spec-driven-development.md` | `specs/`, seção decisões, status aprovado |
 | 3 | `AGENTS.md` | §10 SDD + §11 Commits |
 | 4 | `avaliacao_sdd.md` | Fase 1 seções 12–23 (este bloco) |
 | 5 | `.github/pull_request_template.md` | Checklist SDD (opcional recomendado: forte) |
@@ -604,7 +634,7 @@ Fase 1 está **implementada** quando todos existem e estão alinhados:
 
 | Tema | Decisão |
 | --- | --- |
-| Governança humana | `docs/sdd-governance.md` (resumo) |
+| Governança humana | `docs/SDD-workflow-definition/sdd-governance.md` (resumo) |
 | Playbook agente | `avaliacao_sdd.md` (canônico) |
 | Proposta | Atualizar paths e seção “Decisões adotadas” |
 | AGENTS.md | Novo §10 SDD; Commits → §11 |
@@ -669,7 +699,7 @@ Conteúdo obrigatório:
 
 | Bloco | Conteúdo |
 | --- | --- |
-| Decisão de pasta | `specs/` adotado; link para `avaliacao_sdd.md` e `docs/sdd-governance.md` |
+| Decisão de pasta | `specs/` adotado; link para `avaliacao_sdd.md` e `docs/SDD-workflow-definition/sdd-governance.md` |
 | Índice de features | Tabela: ID, slug, status, owner, rigor (completo/leve) |
 | Exceções SDD | Tabela: PR, motivo, data (seção 4) |
 | Comandos | Referência a `npm run spec:check` (Fase 3) — pode ser “a configurar” até Fase 3 |
@@ -866,7 +896,7 @@ Objetivo: automatizar disciplina SDD com **`scripts/spec-check.mjs`**, scripts n
 | --- | --- |
 | 1 | **Criar** `scripts/spec-check.mjs` na implementação Fase 3. |
 | 2 | **Testar** localmente: `npm run spec:check` e `npm run spec:check:strict`. |
-| 3 | **Documentar** variáveis em `specs/README.md` e `docs/sdd-governance.md`. |
+| 3 | **Documentar** variáveis em `specs/README.md` e `docs/SDD-workflow-definition/sdd-governance.md`. |
 
 ---
 
@@ -928,14 +958,15 @@ Objetivo: automatizar disciplina SDD com **`scripts/spec-check.mjs`**, scripts n
 
 ### Definição
 
+**Decisão (Windows/PowerShell):** usar **flags no `.mjs`** em vez de `cross-env` para não adicionar dependência extra. O script lê `process.argv` ou `process.env` conforme disponível — sem garantia de `cross-env` no CI.
+
 ```json
 "spec:check": "node scripts/spec-check.mjs",
-"spec:check:strict": "cross-env SPEC_GATE_MODE=strict node scripts/spec-check.mjs",
+"spec:check:strict": "node scripts/spec-check.mjs --strict",
 "spec:new": "node scripts/spec-new.mjs"
 ```
 
-- Windows: preferir `cross-env` **ou** script `.mjs` que lê `process.env.SPEC_GATE_MODE` sem depender de shell.
-- Alternativa sem `cross-env`: `node scripts/spec-check.mjs --mode=strict` (flags no script).
+O script interpreta `--strict` via `process.argv.includes('--strict')` ou `process.env.SPEC_GATE_MODE === 'strict'`. Ambos funcionam no Windows PowerShell e no GitHub Actions Linux sem dependência adicional.
 
 ### Ação do agente
 
@@ -954,19 +985,35 @@ Objetivo: automatizar disciplina SDD com **`scripts/spec-check.mjs`**, scripts n
 **Job padrão (todos os PRs):**
 
 ```yaml
+- name: Checkout
+  uses: actions/checkout@v6
+  with:
+    fetch-depth: 0        # obrigatório: sem isso git diff não consegue comparar com a base do PR
+
 - name: Spec gate (warn)
   run: npm run spec:check
-  env:
-    SPEC_GATE_MODE: warn
 ```
+
+> **Por que `fetch-depth: 0`?** Sem ele, o Actions faz um shallow clone de 1 commit. O Check C4 (`git diff base...HEAD`) não encontra a base e silenciosamente pula a verificação de rastreabilidade. O `fetch-depth: 0` garante o histórico completo para comparação.
+
+**Comportamento por evento:**
+
+| Evento CI | `GITHUB_BASE_REF` | Comportamento do C4 |
+| --- | --- | --- |
+| `pull_request` | branch base (ex.: `main`) | `git diff origin/main...HEAD` — correto |
+| `push: main` | vazio | cai em `HEAD~1` — C4 pode ser impreciso; aceitar essa limitação |
+
+**Nota:** o spec gate é mais valioso em `pull_request`. Em `push` direto para `main` (merge), o C4 pode não capturar diferenças corretamente — comportamento conhecido e aceito; o gate warn não bloqueia nesses casos.
 
 **Job ou step condicional strict (label `sdd-strict`):**
 
-- Em `pull_request`, step adicional se label presente:
-  - `npm run spec:check:strict` (ou `SPEC_GATE_MODE=strict`)
-- Documentar: mantenedores / tech lead colocam label quando PR exige conformidade total antes de merge.
+```yaml
+- name: Spec gate (strict — só com label sdd-strict)
+  if: contains(github.event.pull_request.labels.*.name, 'sdd-strict')
+  run: npm run spec:check:strict
+```
 
-**Ordem no pipeline:** `lint` → `test` → `build` → **spec gate warn** → (opcional) **spec gate strict** se label.
+**Ordem no pipeline:** `lint` → `test` → `build` → **spec gate warn** → (condicional) **spec gate strict** se label.
 
 ### Ação do agente
 
@@ -1157,7 +1204,7 @@ Ao fim do piloto, registrar (arquivo `docs/sdd-pilot-retro.md` ou seção em `re
 | --- | --- |
 | 1 | **Lembrar** revisor de exigir label em PRs `done`. |
 | 2 | **Não** alterar `ci.yml` para strict global salvo nova decisão Fase 0. |
-| 3 | Documentar convenção em `docs/sdd-governance.md` após piloto. |
+| 3 | Documentar convenção em `docs/SDD-workflow-definition/sdd-governance.md` após piloto. |
 
 ---
 
@@ -1213,7 +1260,7 @@ Para `flows-external-app-submit`:
 | 3 | ≥ 1 PR mergeado com label `sdd-strict` e CI verde |
 | 4 | `docs/sdd-pilot-retro.md` (ou equivalente) preenchido |
 | 5 | `SPEC.md` macro atualizado com escopo entregue em `002` |
-| 6 | `docs/sdd-governance.md` com convenção label pós-piloto |
+| 6 | `docs/SDD-workflow-definition/sdd-governance.md` com convenção label pós-piloto |
 
 ### Ação do agente
 
@@ -1246,3 +1293,5 @@ Para `flows-external-app-submit`:
 | 2 | §24–31 | “implementar Fase 2” |
 | 3 | §32–38 | “implementar Fase 3” |
 | 4 | §39–46 | “implementar Fase 4” / piloto 1–2 sprints |
+
+

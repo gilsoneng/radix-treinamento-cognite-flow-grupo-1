@@ -283,6 +283,25 @@ Auth is handled by `CogniteSdkProvider` from `@cognite/app-sdk/react` (see `App.
 ---
 
 
+## 10. Spec Driven Development workflow
+
+Toda mudança de **comportamento visível** em `src/` começa por uma feature spec em `specs/`. Ler antes de implementar:
+
+1. `docs/SDD-workflow-definition/avaliacao_sdd.md` — regras e ações de agente (playbook canônico)
+2. `docs/SDD-workflow-definition/sdd-governance.md` — resumo humano e decisões adotadas
+3. `SPEC.md` + `specs/<NNN>-<slug>/spec.md` — o quê construir
+4. `specs/<NNN>-<slug>/tasks.md` — ordem de implementação (Test-First)
+
+**Regras mínimas:**
+
+- Antes de escrever código de feature: `spec.md` estável, `tasks.md` com FRs citados (DoR).
+- Test-First não é opcional: ver §6. Matriz FR→teste em `progress.md` é obrigatória para feature `done`.
+- Mudanças pequenas (bugfix, copy, refactor sem novo FR) → fluxo **leve** (3 etapas); ver `avaliacao_sdd.md` §3.
+- Mudanças sem tocar `src/` (docs, deps, CI) → exceção documentada em `specs/README.md`.
+- Certificação Flows (`flows-code-review`, `flows-design-review`) continua obrigatória para submit — SDD não substitui.
+
+---
+
 ## 9. Commits and pull requests
 
 Use [Conventional Commits v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/).
