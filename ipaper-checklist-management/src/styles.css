@@ -1,0 +1,314 @@
+@import '@cognite/aura/styles.source.css';
+
+@source '../node_modules/@cognite/aura/dist/components';
+
+@theme inline {
+  --color-sidebar: var(--sidebar-background);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-link-fusion: var(--link-fusion);
+}
+
+:root {
+  --font-inter: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-source-code-pro: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+
+  --ip-teal: #006963;
+  --ip-teal-dark: #005550;
+  --ip-teal-sidebar: #004d48;
+  --ip-clover: #00ab5f;
+  --ip-yellow: #fcbd44;
+  --ip-sky: #61c4db;
+  --ip-charcoal: #15191e;
+  --ip-muted-bg: #f1f3f5;
+  --ip-border: #d6dde6;
+  --ip-teal-muted: #e6f3f2;
+  --ip-teal-subtle: #d4ebe9;
+  --link-fusion: #486aed;
+
+  --background: #ffffff;
+  --foreground: var(--ip-charcoal);
+  --card-background: #ffffff;
+  --popover-background: #ffffff;
+  --muted-background: var(--ip-muted-bg);
+  --muted-foreground: #52606d;
+  --border: var(--ip-border);
+  --border-emphasized: #e0e0e0;
+  --highlight-background: var(--ip-muted-bg);
+  --highlight-background-strong: #e8ecef;
+
+  --primary-background: var(--ip-teal);
+  --primary-background-hover: var(--ip-teal-dark);
+  --foreground-on-primary: #ffffff;
+
+  --secondary-background: var(--ip-clover);
+  --secondary-background-hover: #009952;
+  --secondary-foreground: #ffffff;
+
+  --accent-background: #e8f7fb;
+  --accent-background-strong: var(--ip-sky);
+
+  --success-background: #d4f0e3;
+  --success-background-hover: #b8e8cf;
+  --success-foreground: var(--ip-clover);
+  --success-foreground-on-success: #ffffff;
+  --success-muted-background: #ecf9f2;
+
+  --warning-background: var(--ip-yellow);
+  --warning-background-hover: #e6ac3f;
+  --warning-foreground: #c9922a;
+  --warning-foreground-on-warning: var(--ip-charcoal);
+  --warning-muted-background: #fff4dc;
+
+  --info-background: #d9f1f7;
+  --info-background-hover: #c5eaf3;
+  --info-foreground: #2f98ad;
+  --info-foreground-on-info: var(--ip-charcoal);
+  --info-muted-background: #eef9fc;
+
+  --link-foreground: var(--ip-teal);
+
+  --sidebar-background: var(--ip-teal-sidebar);
+  --sidebar-foreground: var(--ip-muted-bg);
+  --sidebar-accent: var(--ip-clover);
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #003d39;
+}
+
+.dark {
+  --background: #0a1211;
+  --foreground: #f1f3f5;
+  --card-background: #15191e;
+  --popover-background: #15191e;
+  --muted-background: #1a2423;
+  --muted-foreground: #b2b6bd;
+  --border: #2a3534;
+  --primary-background: var(--ip-teal);
+  --primary-background-hover: var(--ip-teal-dark);
+  --foreground-on-primary: #ffffff;
+  --sidebar-background: var(--ip-teal-sidebar);
+  --sidebar-foreground: var(--ip-muted-bg);
+}
+
+.link-fusion {
+  color: var(--link-fusion);
+}
+
+.link-fusion:hover {
+  text-decoration: underline;
+}
+
+.ip-page-shell {
+  background: var(--muted-background);
+  color: var(--foreground);
+}
+
+.ip-page-shell__header {
+  padding: 0;
+  background: transparent;
+  border-bottom: 3px solid var(--ip-teal);
+}
+
+.ip-page-shell__brand {
+  width: 100%;
+}
+
+.ip-hero-banner {
+  position: relative;
+  width: 100%;
+  min-height: 148px;
+  background-color: var(--ip-teal);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: left center;
+  overflow: hidden;
+}
+
+.ip-hero-banner__radix-wedge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  height: 62px;
+  width: auto;
+  object-fit: contain;
+}
+
+.ip-hero-banner__brand {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 42%;
+  max-width: 420px;
+  padding-left: 24px;
+  padding-right: 12px;
+}
+
+.ip-hero-banner__logo {
+  height: 46px;
+  width: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.ip-hero-banner__titles {
+  min-width: 0;
+  text-align: left;
+}
+
+.ip-hero-banner__app-name {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 90%);
+}
+
+.ip-hero-banner__page-title {
+  margin: 2px 0 0;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.ip-spinner {
+  object-fit: contain;
+}
+
+.ip-page-shell__content {
+  overflow-y: auto;
+  padding: 16px 24px 24px 41px;
+}
+
+.ip-app-footer {
+  flex-shrink: 0;
+  background: var(--muted-background);
+  border-top: 1px solid var(--border);
+}
+
+.ip-powered-by-radix {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 24px 12px;
+}
+
+.ip-powered-by-radix__logo {
+  height: 14px;
+  width: auto;
+  object-fit: contain;
+}
+
+.ip-app-footer__rights {
+  margin: 0;
+  padding: 0 24px 20px;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+}
+
+.ip-data-table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+
+.ip-data-table thead {
+  background: var(--ip-teal-muted);
+}
+
+.ip-data-table th {
+  padding: 10px 16px 10px 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ip-teal);
+  border-bottom: 2px solid var(--ip-teal);
+}
+
+.ip-data-table td {
+  padding: 12px 16px 12px 0;
+  vertical-align: top;
+  color: var(--foreground);
+  border-bottom: 1px solid var(--border);
+}
+
+.ip-data-table tbody tr:hover {
+  background: var(--ip-teal-subtle);
+}
+
+.ip-data-panel {
+  background: var(--background);
+  border: 1px solid var(--ip-teal);
+  border-top: 3px solid var(--ip-teal);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ip-data-panel__header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--ip-teal-subtle);
+  background: var(--ip-teal-muted);
+}
+
+.ip-data-panel__title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ip-teal);
+}
+
+.ip-data-panel__description {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+
+.ip-data-panel__body {
+  padding: 20px 20px 12px;
+  overflow-x: auto;
+}
+
+.ip-loading-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  padding: 48px 24px;
+  background: linear-gradient(135deg, var(--ip-teal-sidebar) 0%, var(--ip-teal) 100%);
+  border: 1px solid var(--ip-teal-dark);
+  border-radius: 8px;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 8%);
+}
+
+.ip-loading-panel__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.ip-loading-panel__message {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+}
+
