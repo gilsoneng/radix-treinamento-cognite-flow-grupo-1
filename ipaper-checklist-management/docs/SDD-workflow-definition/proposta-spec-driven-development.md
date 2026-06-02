@@ -1,7 +1,8 @@
 # Proposta: Spec Driven Development (SDD) — `ipaper-checklist-management`
 
-> Documento para avaliação e discussão do time. Nada aqui foi implementado ainda.
-> Objetivo: decidir **se** e **como** adotamos um fluxo de desenvolvimento guiado por especificação.
+> **Status: Aprovada para adoção.** Fases 0–2 implementadas.
+> Implementação operacional: [`avaliacao_sdd.md`](avaliacao_sdd.md) (playbook de agente) e [`sdd-governance.md`](sdd-governance.md) (resumo humano).
+> Fase 3 (gate CI + scripts) a implementar quando o time decidir avançar.
 
 - **Autor:** João Hermida
 - **Status:** rascunho para discussão
@@ -39,7 +40,7 @@ flowchart LR
     A2 --> A3[CI: lint/test/build]
   end
   subgraph depois [Depois - SDD]
-    B1[SPEC.md macro] --> B2[spec/NNN: spec -> plan -> tasks]
+    B1[SPEC.md macro] --> B2[specs/NNN: spec -> plan -> tasks]
     B2 --> B3[implement TDD]
     B3 --> B4[progress.md + matriz FR->teste]
     B4 --> B5[CI: lint/test/build + spec gate]
@@ -53,7 +54,7 @@ flowchart LR
 Dois níveis convivem:
 
 - **Macro (já existe):** `SPEC.md` na raiz = visão do produto.
-- **Por feature (novo):** pasta `spec/` com uma subpasta por funcionalidade.
+- **Por feature (novo):** pasta `specs/` com uma subpasta por funcionalidade.
 
 ```
 spec/
@@ -73,7 +74,7 @@ spec/
     progress.md        # andamento das 7 etapas
 ```
 
-Convenção alinhada ao GitHub Spec Kit já citado no `SPEC.md` (`specs/<NNN>-<feature>/`), usando `spec/` por preferência do time.
+Convenção alinhada ao GitHub Spec Kit já citado no `SPEC.md` (`specs/<NNN>-<feature>/`), usando `specs/` por preferência do time.
 
 ---
 
@@ -173,7 +174,7 @@ Hoje o CI termina com `lint → test → build`. O spec gate adiciona um passo (
 
 ### 6.3 Peça 2 — script `scripts/spec-check.mjs`
 
-Script Node puro (sem dependências novas) que percorre `spec/` e o diff do PR, fazendo **3 verificações**:
+Script Node puro (sem dependências novas) que percorre `specs/` e o diff do PR, fazendo **3 verificações**:
 
 ```javascript
 import { readdirSync, readFileSync, existsSync, statSync } from 'node:fs';
@@ -262,15 +263,15 @@ console.log(`Spec gate OK (${features.length} feature(s) validada(s)).`);
 
 | Check | O que valida | Reprova quando |
 | --- | --- | --- |
-| 1. Artefatos | Toda `spec/NNN-*/` tem os 5 arquivos | Falta `spec.md`, `plan.md`, `tasks.md`, `research.md` ou `progress.md` |
+| 1. Artefatos | Toda `specs/NNN-*/` tem os 5 arquivos | Falta `spec.md`, `plan.md`, `tasks.md`, `research.md` ou `progress.md` |
 | 2. Progress | `progress.md` tem front-matter válido | Sem `feature/status/owner/updated` ou `status` fora da lista |
-| 3. Rastreabilidade | Mudança de código tem spec | PR mexe em `src/` mas nada em `spec/` |
+| 3. Rastreabilidade | Mudança de código tem spec | PR mexe em `src/` mas nada em `specs/` |
 
 ### 6.5 Exemplos de resultado
 
 | Situação no PR | Resultado |
 | --- | --- |
-| Mexeu em `src/` mas não há feature em `spec/` referenciada | Reprova |
+| Mexeu em `src/` mas não há feature em `specs/` referenciada | Reprova |
 | Criou `spec/002-foo/` sem `tasks.md` | Reprova |
 | `progress.md` sem o campo `status` | Reprova |
 | Mudou só docs/CI, sem tocar `src/` | Passa |
@@ -300,7 +301,7 @@ flowchart LR
 ## 7. Governança e integração
 
 - **`CONSTITUTION.md`** consolida os princípios do `AGENTS.md` como regras citáveis pelos planos (SOLID, Clean Code, Test-First, DI, proibição de `any`/`as`) + Definition of Ready/Done.
-- **Seção "10. Spec Driven Development workflow"** no `AGENTS.md`: toda mudança de comportamento começa por uma feature em `spec/`.
+- **Seção "10. Spec Driven Development workflow"** no `AGENTS.md`: toda mudança de comportamento começa por uma feature em `specs/`.
 - **PR template** (`.github/pull_request_template.md`) com checklist (qual feature? progress atualizado? matriz FR→teste completa?).
 - **`npm run spec:new`** (opcional): scaffold de nova feature a partir de `_templates/`.
 - **Rastreabilidade bidirecional:** `FR-XXX` aparece no `spec.md`, na tarefa em `tasks.md`, no nome do teste e no `progress.md`.
@@ -309,7 +310,7 @@ flowchart LR
 
 ## 8. Entregáveis da implementação
 
-1. Estrutura `spec/` + `_templates/` + `README.md` + `CONSTITUTION.md`.
+1. Estrutura `specs/` + `_templates/` + `README.md` + `CONSTITUTION.md`.
 2. Feature de exemplo `spec/001-<slug>/` preenchida com o contexto atual do app (referência viva).
 3. Seção SDD no `AGENTS.md` + PR template.
 4. Spec gate no CI (script `scripts/spec-check.mjs` + passo no `ci.yml` + script `spec:check` no `package.json`).
@@ -317,14 +318,17 @@ flowchart LR
 
 ---
 
-## 9. Pontos em aberto para o time decidir
+## 9. Decisões adotadas
 
-1. **Spec gate bloqueante x informativo** — começar travando o merge (cria o hábito) ou só avisando nas primeiras semanas?
-2. **Localização da pasta `spec/`** — dentro de `ipaper-checklist-management/` (assumido) ou na raiz do repositório?
-3. **Número/nomes das etapas** — manter as 7 ou simplificar (ex.: juntar Specify+Clarify)?
-4. **Lint de markdown das specs** — adicionar `markdownlint` (nova devDependency) como check 4?
-5. **Exigir matriz FR→teste preenchida** no `progress.md` como gate adicional?
-6. **Adoção** — aplicar SDD só para features novas ou também retroativamente ao que já existe?
+| Tema | Decisão |
+| --- | --- |
+| Pasta | `ipaper-checklist-management/specs/` (plural — compatível com Flows/Spec Kit) |
+| Gate CI | Dois níveis: **warn** padrão; **strict** via label `sdd-strict` no PR |
+| Etapas | 7 (fluxo completo) + 3 (fluxo leve) — sem tier S/M/L por enquanto |
+| Lint de markdown | Adiado — sem nova devDependency |
+| Matriz FR→teste | Obrigatória para `status: done`; validada em modo strict |
+| Adoção | Features novas em `specs/`; legado documentado em `001-checklist-management` |
+| Scripts CI | Flags `--strict` no `.mjs`; sem `cross-env` (compatibilidade Windows) |
 
 ---
 
