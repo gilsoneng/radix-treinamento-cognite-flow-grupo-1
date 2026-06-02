@@ -13,6 +13,8 @@
 
 Always check `@cognite/aura/components` before reaching for a raw HTML element or custom CSS/Tailwind solution. If Aura has a component that covers the need, use it. Only fall back to custom solutions when Aura genuinely doesn't cover the use case.
 
+Before implementing layouts, colors, typography, or IP-specific patterns (KPIs, tables, shell), read **`docs/Design.md`** — it maps International Paper brand and reference UI to Aura primitives (no custom design-system widgets).
+
 ---
 
 ## 2. Host integration (`@cognite/app-sdk`)
@@ -48,7 +50,7 @@ type AppState = { page: 'a' | 'b'; filters: string[] };
 const DEFAULT_STATE: AppState = { page: 'a', filters: [] };
 
 // On startup — seed from initialState, not from a hardcoded default.
-const { api, initialState } = await connectToHostApp({ applicationName: 'ipaper-checklist-management' });
+const { api, initialState } = await connectToHostApp({ applicationName: 'iptimize-flows' });
 const seeded: AppState = initialState ? (JSON.parse(initialState) as AppState) : DEFAULT_STATE;
 
 // On every change — push the new state to the host so the URL stays in sync.
