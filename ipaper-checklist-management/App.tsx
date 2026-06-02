@@ -101,7 +101,7 @@ function AppContent() {
         <Card>
           <div className="p-15 gap-16">
             <CardHeader>
-              <CardTitle as="h1">Welcome to Flows custom apps!</CardTitle>
+              <CardTitle as="h1">Welcome to Flows custom apps</CardTitle>
               <CardDescription>{INTRO_COPY}</CardDescription>
             </CardHeader>
 
@@ -176,9 +176,9 @@ function AppContent() {
                       <p>
                         For additional support and feedback, please head to{' '}
                         <a
+                          className="link-fusion"
                           href={FLOWS_DOCUMENTATION_HREF}
                           rel="noreferrer"
-                          style={{ color: '#486AED' }}
                           target="_blank"
                         >
                           Flows documentation
