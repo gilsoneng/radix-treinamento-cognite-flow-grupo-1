@@ -51,6 +51,7 @@ export function TaskResultsCharts({ data }: TaskResultsChartsProps) {
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <ChartCard title="OK vs Not OK over time">
+          <div className="ip-chart-shell">
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={[...data.trend]}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
@@ -68,9 +69,11 @@ export function TaskResultsCharts({ data }: TaskResultsChartsProps) {
               />
             </BarChart>
           </ResponsiveContainer>
+          </div>
         </ChartCard>
 
         <ChartCard title="Not OK by checklist">
+          <div className="ip-chart-shell">
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={[...data.notOkByChecklist]} layout="vertical" margin={{ left: 8 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" horizontal={false} />
@@ -89,9 +92,11 @@ export function TaskResultsCharts({ data }: TaskResultsChartsProps) {
               <Bar dataKey="count" fill="var(--destructive-background, #c53030)" radius={[0, 3, 3, 0]} />
             </BarChart>
           </ResponsiveContainer>
+          </div>
         </ChartCard>
 
         <ChartCard title="Not OK by route / area">
+          <div className="ip-chart-shell">
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={[...data.notOkByArea]}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
@@ -101,9 +106,11 @@ export function TaskResultsCharts({ data }: TaskResultsChartsProps) {
               <Bar dataKey="count" fill="var(--ip-yellow)" radius={[3, 3, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
+          </div>
         </ChartCard>
 
         <ChartCard title="% Not OK over time">
+          <div className="ip-chart-shell">
           <ResponsiveContainer width="100%" height={280}>
             <LineChart data={[...data.trend]}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
@@ -119,6 +126,7 @@ export function TaskResultsCharts({ data }: TaskResultsChartsProps) {
               />
             </LineChart>
           </ResponsiveContainer>
+          </div>
         </ChartCard>
       </div>
     </div>

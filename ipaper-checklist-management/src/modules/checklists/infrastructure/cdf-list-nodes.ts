@@ -1,4 +1,4 @@
-import type { CdfReadClient, InstanceNodeDto } from '../../../core/sdk/cdf-client';
+import type { CdfReadClient, InstancesListFilter, InstanceNodeDto } from '../../../core/sdk/cdf-client';
 import {
   DEFAULT_CHECKLIST_LIST_LIMIT,
   MAX_CHECKLIST_LIST_PAGES,
@@ -12,17 +12,27 @@ export type ListViewNodesPageResult = {
   nextCursor?: string;
 };
 
+export function instanceSpaceFilter(instanceSpace: string): InstancesListFilter {
+  return { equals: { property: ['node', 'space'], value: instanceSpace } };
+}
+
+export type ListViewNodesOptions = {
+  instanceSpace?: string;
+};
+
 export async function listViewNodesPage(
   client: CdfReadClient,
   view: ViewRef,
   limit = DEFAULT_CHECKLIST_LIST_LIMIT,
   cursor?: string,
+  options?: ListViewNodesOptions,
 ): Promise<ListViewNodesPageResult> {
   const response = await client.instances.list({
     instanceType: 'node',
     sources: [{ source: { type: 'view', ...view } }],
     limit,
     ...(cursor ? { cursor } : {}),
+    ...(options?.instanceSpace ? { filter: instanceSpaceFilter(options.instanceSpace) } : {}),
   });
 
   return {
@@ -36,12 +46,13 @@ export async function listAllViewNodes(
   view: ViewRef,
   pageLimit = DEFAULT_CHECKLIST_LIST_LIMIT,
   maxPages: number | undefined = MAX_CHECKLIST_LIST_PAGES,
+  options?: ListViewNodesOptions,
 ): Promise<InstanceNodeDto[]> {
   const items: InstanceNodeDto[] = [];
   let cursor: string | undefined;
 
   for (let page = 0; maxPages === undefined || page < maxPages; page += 1) {
-    const response = await listViewNodesPage(client, view, pageLimit, cursor);
+    const response = await listViewNodesPage(client, view, pageLimit, cursor, options);
     items.push(...response.items);
 
     if (!response.nextCursor) {
@@ -60,12 +71,13 @@ export async function listChecklistItemsWithNotes(
   readNote: (item: InstanceNodeDto) => string,
   pageLimit = DEFAULT_CHECKLIST_LIST_LIMIT,
   maxPages: number | undefined = NOT_OK_ITEM_SCAN_MAX_PAGES,
+  options?: ListViewNodesOptions,
 ): Promise<InstanceNodeDto[]> {
   const notedItems: InstanceNodeDto[] = [];
   let cursor: string | undefined;
 
   for (let page = 0; maxPages === undefined || page < maxPages; page += 1) {
-    const response = await listViewNodesPage(client, view, pageLimit, cursor);
+    const response = await listViewNodesPage(client, view, pageLimit, cursor, options);
 
     for (const item of response.items) {
       if (readNote(item).trim().length > 0) {

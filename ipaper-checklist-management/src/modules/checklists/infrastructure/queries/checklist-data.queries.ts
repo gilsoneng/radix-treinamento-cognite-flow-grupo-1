@@ -3,8 +3,6 @@ import type { ChecklistKpiSummary, ChecklistSummary } from '../../domain/checkli
 import type { OperationalKpiSelection } from '../../domain/operational-catalog.model';
 import type { ChecklistRepository } from '../../domain/checklist.repository';
 import type { PagedResult } from '../../domain/pagination.model';
-import type { TaskResultAnalyticsBundle } from '../../domain/task-result-analytics.model';
-import { buildTaskResultAnalytics } from '../../domain/task-result-analytics.rules';
 import type { MeasurementTrendPoint, TimeSeriesKpiPoint } from '../../domain/time-series-trend.model';
 import type { AnalyticsPeriod } from '../../domain/task-result.model';
 import type { TaskResultItem, TaskResultSummary } from '../../domain/task-result.model';
@@ -26,6 +24,8 @@ export const checklistDataQueryKeys = {
   taskSummary: (period: AnalyticsPeriod, cursor: string | undefined, limit: number) =>
     ['checklists', 'task-summary', period, cursor ?? 'start', limit] as const,
   alerts: ['checklists', 'alerts'] as const,
+  /** Raw ChecklistItems from CDF (paginated full scan — period filter is client-side). */
+  taskAnalyticsItems: ['checklists', 'task-analytics-items'] as const,
   taskAnalytics: (period: AnalyticsPeriod) => ['checklists', 'task-analytics', period] as const,
   measurementTrends: ['checklists', 'measurement-trends'] as const,
   routeKpiSnapshots: ['checklists', 'route-kpi-snapshots'] as const,
@@ -75,11 +75,8 @@ export function listAlertsQueryFn(repository: ChecklistRepository) {
   return (): Promise<OperationalAlert[]> => repository.listOperationalAlerts();
 }
 
-export function taskAnalyticsQueryFn(repository: ChecklistRepository, period: AnalyticsPeriod) {
-  return async (): Promise<TaskResultAnalyticsBundle> => {
-    const items = await repository.fetchTaskResultsSample();
-    return buildTaskResultAnalytics(items, period);
-  };
+export function taskAnalyticsItemsQueryFn(repository: ChecklistRepository) {
+  return (): Promise<TaskResultItem[]> => repository.fetchTaskResultsSample();
 }
 
 export function measurementTrendsQueryFn(repository: ChecklistRepository) {

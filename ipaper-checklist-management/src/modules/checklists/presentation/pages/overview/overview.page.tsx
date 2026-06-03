@@ -15,7 +15,9 @@ export function OverviewPage() {
   const vm = useOverviewKpisViewModel();
 
   if (vm.isLoading) {
-    return <LoadingState message="Loading checklist KPIs from CDF..." />;
+    return (
+      <LoadingState message="Loading checklist KPIs from CDF (Checklists + Not OK scan in batches of 250)..." />
+    );
   }
 
   if (vm.isError) {
@@ -31,7 +33,7 @@ export function OverviewPage() {
     return (
       <EmptyState
         title="No checklists in CDF"
-        description="Seed or sync ApmAppData Checklist instances in cdf_apm to populate this overview."
+        description='Seed checklists in flows_radix_checklist_group1 (npm run seed:ingest:apm-checklists). First load paginates CDF in batches of 250.'
       />
     );
   }
@@ -58,6 +60,11 @@ export function OverviewPage() {
         </CardContent>
       </Card>
 
+      <p className="m-0 text-xs text-muted-foreground">
+        {vm.total.toLocaleString()} checklists in{' '}
+        <code className="text-[11px]">flows_radix_checklist_group1</code> (full CDF scan, 250 per
+        request). Not OK derived from all ChecklistItems with notes.
+      </p>
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
         {KPI_BUCKETS.map((bucket) => (
           <KpiCard

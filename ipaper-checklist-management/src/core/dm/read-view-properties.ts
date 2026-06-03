@@ -13,7 +13,21 @@ const PROPERTY_FIELD_HINTS = new Set([
   'name',
   'description',
   'periodLabel',
+  'periodType',
   'avgNokRate',
+  'totalChecklists',
+  'avgDurationMinutes',
+  'totalObservations',
+  'lastValue',
+  'avg7dValue',
+  'avg30dValue',
+  'maxValue',
+  'trendSlope',
+  'threshold',
+  'exceedanceCount30d',
+  'predictedDaysToAlarm',
+  'lastCalculatedAt',
+  'assetRef',
 ]);
 
 function looksLikePropertyBag(value: unknown): value is Record<string, unknown> {
@@ -45,7 +59,7 @@ export function readViewProperties<T extends Record<string, unknown>>(
     }
 
     const nested = spaceProps[nestedKey];
-    if (nested && typeof nested === 'object' && looksLikePropertyBag(nested)) {
+    if (nested && typeof nested === 'object' && !Array.isArray(nested)) {
       return nested as T;
     }
 

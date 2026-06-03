@@ -4626,6 +4626,50 @@
 [2026-06-03T19:24:27.155Z] [INFO] 
 [2026-06-03T19:24:27.155Z] [INFO] Seed successfully ingested to CDF radix-dev!
 [2026-06-03T19:24:27.155Z] [INFO] Validate with MCP: cdf_list_instances → Template, Checklist, Observation
+[2026-06-03T19:41:03.703Z] [INFO] === IP Checklist Seed Ingester === {"run":"latest","runDir":"C:\\Radix\\TreinamentoFlow\\radix-treinamento-cognite-flow-grupo-1\\ipaper-checklist-management\\docs\\Seed\\generated\\run-2025-01-01-B663A49E","dryRun":false,"only":"ip-schema"}
+[2026-06-03T19:41:03.744Z] [INFO]   [→] SST Classification: 42 instances...
+[2026-06-03T19:41:05.160Z] [DEBUG] Upserted 42 nodes (batch #1)
+[2026-06-03T19:41:05.160Z] [INFO]       done — OK
+[2026-06-03T19:41:05.161Z] [INFO] 
+[2026-06-03T19:41:05.161Z] [INFO] === Ingestion complete ===
+[2026-06-03T19:41:05.161Z] [INFO]   Nodes:   42
+[2026-06-03T19:41:05.161Z] [INFO]   Edges:   0
+[2026-06-03T19:41:05.161Z] [INFO]   Batches: 1
+[2026-06-03T19:41:05.162Z] [INFO]   Errors:  0
+[2026-06-03T19:41:05.162Z] [INFO] 
+[2026-06-03T19:41:05.162Z] [INFO] Seed successfully ingested to CDF radix-dev!
+[2026-06-03T19:41:05.162Z] [INFO] Validate with MCP: cdf_list_instances → Template, Checklist, Observation
+[2026-06-03T19:41:11.018Z] [INFO] === IP Checklist Seed Ingester === {"run":"latest","runDir":"C:\\Radix\\TreinamentoFlow\\radix-treinamento-cognite-flow-grupo-1\\ipaper-checklist-management\\docs\\Seed\\generated\\run-2025-01-01-B663A49E","dryRun":false,"only":"kpis"}
+[2026-06-03T19:41:11.080Z] [INFO]   [→] ChecklistKpi: 6.815 instances...
+[2026-06-03T19:41:14.716Z] [DEBUG] Upserted 1000 nodes (batch #5)
+[2026-06-03T19:41:14.779Z] [DEBUG] Upserted 1000 nodes (batch #5)
+[2026-06-03T19:41:14.972Z] [DEBUG] Upserted 1000 nodes (batch #5)
+[2026-06-03T19:41:15.148Z] [DEBUG] Upserted 1000 nodes (batch #5)
+[2026-06-03T19:41:17.406Z] [DEBUG] Upserted 1000 nodes (batch #5)
+[2026-06-03T19:41:19.033Z] [DEBUG] Upserted 815 nodes (batch #7)
+[2026-06-03T19:41:19.358Z] [DEBUG] Upserted 1000 nodes (batch #7)
+[2026-06-03T19:41:19.358Z] [INFO]       done — OK
+[2026-06-03T19:41:19.359Z] [INFO]   [→] EquipmentHealthIndex: 71 instances...
+[2026-06-03T19:41:19.797Z] [DEBUG] Upserted 71 nodes (batch #8)
+[2026-06-03T19:41:19.797Z] [INFO]       done — OK
+[2026-06-03T19:41:19.798Z] [INFO]   [→] RouteKpiSnapshot: 144 instances...
+[2026-06-03T19:41:20.155Z] [DEBUG] Upserted 144 nodes (batch #9)
+[2026-06-03T19:41:20.155Z] [INFO]       done — OK
+[2026-06-03T19:41:20.156Z] [INFO]   [→] MeasurementTrend: 47 instances...
+[2026-06-03T19:41:20.477Z] [DEBUG] Upserted 47 nodes (batch #10)
+[2026-06-03T19:41:20.477Z] [INFO]       done — OK
+[2026-06-03T19:41:20.477Z] [INFO]   [→] SeedManifest: 1 instances...
+[2026-06-03T19:41:20.758Z] [DEBUG] Upserted 1 nodes (batch #11)
+[2026-06-03T19:41:20.758Z] [INFO]       done — OK
+[2026-06-03T19:41:20.759Z] [INFO] 
+[2026-06-03T19:41:20.759Z] [INFO] === Ingestion complete ===
+[2026-06-03T19:41:20.759Z] [INFO]   Nodes:   7.078
+[2026-06-03T19:41:20.759Z] [INFO]   Edges:   0
+[2026-06-03T19:41:20.759Z] [INFO]   Batches: 11
+[2026-06-03T19:41:20.759Z] [INFO]   Errors:  0
+[2026-06-03T19:41:20.760Z] [INFO] 
+[2026-06-03T19:41:20.760Z] [INFO] Seed successfully ingested to CDF radix-dev!
+[2026-06-03T19:41:20.760Z] [INFO] Validate with MCP: cdf_list_instances → Template, Checklist, Observation
 [2026-06-03T19:45:20.068Z] [INFO] === IP Checklist Seed Ingester === {"run":"latest","runDir":"C:\\repositories\\radix-treinamento-cognite-flow-grupo-1\\ipaper-checklist-management\\docs\\Seed\\generated\\run-2025-01-01-85B7AFF9","dryRun":false,"only":"all"}
 [2026-06-03T19:45:20.205Z] [INFO]   [→] CogniteAsset (v1): 84 instances...
 [2026-06-03T19:45:22.725Z] [ERROR] Failed to upsert 84 nodes {"message":"One or more spaces do not exist: 'flows_radix_space_group1'. | code: 400 | X-Request-ID: a5c43723-2f70-9429-adec-c227efa43ced"}

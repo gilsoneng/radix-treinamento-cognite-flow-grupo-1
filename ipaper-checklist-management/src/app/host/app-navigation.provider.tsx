@@ -33,7 +33,7 @@ export function AppNavigationProvider({ children, initialAppState }: AppNavigati
         page,
         checklistId: options?.checklistId ?? (page === 'checklists' ? state.checklistId : undefined),
         analyticsTab:
-          page === 'analytics' ? options?.analyticsTab ?? state.analyticsTab ?? 'results' : undefined,
+          page === 'analytics' ? options?.analyticsTab ?? state.analyticsTab ?? 'trends' : undefined,
       };
       pushState(next);
     },

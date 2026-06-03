@@ -16,7 +16,7 @@ function readNumber(value: unknown): number | null {
 
 export function toMeasurementTrendPoint(node: InstanceNodeDto): MeasurementTrendPoint {
   const props = readProps(node, MEASUREMENT_TREND_VIEW);
-  const label = node.externalId.replace(/^CKM_MTREND_GR1_/, '').replace(/-/g, ' ');
+  const label = node.externalId.replace(/^CKM_MTRND_GR1_/, '').replace(/-/g, ' ');
 
   return {
     externalId: node.externalId,

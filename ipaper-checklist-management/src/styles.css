@@ -111,6 +111,12 @@
   text-decoration: underline;
 }
 
+/* Recharts ResponsiveContainer needs explicit box size in flex/grid layouts */
+.ip-chart-shell {
+  width: 100%;
+  min-height: 260px;
+}
+
 .ip-app-shell {
   background: var(--muted-background);
   color: var(--foreground);

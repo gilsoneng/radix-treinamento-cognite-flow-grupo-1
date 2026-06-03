@@ -21,7 +21,7 @@ export type AppState = {
   overviewShiftCode?: OverviewShiftCode;
 };
 
-export const DEFAULT_APP_STATE: AppState = { page: 'overview', analyticsTab: 'results' };
+export const DEFAULT_APP_STATE: AppState = { page: 'overview', analyticsTab: 'trends' };
 
 const APP_PAGE_SET = new Set<string>(APP_PAGES);
 

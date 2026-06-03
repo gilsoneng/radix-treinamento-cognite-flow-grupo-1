@@ -2,7 +2,6 @@ import { Button } from '@cognite/aura/components';
 import { IconChevronDown, IconChevronUp, IconX } from '@tabler/icons-react';
 import { useCallback, useEffect, useMemo, useState, type CSSProperties } from 'react';
 
-import { useAppNavigation } from '../../../../../app/host/use-app-navigation';
 import type { OperationalAlert } from '../../../domain/alert.model';
 import type { NotificationRule } from '../../../domain/notification-settings.model';
 import {
@@ -48,7 +47,6 @@ function alertsForFeed(
 }
 
 export function NotificationRuntime({ alerts }: NotificationRuntimeProps) {
-  const { navigate } = useAppNavigation();
   const [settings, setSettings] = useState(() => loadNotificationSettings());
   const [dismissed, setDismissed] = useState(() => loadDismissedAlertIds());
   const [collapsed, setCollapsed] = useState(false);
@@ -64,7 +62,6 @@ export function NotificationRuntime({ alerts }: NotificationRuntimeProps) {
   );
 
   const visible = feedAlerts.slice(0, MAX_VISIBLE);
-  const hiddenCount = Math.max(0, feedAlerts.length - visible.length);
 
   const dismissOne = useCallback((id: string) => {
     setDismissed((prev) => {
@@ -111,58 +108,40 @@ export function NotificationRuntime({ alerts }: NotificationRuntimeProps) {
       </header>
 
       {!collapsed ? (
-        <>
-          <ul className="ip-notification-feed__list">
-            {visible.map((alert) => {
-              const theme = themeForAlertKind(alert.kind);
-              return (
-                <li
-                  key={alert.id}
-                  className="ip-notification-item"
-                  style={
-                    {
-                      '--ip-alert-accent': theme.color,
-                      '--ip-alert-border': theme.border,
-                    } as CSSProperties
-                  }
-                >
-                  <span className="ip-notification-item__corner-dot" aria-hidden />
-                  <div className="ip-notification-item__content">
-                    <div className="ip-notification-item__top">
-                      <span className="ip-notification-item__title">{alert.title}</span>
-                      <AlertKindBadge kind={alert.kind} />
-                    </div>
-                    <p className="ip-notification-item__description">{alert.description}</p>
-                  </div>
-                  <button
-                    type="button"
-                    className="ip-notification-item__dismiss"
-                    aria-label={`Dismiss ${alert.title}`}
-                    onClick={() => dismissOne(alert.id)}
-                  >
-                    <IconX size={14} />
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-          {hiddenCount > 0 || feedAlerts.length > 5 ? (
-            <footer className="ip-notification-feed__footer">
-              {hiddenCount > 0 ? (
-                <span className="text-xs text-muted-foreground">
-                  +{hiddenCount} more not shown here
-                </span>
-              ) : null}
-              <button
-                type="button"
-                className="text-xs text-link-foreground underline-offset-2 hover:underline"
-                onClick={() => navigate('alerts')}
+        <ul className="ip-notification-feed__list">
+          {visible.map((alert) => {
+            const theme = themeForAlertKind(alert.kind);
+            return (
+              <li
+                key={alert.id}
+                className="ip-notification-item"
+                style={
+                  {
+                    '--ip-alert-accent': theme.color,
+                    '--ip-alert-border': theme.border,
+                  } as CSSProperties
+                }
               >
-                Open Alerts page
-              </button>
-            </footer>
-          ) : null}
-        </>
+                <span className="ip-notification-item__corner-dot" aria-hidden />
+                <div className="ip-notification-item__content">
+                  <div className="ip-notification-item__top">
+                    <span className="ip-notification-item__title">{alert.title}</span>
+                    <AlertKindBadge kind={alert.kind} />
+                  </div>
+                  <p className="ip-notification-item__description">{alert.description}</p>
+                </div>
+                <button
+                  type="button"
+                  className="ip-notification-item__dismiss"
+                  aria-label={`Dismiss ${alert.title}`}
+                  onClick={() => dismissOne(alert.id)}
+                >
+                  <IconX size={14} />
+                </button>
+              </li>
+            );
+          })}
+        </ul>
       ) : (
         <p className="ip-notification-feed__collapsed-hint">
           {feedAlerts.length} active notification{feedAlerts.length === 1 ? '' : 's'} — expand to
