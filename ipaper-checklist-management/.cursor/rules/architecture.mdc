@@ -1,0 +1,43 @@
+---
+description: Fronteiras de arquitetura (DDD/Clean) ao editar código em src/
+globs: ipaper-checklist-management/src/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Arquitetura — fronteiras de camada
+
+Fonte de verdade: `docs/architecture/` (README, folder-structure, layers, ADRs).
+Padrões de implementação (DI, ViewModel, test-first): `AGENTS.md`.
+
+## Regra de ouro (dependências apontam para dentro)
+
+```txt
+presentation ──▶ domain        infrastructure ──▶ domain
+composição (providers/routes) ──▶ presentation + infrastructure + domain
+```
+
+- `modules/<bc>/domain` é **TS puro**: nada de React, `@cognite/sdk`, `@cognite/app-sdk`,
+  react-query, config de ambiente ou browser APIs.
+- Só `modules/<bc>/infrastructure` pode tocar `@cognite/sdk` / instâncias DMS. É onde
+  ficam DTOs, mappers e as queryFns/mutationFns do react-query.
+- `presentation` consome contratos de `domain` e hooks injetados via Context; **nunca**
+  usa `CogniteClient`/HTTP direto nem vê DTO/instância DMS crua.
+- Um módulo **não** importa internals de outro módulo.
+- `core/`, `design-system/`, `shared/` não importam de `modules/*`.
+
+## UI
+
+`@cognite/aura` é a fundação; o **IP Design System** (próprio) é construído **sobre** ele
+em `design-system/`. Use Aura quando cobre; crie em `design-system/` só quando o Aura não
+cobre ou a marca IP exige. Não recrie primitivos Aura nem copie widgets Angular verbatim.
+
+## Exemplo
+
+```typescript
+// ❌ presentation tocando o SDK / DTO cru
+import { useCogniteSdk } from '@cognite/app-sdk/react';
+const items = (await sdk.instances.list(...)).items; // DTO DMS na UI
+
+// ✅ presentation consome o repositório via hook injetado (DTO já mapeado p/ domínio)
+const { items } = useChecklistsViewModel(); // domínio, não DMS
+```

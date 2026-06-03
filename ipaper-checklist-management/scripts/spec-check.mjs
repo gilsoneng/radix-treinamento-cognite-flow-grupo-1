@@ -19,9 +19,9 @@
  * Ref: docs/SDD-workflow-definition/avaliacao_sdd.md §32–§33
  */
 
+import { execSync } from 'node:child_process';
 import { readdirSync, readFileSync, existsSync, statSync } from 'node:fs';
 import { join } from 'node:path';
-import { execSync } from 'node:child_process';
 
 // ---------------------------------------------------------------------------
 // Config
@@ -328,7 +328,7 @@ if (errors.length > 0) {
 }
 
 if (STRICT && errors.length > 0) {
-  console.error(`\nSpec gate FALHOU [STRICT] — corrigir os erros acima antes de mergear.`);
+  console.error('\nSpec gate FALHOU [STRICT] — corrigir os erros acima antes de mergear.');
   process.exit(1);
 } else {
   console.warn(`\nSpec gate WARN — ${totalIssues} aviso(s); pipeline não bloqueado.`);

@@ -10,6 +10,12 @@
 docs/
   README.md                    ← você está aqui
   Design.md                    ← IP + Aura (guia deste app Flows)
+  architecture/                ← arquitetura de software (DDD/Clean adaptado a Flows)
+    README.md
+    folder-structure.md
+    layers.md
+    adr/
+      0001-angular-base-to-react-flows.md
   prototype/                   ← protótipo Lovable (referência UX)
     README.md
     LOVABLE-PROTOTYPE.md
@@ -62,7 +68,7 @@ Documentação visual e contrato de interface IP integrada à documentação do 
 
 | Documento | Para quem | O que é |
 | --- | --- | --- |
-| [`Design.md`](Design.md) | Desenvolvedores Flows / agentes | Mapeamento **IP → Aura**: tokens em `src/lib/styles.css`, regras de componentes, checklist de PR |
+| [`Design.md`](Design.md) | Desenvolvedores Flows / agentes | Mapeamento **IP → Aura**: tokens em `src/styles.css`, shell IP, regras de componentes |
 | [`design/README.md`](design/README.md) | Índice design | Estrutura, sincronização com `references/app/`, assets de marca |
 | [`design/IP-DESIGN-SYSTEM.md`](design/IP-DESIGN-SYSTEM.md) | Plataforma Angular IP + referência visual | Contrato completo v1.0 (tokens, Material M3, catálogo, shell, gráficos, a11y) |
 
@@ -91,11 +97,24 @@ Ver índice completo: [`SDD-workflow-definition/README.md`](SDD-workflow-definit
 
 ---
 
+## architecture/ — Arquitetura de software
+
+Referência **durável e transversal** da arquitetura do app (DDD + Clean + SOLID adaptado à
+stack do Cognite Flows). Specs de feature **consomem** estas regras; não as redefinem.
+
+| Documento | Para quem | O que é |
+| --- | --- | --- |
+| [`architecture/README.md`](architecture/README.md) | Engenheiros / agentes | Princípios, regra de ouro, diagrama de dependências, glossário |
+| [`architecture/folder-structure.md`](architecture/folder-structure.md) | Quem cria módulos/arquivos | Estrutura de `src/` anotada + mapa Angular→React/Flows |
+| [`architecture/layers.md`](architecture/layers.md) | Quem implementa | Responsabilidades por camada + tabela de regras de import |
+| [`architecture/adr/`](architecture/adr/) | Contexto histórico | Decisões arquiteturais (ADRs) e seu "porquê" |
+
+---
+
 ## Outras pastas (a criar conforme o projeto evolui)
 
 | Pasta | Conteúdo sugerido |
 | --- | --- |
-| `architecture/` | Diagramas, ADRs globais, decisões de sistema |
 | `api/` | Contratos de API, schemas CDF, integrações externas |
 | `runbooks/` | Procedimentos de deploy, incidentes, rollback |
 

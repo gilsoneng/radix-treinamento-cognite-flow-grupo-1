@@ -8,7 +8,7 @@
 
 ## 1. Tokens de marca IP (CSS)
 
-Valores canônicos do IP Design System (§3.1) aplicados neste app em `src/lib/styles.css`:
+Valores canônicos do IP Design System (§3.1) aplicados neste app em `src/styles.css`:
 
 | Token IP (design system) | Variável neste app | Hex / uso |
 | --- | --- | --- |
@@ -32,7 +32,8 @@ Valores canônicos do IP Design System (§3.1) aplicados neste app em `src/lib/s
 | Necessidade | Onde implementar |
 | --- | --- |
 | Botões, cards, alerts, loaders, tabelas, formulários | `@cognite/aura/components` |
-| Layout página, topbar (futuro) | Aura + skill `use-topbar` quando aplicável |
+| Layout página, shell IP | `design-system/layout/page-shell`, `ip-hero-banner`, `app-footer` |
+| Loading branded | `design-system/components/ip-spinner`, `layout/states/loading-state` |
 | KPI, tabela densa, sidebar expansível (referência Angular) | **Aproximar com Aura** (Card, Badge, DataTable patterns) — ver catálogo IP para densidade e hierarquia |
 
 Catálogo detalhado (API Angular): [`design/IP-DESIGN-SYSTEM.md` §9](design/IP-DESIGN-SYSTEM.md).
@@ -63,7 +64,7 @@ Do IP Design System §1 — válidos para qualquer tela deste app:
 
 ## 5. Tema Aura (implementação)
 
-Arquivo: [`src/lib/styles.css`](../src/lib/styles.css)
+Arquivo: [`src/styles.css`](../src/styles.css)
 
 ### 5.1 Semântica
 
@@ -87,7 +88,8 @@ Usar quando integrar navegação lateral ou shell alinhado ao layout IP (§10 do
 | --- | --- |
 | **Protótipo Lovable (UX InField Challenge)** | [`prototype/LOVABLE-PROTOTYPE.md`](prototype/LOVABLE-PROTOTYPE.md) · código: [`../prototype/fieldops-insights/`](../prototype/fieldops-insights/) |
 | Logos e workshop | [`references/brand/`](../references/brand/) |
-| Spinner / assets | [`references/utils/`](../references/utils/) |
+| Spinner / assets | [`references/utils/`](../references/utils/) (ex.: `grun-ip-spinner.gif`, `poweredbyradix.svg`) |
+| Hero / logos | [`references/hero.jpg`](../references/hero.jpg), [`references/ip-logo-white.svg`](../references/ip-logo-white.svg), [`references/radix_wedge.svg`](../references/radix_wedge.svg) |
 | Design system completo | [`design/IP-DESIGN-SYSTEM.md`](design/IP-DESIGN-SYSTEM.md) |
 | Cópia junto aos assets | [`references/app/IP-DESIGN-SYSTEM.md`](../references/app/IP-DESIGN-SYSTEM.md) |
 
