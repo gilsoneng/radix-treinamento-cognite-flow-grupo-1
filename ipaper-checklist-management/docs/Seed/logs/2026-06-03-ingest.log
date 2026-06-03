@@ -4670,3 +4670,6 @@
 [2026-06-03T19:41:20.760Z] [INFO] 
 [2026-06-03T19:41:20.760Z] [INFO] Seed successfully ingested to CDF radix-dev!
 [2026-06-03T19:41:20.760Z] [INFO] Validate with MCP: cdf_list_instances → Template, Checklist, Observation
+[2026-06-03T19:45:20.068Z] [INFO] === IP Checklist Seed Ingester === {"run":"latest","runDir":"C:\\repositories\\radix-treinamento-cognite-flow-grupo-1\\ipaper-checklist-management\\docs\\Seed\\generated\\run-2025-01-01-85B7AFF9","dryRun":false,"only":"all"}
+[2026-06-03T19:45:20.205Z] [INFO]   [→] CogniteAsset (v1): 84 instances...
+[2026-06-03T19:45:22.725Z] [ERROR] Failed to upsert 84 nodes {"message":"One or more spaces do not exist: 'flows_radix_space_group1'. | code: 400 | X-Request-ID: a5c43723-2f70-9429-adec-c227efa43ced"}

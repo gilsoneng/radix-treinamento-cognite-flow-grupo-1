@@ -10,10 +10,15 @@ export type AppPage = (typeof APP_PAGES)[number];
 
 export type AnalyticsTab = 'results' | 'trends';
 
+export type OverviewShiftCode = 'D' | 'A' | 'N';
+
 export type AppState = {
   page: AppPage;
   checklistId?: string;
   analyticsTab?: AnalyticsTab;
+  /** Overview KPI filter — host-synced (YYYY-MM-DD from CDF checklist externalIds). */
+  overviewOperationalDay?: string;
+  overviewShiftCode?: OverviewShiftCode;
 };
 
 export const DEFAULT_APP_STATE: AppState = { page: 'overview', analyticsTab: 'trends' };
@@ -26,6 +31,10 @@ export function isAppPage(value: string): value is AppPage {
 
 export function isAnalyticsTab(value: string): value is AnalyticsTab {
   return value === 'results' || value === 'trends';
+}
+
+export function isOverviewShiftCode(value: string): value is OverviewShiftCode {
+  return value === 'D' || value === 'A' || value === 'N';
 }
 
 export type AppNavItem = {
@@ -43,9 +52,9 @@ export const APP_NAV_ITEMS: readonly AppNavItem[] = [
 ];
 
 export const APP_PAGE_TITLES: Record<AppPage, string> = {
-  overview: 'Overview',
-  checklists: 'Checklists',
-  analytics: 'Analytics',
-  alerts: 'Alerts',
-  settings: 'Settings',
+  overview: 'OVERVIEW',
+  checklists: 'CHECKLISTS',
+  analytics: 'ANALYTICS',
+  alerts: 'ALERTS',
+  settings: 'SETTINGS',
 };

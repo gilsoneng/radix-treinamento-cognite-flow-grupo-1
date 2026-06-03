@@ -1,7 +1,13 @@
 import { describe, expect, it } from 'vitest';
 
 import type { ChecklistSummary } from './checklist-kpi.model';
-import { buildChecklistAlerts, isChecklistDueSoon, isChecklistOverdue } from './alert.rules';
+import type { OperationalAlert } from './alert.model';
+import {
+  buildChecklistAlerts,
+  filterOperationalAlerts,
+  isChecklistDueSoon,
+  isChecklistOverdue,
+} from './alert.rules';
 
 function makeChecklist(overrides: Partial<ChecklistSummary>): ChecklistSummary {
   return {
@@ -53,6 +59,50 @@ describe(buildChecklistAlerts.name, () => {
     );
     expect(alerts.some((a) => a.kind === 'not-ok')).toBe(true);
     expect(alerts.some((a) => a.kind === 'completed')).toBe(true);
+  });
+});
+
+describe(filterOperationalAlerts.name, () => {
+  const alerts: OperationalAlert[] = [
+    {
+      id: 'notok-CKM_CHK_GR1_ROUTE1-2025-01-11-D',
+      kind: 'not-ok',
+      title: 'Route 1 Day',
+      description: 'NOK',
+      priority: 'urgent',
+      checklistExternalId: 'CKM_CHK_GR1_ROUTE1-2025-01-11-D',
+    },
+    {
+      id: 'notok-CKM_CHK_GR1_ROUTE1-2025-01-11-A',
+      kind: 'not-ok',
+      title: 'Route 1 Afternoon',
+      description: 'NOK',
+      priority: 'urgent',
+      checklistExternalId: 'CKM_CHK_GR1_ROUTE1-2025-01-11-A',
+    },
+    {
+      id: 'obs-CKM_OBS_GR1_ROUTE1-2025-01-10-N-7F-SCRAPER-001',
+      kind: 'critical-observation',
+      title: 'Obs',
+      description: 'Critical',
+      priority: 'urgent',
+    },
+  ];
+
+  it('filters alerts to selected day and shift', () => {
+    const filtered = filterOperationalAlerts(
+      alerts,
+      { operationalDay: '2025-01-11', shiftCode: 'D' },
+      true,
+    );
+    expect(filtered).toHaveLength(1);
+    expect(filtered[0]?.title).toBe('Route 1 Day');
+  });
+
+  it('returns all alerts when restrictToSelection is false', () => {
+    expect(
+      filterOperationalAlerts(alerts, { operationalDay: '2025-01-11', shiftCode: 'D' }, false),
+    ).toHaveLength(3);
   });
 });
 

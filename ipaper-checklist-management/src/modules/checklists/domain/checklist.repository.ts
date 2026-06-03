@@ -1,4 +1,5 @@
 import type { ChecklistKpiSummary, ChecklistSummary } from './checklist-kpi.model';
+import type { OperationalKpiSelection } from './operational-catalog.model';
 import type { OperationalAlert } from './alert.model';
 import type { PagedResult } from './pagination.model';
 import type { MeasurementTrendPoint, TimeSeriesKpiPoint } from './time-series-trend.model';
@@ -9,7 +10,10 @@ export interface ChecklistRepository {
   /** Bounded scan of ChecklistItem notes (cached by react-query). */
   fetchNotOkChecklistIds(): Promise<Set<string>>;
   /** Bounded aggregate for Overview KPI cards (does not scan entire CDF). */
-  computeKpiSummary(templateExternalId?: string): Promise<ChecklistKpiSummary>;
+  computeKpiSummary(
+    templateExternalId?: string,
+    selection?: OperationalKpiSelection,
+  ): Promise<ChecklistKpiSummary>;
   listSummariesPage(
     notOkIds: Set<string>,
     cursor?: string,

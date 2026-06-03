@@ -1,11 +1,12 @@
 import { createContext, useContext } from 'react';
 
-import type { AnalyticsTab, AppPage, AppState } from '../routing/app-view.types';
+import type { AnalyticsTab, AppPage, AppState, OverviewShiftCode } from '../routing/app-view.types';
 
 export type AppNavigationContextValue = {
   readonly state: AppState;
   readonly setPage: (page: AppPage, options?: { analyticsTab?: AnalyticsTab; checklistId?: string }) => void;
   readonly setAnalyticsTab: (tab: AnalyticsTab) => void;
+  readonly setOverviewOperationalFilter: (day: string, shiftCode: OverviewShiftCode) => void;
 };
 
 export const AppNavigationContext = createContext<AppNavigationContextValue | null>(null);

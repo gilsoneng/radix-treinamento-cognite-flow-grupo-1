@@ -9,6 +9,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import App from './App';
 import { createQueryClient } from './app/providers/query-client';
+import { makeChecklistKpiSummary } from './__mocks__/checklist-kpi-summary.factory';
 import type { ChecklistKpiSummary } from './modules/checklists/domain/checklist-kpi.model';
 import type { ChecklistSummary } from './modules/checklists/domain/checklist-kpi.model';
 import type { OperationalAlert } from './modules/checklists/domain/alert.model';
@@ -63,10 +64,10 @@ function fakeKpiQuery(): UseQueryResult<ChecklistKpiSummary> {
   return {
     isPending: false,
     isError: false,
-    data: {
+    data: makeChecklistKpiSummary({
       total: 5,
       counts: { todo: 1, ongoing: 1, done: 2, overdue: 0, notok: 1 },
-    },
+    }),
     refetch: vi.fn(),
   } as Partial<UseQueryResult<ChecklistKpiSummary>> as UseQueryResult<ChecklistKpiSummary>;
 }
@@ -148,12 +149,12 @@ describe('App', () => {
     );
   });
 
-  it('renders the InField shell with overview KPI cards by default', async () => {
+  it('renders the FieldOps shell with overview KPI cards by default', async () => {
     renderConnected();
     await waitFor(() =>
       expect(screen.getByRole('img', { name: 'International Paper' })).toBeInTheDocument(),
     );
-    expect(screen.getByRole('heading', { name: 'Overview' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'OVERVIEW' })).toBeInTheDocument();
     expect(screen.getByText('To Do')).toBeInTheDocument();
     expect(screen.getByText('Not OK')).toBeInTheDocument();
   });

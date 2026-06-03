@@ -7,6 +7,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { createQueryClient } from '../../../../../app/providers/query-client';
 import { AppNavigationContext } from '../../../../../app/host/app-navigation.context';
 import { DEFAULT_APP_STATE } from '../../../../../app/routing/app-view.types';
+import { makeChecklistKpiSummary } from '../../../../../__mocks__/checklist-kpi-summary.factory';
 import type { ChecklistKpiSummary } from '../../../domain/checklist-kpi.model';
 import type { ChecklistSummary } from '../../../domain/checklist-kpi.model';
 import type { OperationalAlert } from '../../../domain/alert.model';
@@ -22,10 +23,10 @@ function fakeKpiQuery(
   return {
     isPending: false,
     isError: false,
-    data: {
+    data: makeChecklistKpiSummary({
       total: 10,
       counts: { todo: 2, ongoing: 1, done: 5, overdue: 1, notok: 1 },
-    },
+    }),
     refetch: vi.fn(),
     ...overrides,
   } as Partial<UseQueryResult<ChecklistKpiSummary>> as UseQueryResult<ChecklistKpiSummary>;
@@ -34,12 +35,7 @@ function fakeKpiQuery(
 function makeStubRepository(): ChecklistRepository {
   return {
     fetchNotOkChecklistIds: vi.fn(() => Promise.resolve(new Set<string>())),
-    computeKpiSummary: vi.fn(() =>
-      Promise.resolve({
-        total: 0,
-        counts: { todo: 0, ongoing: 0, done: 0, overdue: 0, notok: 0 },
-      }),
-    ),
+    computeKpiSummary: vi.fn(() => Promise.resolve(makeChecklistKpiSummary({ total: 0 }))),
     listSummariesPage: vi.fn(() =>
       Promise.resolve({ items: [] as ChecklistSummary[], hasMore: false }),
     ),
@@ -55,6 +51,7 @@ function makeStubRepository(): ChecklistRepository {
 function renderPage(query: UseQueryResult<ChecklistKpiSummary>) {
   const setPage = vi.fn();
   const setAnalyticsTab = vi.fn();
+  const setOverviewOperationalFilter = vi.fn();
   const queryClient = createQueryClient();
   const wrapper: ComponentType<{ children: ReactNode }> = ({ children }) => (
     <QueryClientProvider client={queryClient}>
@@ -62,12 +59,21 @@ function renderPage(query: UseQueryResult<ChecklistKpiSummary>) {
         value={{ useChecklistRepository: () => makeStubRepository() }}
       >
         <AppNavigationContext.Provider
-          value={{ state: DEFAULT_APP_STATE, setPage, setAnalyticsTab }}
+          value={{
+            state: DEFAULT_APP_STATE,
+            setPage,
+            setAnalyticsTab,
+            setOverviewOperationalFilter,
+          }}
         >
         <UseOverviewKpisViewModelContext.Provider
           value={{
             useChecklistKpiQuery: () => query,
-            useAppNavigation: () => ({ setPage }),
+            useAppNavigation: () => ({
+              state: DEFAULT_APP_STATE,
+              setPage,
+              setOverviewOperationalFilter,
+            }),
           }}
         >
           {children}

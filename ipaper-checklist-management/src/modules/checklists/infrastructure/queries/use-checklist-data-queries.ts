@@ -1,13 +1,14 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { createContext, useContext, useMemo } from 'react';
 
+import { useAppNavigationContext } from '../../../../app/host/app-navigation.context';
 import { buildTaskResultAnalytics } from '../../domain/task-result-analytics.rules';
-
 import { useCdfClient } from '../../../../core/sdk/cdf-client';
 import { DEFAULT_TABLE_PAGE_SIZE } from '../../domain/checklist-kpi.model';
 import type { OperationalAlert } from '../../domain/alert.model';
 import { loadNotificationSettings } from '../notification-settings.storage';
 import type { ChecklistKpiSummary, ChecklistSummary } from '../../domain/checklist-kpi.model';
+import type { OperationalKpiSelection } from '../../domain/operational-catalog.model';
 import type { ChecklistRepository } from '../../domain/checklist.repository';
 import type { PagedResult } from '../../domain/pagination.model';
 import type { TaskResultAnalyticsBundle } from '../../domain/task-result-analytics.model';
@@ -38,14 +39,27 @@ export type UseChecklistDataQueriesContextType = typeof defaultDeps;
 export const UseChecklistDataQueriesContext =
   createContext<UseChecklistDataQueriesContextType>(defaultDeps);
 
+function useOverviewKpiSelectionFromHost(): OperationalKpiSelection | undefined {
+  const { state } = useAppNavigationContext();
+  if (state.overviewOperationalDay && state.overviewShiftCode) {
+    return {
+      operationalDay: state.overviewOperationalDay,
+      shiftCode: state.overviewShiftCode,
+    };
+  }
+  return undefined;
+}
+
 export function useChecklistKpiQuery(
   templateExternalId?: string,
 ): UseQueryResult<ChecklistKpiSummary> {
   const { useChecklistRepository } = useContext(UseChecklistDataQueriesContext);
   const repository = useChecklistRepository();
+  const selection = useOverviewKpiSelectionFromHost();
+
   return useQuery({
-    queryKey: checklistDataQueryKeys.kpiSummary(templateExternalId),
-    queryFn: checklistKpiSummaryQueryFn(repository, templateExternalId),
+    queryKey: checklistDataQueryKeys.kpiSummary(templateExternalId, selection),
+    queryFn: checklistKpiSummaryQueryFn(repository, templateExternalId, selection),
     staleTime: 300_000,
     refetchOnWindowFocus: false,
   });

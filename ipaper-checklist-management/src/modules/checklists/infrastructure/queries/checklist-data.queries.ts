@@ -1,5 +1,6 @@
 import type { OperationalAlert } from '../../domain/alert.model';
 import type { ChecklistKpiSummary, ChecklistSummary } from '../../domain/checklist-kpi.model';
+import type { OperationalKpiSelection } from '../../domain/operational-catalog.model';
 import type { ChecklistRepository } from '../../domain/checklist.repository';
 import type { PagedResult } from '../../domain/pagination.model';
 import type { MeasurementTrendPoint, TimeSeriesKpiPoint } from '../../domain/time-series-trend.model';
@@ -8,8 +9,14 @@ import type { TaskResultItem, TaskResultSummary } from '../../domain/task-result
 
 export const checklistDataQueryKeys = {
   notOkIds: ['checklists', 'not-ok-ids'] as const,
-  kpiSummary: (templateExternalId?: string) =>
-    ['checklists', 'kpi-summary', templateExternalId ?? 'all'] as const,
+  kpiSummary: (templateExternalId?: string, selection?: OperationalKpiSelection) =>
+    [
+      'checklists',
+      'kpi-summary',
+      templateExternalId ?? 'all',
+      selection?.operationalDay ?? 'auto',
+      selection?.shiftCode ?? 'auto',
+    ] as const,
   summariesPage: (cursor: string | undefined, limit: number) =>
     ['checklists', 'summaries-page', cursor ?? 'start', limit] as const,
   taskResultsPage: (cursor: string | undefined, limit: number) =>
@@ -27,8 +34,10 @@ export const checklistDataQueryKeys = {
 export function checklistKpiSummaryQueryFn(
   repository: ChecklistRepository,
   templateExternalId?: string,
+  selection?: OperationalKpiSelection,
 ) {
-  return (): Promise<ChecklistKpiSummary> => repository.computeKpiSummary(templateExternalId);
+  return (): Promise<ChecklistKpiSummary> =>
+    repository.computeKpiSummary(templateExternalId, selection);
 }
 
 export function fetchNotOkIdsQueryFn(repository: ChecklistRepository) {

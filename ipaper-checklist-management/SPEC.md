@@ -3,7 +3,7 @@
 > Fonte de verdade do produto. Leia antes de tomar decisões de feature. Mantenha em
 > sincronia com qualquer mudança de comportamento visível ao usuário.
 
-**International Paper — InField Challenge**  
+**FieldOps — IPaper** (International Paper — InField Challenge)  
 **Application Requirements:** [`docs/requirements/APPLICATION-REQUIREMENTS.md`](docs/requirements/APPLICATION-REQUIREMENTS.md)  
 **Tasks / Issues:** [`docs/requirements/TASKS-DIVISION.md`](docs/requirements/TASKS-DIVISION.md)  
 **UX Prototype (Lovable):** [`docs/prototype/LOVABLE-PROTOTYPE.md`](docs/prototype/LOVABLE-PROTOTYPE.md)

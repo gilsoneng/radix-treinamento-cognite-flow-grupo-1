@@ -1,5 +1,7 @@
 import type { ChecklistSummary } from './checklist-kpi.model';
 import type { AlertKind, OperationalAlert } from './alert.model';
+import { parseOperationalShiftFromExternalId } from './checklist-shift.rules';
+import type { OperationalKpiSelection } from './operational-catalog.model';
 
 const MS_PER_HOUR = 60 * 60 * 1000;
 
@@ -87,6 +89,40 @@ export function buildChecklistAlerts(
   }
 
   return alerts;
+}
+
+export function resolveAlertSourceExternalId(alert: OperationalAlert): string | null {
+  if (alert.checklistExternalId) {
+    return alert.checklistExternalId;
+  }
+  if (alert.id.startsWith('obs-')) {
+    return alert.id.slice(4);
+  }
+  return null;
+}
+
+export function filterOperationalAlerts(
+  alerts: readonly OperationalAlert[],
+  selection: OperationalKpiSelection | null,
+  restrictToSelection: boolean,
+): OperationalAlert[] {
+  if (!restrictToSelection || !selection) {
+    return [...alerts];
+  }
+
+  return alerts.filter((alert) => {
+    const sourceId = resolveAlertSourceExternalId(alert);
+    if (!sourceId) {
+      return false;
+    }
+    const parsed = parseOperationalShiftFromExternalId(sourceId);
+    if (!parsed) {
+      return false;
+    }
+    return (
+      parsed.dateIso === selection.operationalDay && parsed.code === selection.shiftCode
+    );
+  });
 }
 
 export function sortAlertsByPriority(alerts: readonly OperationalAlert[]): OperationalAlert[] {

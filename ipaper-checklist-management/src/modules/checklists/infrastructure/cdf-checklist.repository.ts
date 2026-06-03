@@ -22,8 +22,9 @@ import {
   type ChecklistKpiSummary,
   type ChecklistSummary,
 } from '../domain/checklist-kpi.model';
-import { filterChecklistsByTemplate, summarizeChecklistKpis } from '../domain/checklist-kpi.rules';
+import { buildOperationalKpiSummary } from '../domain/operational-kpi-summary.rules';
 import type { ChecklistRepository } from '../domain/checklist.repository';
+import type { OperationalKpiSelection } from '../domain/operational-catalog.model';
 import type { PagedResult } from '../domain/pagination.model';
 import type { AnalyticsPeriod } from '../domain/task-result.model';
 import {
@@ -128,7 +129,10 @@ export class CdfChecklistRepository implements ChecklistRepository {
     });
   }
 
-  async computeKpiSummary(templateExternalId?: string): Promise<ChecklistKpiSummary> {
+  async computeKpiSummary(
+    templateExternalId?: string,
+    selection?: OperationalKpiSelection,
+  ): Promise<ChecklistKpiSummary> {
     return cdfTaskRunner.schedule(async () => {
       const notOkIds = await this.fetchNotOkChecklistIds();
       const checklistNodes = await listAllViewNodes(
@@ -140,13 +144,7 @@ export class CdfChecklistRepository implements ChecklistRepository {
       );
 
       const summaries = this.mapChecklistPage(checklistNodes as ChecklistInstanceDto[], notOkIds);
-      const filtered = filterChecklistsByTemplate(summaries, templateExternalId);
-      const counts = summarizeChecklistKpis(filtered);
-
-      return {
-        counts,
-        total: filtered.length,
-      };
+      return buildOperationalKpiSummary(summaries, templateExternalId, selection);
     });
   }
 

@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { useCallback, useMemo, useState } from 'react';
 
-import type { AnalyticsTab, AppPage, AppState } from '../routing/app-view.types';
+import type { AnalyticsTab, AppPage, AppState, OverviewShiftCode } from '../routing/app-view.types';
 
 import { AppNavigationContext } from './app-navigation.context';
 import { useHostAppContext } from './host-app.context';
@@ -29,13 +29,15 @@ export function AppNavigationProvider({ children, initialAppState }: AppNavigati
   const setPage = useCallback(
     (page: AppPage, options?: { analyticsTab?: AnalyticsTab; checklistId?: string }) => {
       const next: AppState = {
+        ...state,
         page,
-        checklistId: options?.checklistId,
-        analyticsTab: page === 'analytics' ? options?.analyticsTab ?? state.analyticsTab ?? 'trends' : undefined,
+        checklistId: options?.checklistId ?? (page === 'checklists' ? state.checklistId : undefined),
+        analyticsTab:
+          page === 'analytics' ? options?.analyticsTab ?? state.analyticsTab ?? 'trends' : undefined,
       };
       pushState(next);
     },
-    [pushState, state.analyticsTab],
+    [pushState, state],
   );
 
   const setAnalyticsTab = useCallback(
@@ -48,9 +50,20 @@ export function AppNavigationProvider({ children, initialAppState }: AppNavigati
     [pushState, state],
   );
 
+  const setOverviewOperationalFilter = useCallback(
+    (day: string, shiftCode: OverviewShiftCode) => {
+      pushState({
+        ...state,
+        overviewOperationalDay: day,
+        overviewShiftCode: shiftCode,
+      });
+    },
+    [pushState, state],
+  );
+
   const value = useMemo(
-    () => ({ state, setPage, setAnalyticsTab }),
-    [setAnalyticsTab, setPage, state],
+    () => ({ state, setPage, setAnalyticsTab, setOverviewOperationalFilter }),
+    [setAnalyticsTab, setOverviewOperationalFilter, setPage, state],
   );
 
   return <AppNavigationContext.Provider value={value}>{children}</AppNavigationContext.Provider>;

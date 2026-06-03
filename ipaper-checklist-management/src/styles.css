@@ -153,9 +153,9 @@
 .ip-app-sidebar__nav-button {
   border-left: 2px solid transparent;
   border-radius: 0.375rem;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.875rem;
-  font-weight: 400;
+  padding: 0.5625rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
   color: color-mix(in srgb, var(--sidebar-foreground) 80%, transparent);
 }
 
@@ -181,16 +181,56 @@
 }
 
 .ip-app-shell__header {
+  position: relative;
   background: var(--background);
   border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.ip-app-shell__radix-wedge {
+  position: absolute;
+  top: 0;
+  right: -8px;
+  z-index: 1;
+  height: 62px;
+  width: auto;
+  object-fit: contain;
+}
+
+.ip-app-shell__header-copy {
+  position: relative;
+  z-index: 2;
+  max-width: calc(100% - 180px);
 }
 
 .ip-app-shell__title {
-  color: var(--foreground);
+  color: var(--ip-teal);
 }
 
 .ip-app-shell__subtitle {
-  color: var(--muted-foreground);
+  color: var(--ip-teal-dark);
+}
+
+.ip-kpi-card {
+  border: 1px solid var(--border);
+  transition: border-color 0.15s ease;
+}
+
+.ip-kpi-card--good {
+  border-color: color-mix(in srgb, var(--ip-clover) 55%, var(--border));
+}
+
+.ip-kpi-card--watch {
+  border-color: color-mix(in srgb, var(--ip-yellow) 60%, var(--border));
+}
+
+.ip-kpi-card--critical {
+  border-color: color-mix(in srgb, var(--destructive-background, #c53030) 50%, var(--border));
+  background: color-mix(in srgb, var(--destructive-background, #c53030) 6%, var(--card-background));
+}
+
+.ip-kpi-card--neutral {
+  border-color: var(--border);
 }
 
 .ip-kpi-card__button {
@@ -203,6 +243,10 @@
 .ip-kpi-card__button:focus-visible {
   outline: 2px solid var(--primary-background);
   outline-offset: 2px;
+}
+
+.ip-kpi-card__value {
+  color: var(--ip-teal);
 }
 
 /* Status pills — aligned with Overview KPI accent colors */
@@ -512,6 +556,10 @@
   font-size: 11px;
   line-height: 1.4;
   color: var(--muted-foreground);
+}
+
+.ip-data-table__title {
+  color: var(--ip-teal);
 }
 
 .ip-data-table {

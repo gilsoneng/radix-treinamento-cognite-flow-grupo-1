@@ -1,7 +1,0 @@
-- space: ip_checklist_dm
-  name: IP Checklist DM Schema
-  description: Schema space for ip_checklist_dm data model (containers, views).
-
-- space: flows_radix_checklist_group1
-  name: Flows Radix Checklist Group 1
-  description: Checklist instances — ApmAppData + ip_checklist_dm. Prefix CKM_{VIEW_CODE}_GR1_*

@@ -1,30 +1,51 @@
-import { createContext, useCallback, useContext, useMemo } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo } from 'react';
 
 import { useAppNavigationContext } from '../../../../app/host/app-navigation.context';
-import type { ChecklistKpiBucket, ChecklistKpiCounts } from '../../domain/checklist-kpi.model';
+import type { OverviewShiftCode } from '../../../../app/routing/app-view.types';
+import type { ChecklistKpiCounts } from '../../domain/checklist-kpi.model';
 import { EMPTY_KPI_COUNTS } from '../../domain/checklist-kpi.model';
+import type { ChecklistKpiInsights } from '../../domain/kpi-insight.model';
+import { buildChecklistKpiInsights } from '../../domain/kpi-insight.rules';
+import type { OperationalShiftContext } from '../../domain/inspection-shift.model';
+import type { OperationalKpiCatalog, OperationalKpiSelection } from '../../domain/operational-catalog.model';
+import {
+  stepOperationalDay,
+  stepOperationalShift,
+} from '../../domain/operational-catalog.rules';
 import { useChecklistKpiQuery } from '../../infrastructure/queries/use-checklist-kpi-query';
 
-const KPI_BUCKETS: ChecklistKpiBucket[] = ['todo', 'ongoing', 'done', 'overdue', 'notok'];
+const EMPTY_CATALOG: OperationalKpiCatalog = { days: [], shiftsByDay: {} };
 
 export type OverviewKpisViewModel = {
   readonly counts: ChecklistKpiCounts;
   readonly total: number;
-  readonly percentages: Record<ChecklistKpiBucket, string>;
+  readonly insights: ChecklistKpiInsights;
+  readonly shiftContext: OperationalShiftContext | null;
+  readonly catalog: OperationalKpiCatalog;
+  readonly selection: OperationalKpiSelection | null;
+  readonly canStepDayOlder: boolean;
+  readonly canStepDayNewer: boolean;
   readonly isLoading: boolean;
   readonly isError: boolean;
   readonly refresh: () => void;
   readonly navigateToChecklists: () => void;
+  readonly setOperationalFilter: (day: string, shiftCode: OverviewShiftCode) => void;
+  readonly stepDay: (direction: 'older' | 'newer') => void;
+  readonly stepShift: (direction: 'previous' | 'next') => void;
 };
 
 export type UseOverviewKpisViewModelDeps = {
   useChecklistKpiQuery: typeof useChecklistKpiQuery;
-  useAppNavigation: () => { setPage: (page: 'checklists') => void };
+  useAppNavigation: () => {
+    state: { overviewOperationalDay?: string; overviewShiftCode?: OverviewShiftCode };
+    setPage: (page: 'checklists') => void;
+    setOverviewOperationalFilter: (day: string, shiftCode: OverviewShiftCode) => void;
+  };
 };
 
 function defaultUseAppNavigation() {
-  const { setPage } = useAppNavigationContext();
-  return { setPage };
+  const { state, setPage, setOverviewOperationalFilter } = useAppNavigationContext();
+  return { state, setPage, setOverviewOperationalFilter };
 }
 
 const defaultDeps: UseOverviewKpisViewModelDeps = {
@@ -35,11 +56,12 @@ const defaultDeps: UseOverviewKpisViewModelDeps = {
 export const UseOverviewKpisViewModelContext =
   createContext<UseOverviewKpisViewModelDeps>(defaultDeps);
 
-function formatPercentage(value: number, total: number): string {
-  if (total === 0) {
-    return '0%';
-  }
-  return `${Math.round((value / total) * 100)}%`;
+function canStepDay(
+  catalog: OperationalKpiCatalog,
+  selection: OperationalKpiSelection,
+  direction: 'older' | 'newer',
+): boolean {
+  return stepOperationalDay(catalog, selection, direction) !== null;
 }
 
 export function useOverviewKpisViewModel(): OverviewKpisViewModel {
@@ -47,18 +69,62 @@ export function useOverviewKpisViewModel(): OverviewKpisViewModel {
     UseOverviewKpisViewModelContext,
   );
   const query = useQuery();
-  const { setPage } = useAppNavigation();
+  const { state, setPage, setOverviewOperationalFilter } = useAppNavigation();
 
   const counts = query.data?.counts ?? EMPTY_KPI_COUNTS;
   const total = query.data?.total ?? 0;
+  const catalog = query.data?.catalog ?? EMPTY_CATALOG;
+  const selection = query.data?.selection ?? null;
+  const insights = useMemo(
+    () =>
+      query.data?.insights ??
+      buildChecklistKpiInsights(counts, EMPTY_KPI_COUNTS, false),
+    [query.data?.insights, counts],
+  );
+  const shiftContext = query.data?.shiftContext ?? null;
 
-  const percentages = useMemo(() => {
-    const result = {} as Record<ChecklistKpiBucket, string>;
-    for (const bucket of KPI_BUCKETS) {
-      result[bucket] = formatPercentage(counts[bucket], total);
+  const canStepDayOlder = selection ? canStepDay(catalog, selection, 'older') : false;
+  const canStepDayNewer = selection ? canStepDay(catalog, selection, 'newer') : false;
+
+  useEffect(() => {
+    if (!selection || state.overviewOperationalDay) {
+      return;
     }
-    return result;
-  }, [counts, total]);
+    setOverviewOperationalFilter(selection.operationalDay, selection.shiftCode);
+  }, [selection, state.overviewOperationalDay, setOverviewOperationalFilter]);
+
+  const setOperationalFilter = useCallback(
+    (day: string, shiftCode: OverviewShiftCode) => {
+      setOverviewOperationalFilter(day, shiftCode);
+    },
+    [setOverviewOperationalFilter],
+  );
+
+  const stepDay = useCallback(
+    (direction: 'older' | 'newer') => {
+      if (!selection) {
+        return;
+      }
+      const next = stepOperationalDay(catalog, selection, direction);
+      if (next) {
+        setOverviewOperationalFilter(next.operationalDay, next.shiftCode);
+      }
+    },
+    [catalog, selection, setOverviewOperationalFilter],
+  );
+
+  const stepShift = useCallback(
+    (direction: 'previous' | 'next') => {
+      if (!selection) {
+        return;
+      }
+      const next = stepOperationalShift(catalog, selection, direction);
+      if (next) {
+        setOverviewOperationalFilter(next.operationalDay, next.shiftCode);
+      }
+    },
+    [catalog, selection, setOverviewOperationalFilter],
+  );
 
   const navigateToChecklists = useCallback(() => {
     setPage('checklists');
@@ -67,12 +133,20 @@ export function useOverviewKpisViewModel(): OverviewKpisViewModel {
   return {
     counts,
     total,
-    percentages,
+    insights,
+    shiftContext,
+    catalog,
+    selection,
+    canStepDayOlder,
+    canStepDayNewer,
     isLoading: query.isPending,
     isError: query.isError,
     refresh: () => {
       void query.refetch();
     },
     navigateToChecklists,
+    setOperationalFilter,
+    stepDay,
+    stepShift,
   };
 }

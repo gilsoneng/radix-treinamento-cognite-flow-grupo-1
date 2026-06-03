@@ -1,3 +1,7 @@
+import type { OperationalShiftContext } from './inspection-shift.model';
+import type { ChecklistKpiInsights } from './kpi-insight.model';
+import type { OperationalKpiCatalog, OperationalKpiSelection } from './operational-catalog.model';
+
 export type ChecklistKpiBucket = 'todo' | 'ongoing' | 'done' | 'overdue' | 'notok';
 
 export type ChecklistKpiCounts = Record<ChecklistKpiBucket, number>;
@@ -15,6 +19,12 @@ export type ChecklistSummary = {
 export type ChecklistKpiSummary = {
   readonly counts: ChecklistKpiCounts;
   readonly total: number;
+  readonly insights: ChecklistKpiInsights;
+  readonly shiftContext: OperationalShiftContext | null;
+  readonly catalog: OperationalKpiCatalog;
+  readonly selection: OperationalKpiSelection | null;
+  /** Checklists in the current operational day/shift scope (for list views). */
+  readonly scopedSummaries: readonly ChecklistSummary[];
 };
 
 export const EMPTY_KPI_COUNTS: ChecklistKpiCounts = {
