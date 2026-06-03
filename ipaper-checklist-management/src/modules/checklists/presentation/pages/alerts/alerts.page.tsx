@@ -5,7 +5,7 @@ import { LoadingState } from '../../../../../design-system/layout/states/loading
 import type { AlertKind, OperationalAlert } from '../../../domain/alert.model';
 import { useOperationalAlertsQuery } from '../../../infrastructure/queries/use-checklist-data-queries';
 import { AlertKindBadge } from '../../components/alert-kind-badge/alert-kind-badge';
-import { StatusBadge } from '../../components/status-badge/status-badge';
+import { PriorityBadge } from '../../components/priority-badge/priority-badge';
 
 const KIND_LABELS: Record<AlertKind, string> = {
   overdue: 'Overdue',
@@ -37,12 +37,7 @@ const COLUMNS: IpDataTableColumn<OperationalAlert>[] = [
     id: 'priority',
     header: 'Priority',
     sortValue: (row) => row.priority,
-    cell: (row) => (
-      <StatusBadge
-        status={row.priority === 'urgent' ? 'notok' : row.priority === 'high' ? 'overdue' : 'ongoing'}
-        label={row.priority}
-      />
-    ),
+    cell: (row) => <PriorityBadge priority={row.priority} />,
   },
 ];
 

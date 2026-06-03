@@ -1,4 +1,4 @@
-import type { AlertKind } from '../../domain/alert.model';
+import type { AlertKind, OperationalAlert } from '../../domain/alert.model';
 import type { ChecklistKpiBucket } from '../../domain/checklist-kpi.model';
 import type { ChecklistSummary } from '../../domain/checklist-kpi.model';
 import { resolveChecklistKpiBucket } from '../../domain/checklist-kpi.rules';
@@ -39,9 +39,31 @@ export const CHECKLIST_KPI_STATUS_THEME: Record<ChecklistKpiBucket, StatusColorT
   },
   notok: {
     label: 'Not OK',
-    color: 'var(--destructive-background, #c53030)',
-    background: 'color-mix(in srgb, var(--destructive-background, #c53030) 12%, white)',
-    border: 'color-mix(in srgb, var(--destructive-background, #c53030) 35%, transparent)',
+    color: 'var(--ip-error-foreground)',
+    background: 'var(--ip-error-muted-background)',
+    border: 'var(--ip-error-border)',
+  },
+};
+
+/** Alert priority — urgent uses IP error tokens (strong contrast, not pastel pink). */
+export const ALERT_PRIORITY_THEME: Record<OperationalAlert['priority'], StatusColorToken> = {
+  urgent: {
+    label: 'Urgent',
+    color: 'var(--ip-error-foreground)',
+    background: 'var(--ip-error-muted-background)',
+    border: 'var(--ip-error-border)',
+  },
+  high: {
+    label: 'High',
+    color: 'var(--warning-foreground)',
+    background: 'var(--warning-muted-background)',
+    border: 'color-mix(in srgb, var(--warning-foreground) 50%, transparent)',
+  },
+  medium: {
+    label: 'Medium',
+    color: 'var(--info-foreground)',
+    background: 'var(--info-muted-background)',
+    border: 'color-mix(in srgb, var(--ip-sky) 45%, transparent)',
   },
 };
 
@@ -96,4 +118,8 @@ export function themeForChecklistSummary(summary: ChecklistSummary): StatusColor
 
 export function themeForAlertKind(kind: AlertKind): StatusColorToken {
   return ALERT_KIND_THEME[kind];
+}
+
+export function themeForAlertPriority(priority: OperationalAlert['priority']): StatusColorToken {
+  return ALERT_PRIORITY_THEME[priority];
 }
