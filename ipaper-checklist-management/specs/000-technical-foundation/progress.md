@@ -43,6 +43,15 @@ rigor: leve
 | `.env_example` | ✅ done | 2026-06-01 | Template de credenciais CDF |
 | `docs/mcp-cdf.md` | ✅ done | 2026-06-02 | Guia completo de uso do MCP CDF |
 
+### Bloco A-bis — Workflow Gate & Agent Onboarding
+
+| Entrega | Status | Data | Descrição |
+|---|---|---|---|
+| `specs/006-bugs-and-minor-actions/` (5 arquivos) | ✅ done | 2026-06-03 | Spec de manutenção permanente (fluxo leve) — bugfixes e ajustes menores |
+| `project-orientation.mdc` — Protocolo de onboarding | ✅ done | 2026-06-03 | Menu de 4 opções que o agente apresenta ao iniciar a sessão |
+| `project-orientation.mdc` — Gate de implementação | ✅ done | 2026-06-03 | Bloco ⛔ SPEC REQUIRED para sessões sem spec confirmada |
+| `specs/README.md` — linha `006` adicionada | ✅ done | 2026-06-03 | Índice atualizado com nova spec |
+
 ### Bloco D — Arquitetura de software
 
 | Entrega | Status | Data | Descrição |
@@ -57,7 +66,8 @@ rigor: leve
 | Entrega | Status | Data | Descrição |
 |---|---|---|---|
 | `docs/Seed/A Line OEC Routes 2 (1).xlsx` | ✅ done | 2026-06-02 | Excel fonte (OEC Routes — Linha A) |
-| `specs/002-dataseed/` | 🔲 pending | — | Spec SDD do dataseed (ver `spec.md` desta pasta) |
+| `specs/002-dataseed/` | ✅ done | 2026-06-03 | Spec SDD criada; análise Excel concluída; arquitetura ApmAppData as-is decidida |
+| Renumeração specs 002→003, 003→004, 004→005 | ✅ done | 2026-06-03 | Pastas renomeadas + README + project-orientation atualizados |
 | Cognite Toolkit instalado e documentado | 🔲 pending | — | Atividade 4 do roadmap |
 | Arquivos de seed (CSV/Parquet) | 🔲 pending | — | Atividade 3 do roadmap |
 | Seed ingerido no `radix-dev` | 🔲 pending | — | Atividade 5 do roadmap |
@@ -72,7 +82,7 @@ Ver detalhes completos em `.cursor/plans/roadmap_5_atividades_efdd434d.plan.md`.
 |---|---|---|
 | ~~Atividade 0: Context engineering~~ | ✅ concluída | — |
 | ~~Atividade 1: Mapear data models~~ | ✅ concluída | — |
-| Atividade 2: Criar spec 002-dataseed + renumerar | 🔲 pendente | nada |
+| ~~Atividade 2: Criar spec 002-dataseed + renumerar~~ | ✅ concluída | — |
 | Atividade 3: Projetar e criar dataseed | 🔲 pendente | Atividade 1 ✅ |
 | Atividade 4: Cognite Toolkit | 🔲 pendente | nada |
 | Atividade 5: Ingestão seed | 🔲 pendente | Atividades 3 + 4 |

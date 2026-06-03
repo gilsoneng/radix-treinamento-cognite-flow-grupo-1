@@ -31,6 +31,8 @@ alwaysApply: true
 | Governança SDD — resumo 1 página | `docs/SDD-workflow-definition/sdd-governance.md` |
 | Como usar o MCP CDF no agente Cursor | `docs/mcp-cdf.md` |
 | Seed data fonte (Excel OEC) | `docs/Seed/A Line OEC Routes 2 (1).xlsx` |
+| Análise completa do Excel (inventário, tipos, guia de seed) | `docs/Seed/excel-analysis.md` |
+| Design do seed (DM solution, analytics, SST, script architecture) | `docs/Seed/seed-design.md` |
 | IP Design System → Aura mapping | `docs/Design.md` |
 | Decisões arquiteturais (ADRs) | `docs/architecture/adr/` |
 | Rastreamento da fundação técnica (000) | `specs/000-technical-foundation/progress.md` |
@@ -42,16 +44,16 @@ alwaysApply: true
 | Feature | Status |
 |---|---|
 | `001-checklist-management` | In progress — arquitetura definida, módulo `health` como exemplo; implementação real pendente |
-| `002-dataseed` | **A criar** — renumerar 002→003, 003→004, 004→005 antes |
-| `002-checklist-kpis` → vira `003` | Not started |
-| `003-task-result-dashboards` → vira `004` | Not started |
-| `004-alerts-notifications` → vira `005` | Not started |
+| `002-dataseed` | In progress — spec criada, análise do Excel concluída; geração de CSVs e ingestão pendentes |
+| `003-checklist-kpis` | Not started |
+| `004-task-result-dashboards` | Not started |
+| `005-alerts-notifications` | Not started |
 
 ### Pendências do roadmap (executar nesta ordem)
 
 1. **Atividade 0 (infra de orientação)** — este arquivo + `architecture.mdc` alwaysApply + `SPEC.md` preenchido ✅ *concluído*
 2. **Atividade 1** — ~~criar `docs/cognitecoremodel.md`~~ → CogniteCore documentado em `docs/datamodel.md` ✅ *concluído*
-3. **Atividade 2** — criar `specs/002-dataseed/` + renumerar specs 002→003, 003→004, 004→005
+3. **Atividade 2** — criar `specs/002-dataseed/` + renumerar specs 002→003, 003→004, 004→005 ✅ *concluído*
 4. **Atividade 3** — analisar Excel OEC, decidir arquitetura DM, gerar arquivos CSV/Parquet de seed
 5. **Atividade 4** — instalar e documentar Cognite Toolkit
 6. **Atividade 5** — ingerir seed no ambiente `radix-dev` via Toolkit, validar via MCP
@@ -95,3 +97,45 @@ alwaysApply: true
 4. Se a tarefa envolve CDF: ler `docs/datamodel.md`.
 5. Se a tarefa envolve nova feature: ler `specs/CONSTITUTION.md` (DoR/DoD).
 6. Se a tarefa é de infra/fundação: ler `specs/000-technical-foundation/progress.md`.
+
+---
+
+## Protocolo de onboarding de sessão (OBRIGATÓRIO em Agent mode)
+
+> **PRIMEIRA AÇÃO** em toda sessão Agent mode, antes de qualquer implementação:
+> ler `specs/README.md` e apresentar as opções abaixo. Não prosseguir sem escolha confirmada.
+
+```
+Olá! Antes de começar, escolha uma das opções:
+
+① Trabalhar em spec existente
+   → Informar o número (ex: "001") ou eu listo as specs com tasks [ ] pendentes
+
+② Nova atividade / feature
+   → Informar o que será feito → eu crio a spec (completo ou fluxo leve)
+   → Nenhum código sem spec confirmada
+
+③ Bugs & ajustes menores
+   → Usar spec 006-bugs-and-minor-actions (fluxo leve)
+   → Dev descreve o bug/ajuste → eu registro em tasks.md e executo
+
+④ Análise / Exploração (sem implementação)
+   → Modo read-only declarado: leio, analiso, proponho — não executo sem confirmação
+   → Não requer spec
+```
+
+---
+
+## Gate de implementação (BLOQUEANTE)
+
+> Se o dev não informou uma spec nesta conversa E a tarefa envolve editar arquivos:
+>
+> **Resposta obrigatória:**
+> ```
+> ⛔ SPEC REQUIRED
+> Nenhum arquivo será editado sem spec confirmada.
+> Specs com tasks pendentes: [listar do specs/README.md]
+> Escolha uma opção do protocolo de onboarding acima.
+> ```
+>
+> **Exceção permitida:** opção ④ (análise/exploração) — leitura é sempre liberada.

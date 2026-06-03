@@ -13,13 +13,13 @@
 
 | ID | Slug | Status | Owner | Rigor | PR |
 | --- | --- | --- | --- | --- | --- |
-| 000 | technical-foundation    | in-progress | time-grupo-1 | leve    | — |
+| 000 | technical-foundation    | in-progress | time-grupo-1 | leve     | — |
 | 001 | checklist-management    | in-progress | time-grupo-1 | completo | — |
-| 002 | checklist-kpis          | not-started | time-grupo-1 | completo | — |
-| 003 | task-result-dashboards  | not-started | time-grupo-1 | completo | — |
-| 004 | alerts-notifications    | not-started | time-grupo-1 | completo | — |
-
-> **Nota:** A spec `002-dataseed` será criada na próxima atividade (as specs acima serão renumeradas: 002→003, 003→004, 004→005).
+| 002 | dataseed                | in-progress | time-grupo-1 | leve     | — |
+| 003 | checklist-kpis          | not-started | time-grupo-1 | completo | — |
+| 004 | task-result-dashboards  | not-started | time-grupo-1 | completo | — |
+| 005 | alerts-notifications    | not-started | time-grupo-1 | completo | — |
+| 006 | bugs-and-minor-actions  | in-progress | time-grupo-1 | leve     | — |
 
 ---
 

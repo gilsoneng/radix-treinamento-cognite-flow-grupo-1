@@ -1,0 +1,3665 @@
+{
+  "Route 1 - Dig IV Diff": {
+    "sections": [
+      {
+        "name": "7th Floor",
+        "equipment": [
+          {
+            "name": "Diffuser Scraper",
+            "wo": "301112080",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Motor",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Lube Oil Pump Flow",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Coupling",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Audible Noise",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Leaks",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              }
+            ]
+          },
+          {
+            "name": "Diffuser Gearbox",
+            "wo": "301112080",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Drive Belts",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              }
+            ]
+          },
+          {
+            "name": "#1 Backflush Tank",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Associated Piping",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "#2 Backflush Tank",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Associated Piping",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "6th Floor",
+        "equipment": [
+          {
+            "name": "Digester Top Separator",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Motor",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Coupling",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "5th Floor",
+        "equipment": [
+          {
+            "name": "NE Diffuser Hydraulic Cylinder",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Water Packing",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Hyd.Oil Packing",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Liquid in Drip Pan",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "SE Diffuser Hydraulic Cylinder",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Water Packing",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Hyd.Oil Packing",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Liquid in Drip Pan",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "SW Diffuser Hydraulic Cylinder",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Water Packing",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Hyd.Oil Packing",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Liquid in Drip Pan",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "NW Diffuser Hydraulic Cylinder",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Water Packing",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Hyd.Oil Packing",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Liquid in Drip Pan",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Main Hydraulic Unit",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Leaks",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "4.5th Floor",
+        "equipment": [
+          {
+            "name": "165# Steam Header",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Associated Piping",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Leaks",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "BC1 and BC2",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Associated Piping",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Leaks",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Upper Strain Gauge",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Visual Inspection",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Horizontal",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "4th Floor",
+        "equipment": [
+          {
+            "name": "IV Top Separator Motor",
+            "wo": "291142040",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Motor",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Coupling",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Junction Box",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              }
+            ]
+          },
+          {
+            "name": "DIG Bottom Strain Gauge",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Visual Inspection",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Horizontal",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "3rd Floor",
+        "equipment": [
+          {
+            "name": "V53 and V54",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Gasket Leaks",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "2nd Floor",
+        "equipment": [
+          {
+            "name": "V151 (4 Nozzles)",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Leaks",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "V72 (8 Valves)",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Gasket Leaks",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "No. of Open Nozzles",
+                "type": null,
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Ground Floor",
+        "equipment": [
+          {
+            "name": "Kamyr Digester OD",
+            "wo": "291158080",
+            "items": [
+              {
+                "name": "Motor",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Drive Belts",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Junction Box",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Lube Oil Pump A",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Lube Oil Pump B",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Kamyr Digester OD Gear Box",
+            "wo": "291158080",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Drive Belts",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              }
+            ]
+          },
+          {
+            "name": "IV OD",
+            "wo": "291158080",
+            "items": [
+              {
+                "name": "Motor",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Drive Belts",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Junction Box",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Lube Oil Pump A",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Lube Oil Pump B",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "IV OD Gear Box",
+            "wo": "291158080",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Drive Belts",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              }
+            ]
+          },
+          {
+            "name": "Stripped Condensate Tank",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Associated Piping",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Decker Shower Pump",
+            "wo": "WO#: Stripped Condensate Tank is Decker Shower Tank. North Hot water tank. 1 level about north washer shower",
+            "items": [
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "IB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "TMS",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "IB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "#2 Flash Tank",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Associated Piping",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "South Flash Tank Pump",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "IB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "North Flash Tank Pump",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              }
+            ]
+          },
+          {
+            "name": "Cooling Water Reflux Pump",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "#2 Reflux Supply Pump",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "#1 Backflush Pump(South)",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "#2 Backflush Pump(North)",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "North Filtrate Pump",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "South Filtrate Pump",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Condensate Filtrate Pump",
+            "wo": "WO#: 291150020",
+            "items": [
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "Route 2 - Feed System": {
+    "sections": [
+      {
+        "name": "CHIP BIN",
+        "equipment": [
+          {
+            "name": "Top of Chip Bin & Belts",
+            "wo": null,
+            "items": [
+              {
+                "name": "Unusual noises on belt/wipes etc?",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Hoses rolled up",
+                "type": "Yes / No",
+                "threshold": "Cleaned?",
+                "isMeasurement": false
+              },
+              {
+                "name": "Sawdust built up on top of chip bin",
+                "type": "Yes / No",
+                "threshold": "Cleaned?",
+                "isMeasurement": false
+              },
+              {
+                "name": "Sawdust built up to roller",
+                "type": "Yes / No",
+                "threshold": "Cleaned?",
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Chip Bin Gyrators",
+            "wo": "291104080",
+            "items": [
+              {
+                "name": "Loose Bolts",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Missing Bolts",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Gyrators Misaligned",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Running",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Chip Meter",
+            "wo": "291104080",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": ">170F",
+                "isMeasurement": true
+              },
+              {
+                "name": "Motor",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170F",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170F",
+                "isMeasurement": true
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Audible Noise",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Leaks",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              }
+            ]
+          },
+          {
+            "name": "Chip Meter Gearbox",
+            "wo": "291104080",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "˚F",
+                "threshold": ">170F",
+                "isMeasurement": true
+              },
+              {
+                "name": "Drive Belts",
+                "type": "˚F",
+                "threshold": ">170F",
+                "isMeasurement": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "LOW PRESSURE FEEDER",
+        "equipment": [
+          {
+            "name": "Low Pressure Feeder",
+            "wo": "291106080",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": ">170F",
+                "isMeasurement": true
+              },
+              {
+                "name": "Motor",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170F",
+                "isMeasurement": true
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Audible Noise",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Leaks",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Slide Rule Setting",
+                "type": "mm",
+                "threshold": null,
+                "isMeasurement": true
+              }
+            ]
+          },
+          {
+            "name": "Low Pressure Feeder Gearbox",
+            "wo": "291106080",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Drive Belts",
+                "type": "˚F",
+                "threshold": ">170F",
+                "isMeasurement": true
+              }
+            ]
+          },
+          {
+            "name": "Valve 9 (V009)",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Number of Rings",
+                "type": null,
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Defoamer",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Check Line for Leaks",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "STEAMING VESSEL",
+        "equipment": [
+          {
+            "name": "Steaming Vessel Motor",
+            "wo": "291108080",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": ">170F",
+                "isMeasurement": true
+              },
+              {
+                "name": "DE Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170F",
+                "isMeasurement": true
+              },
+              {
+                "name": "DE Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "DE Audible Noise",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "DE Leaks",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "ND Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170F",
+                "isMeasurement": true
+              },
+              {
+                "name": "ND Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "ND Audible Noise",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "ND Leaks",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Packing",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Steaming Vessel Gearbox",
+            "wo": "291108080",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "˚F",
+                "threshold": ">170F",
+                "isMeasurement": true
+              },
+              {
+                "name": "Drive Belts",
+                "type": "˚F",
+                "threshold": ">170F",
+                "isMeasurement": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "HIGH PRESSURE FEEDER",
+        "equipment": [
+          {
+            "name": "High Pressure Feeder",
+            "wo": "291106080",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": ">190F",
+                "isMeasurement": true
+              },
+              {
+                "name": "Motor",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">190F",
+                "isMeasurement": true
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Audible Noise",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Leaks",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Slide Ruler Setting",
+                "type": "mm",
+                "threshold": null,
+                "isMeasurement": true
+              }
+            ]
+          },
+          {
+            "name": "High Pressure Feeder Gearbox",
+            "wo": "291106080",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "˚F",
+                "threshold": ">170F",
+                "isMeasurement": true
+              },
+              {
+                "name": "Drive Belts",
+                "type": "˚F",
+                "threshold": ">170F",
+                "isMeasurement": true
+              }
+            ]
+          },
+          {
+            "name": "Equalization Line",
+            "wo": "291106080",
+            "items": [
+              {
+                "name": "North End Temp",
+                "type": "˚F",
+                "threshold": ">130F",
+                "isMeasurement": true
+              },
+              {
+                "name": "South End Temp",
+                "type": "˚F",
+                "threshold": ">130F",
+                "isMeasurement": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "TOP CIRCULATION",
+        "equipment": [
+          {
+            "name": "Top Circulation",
+            "wo": "291106080",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": ">170F",
+                "isMeasurement": true
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170F",
+                "isMeasurement": true
+              },
+              {
+                "name": "Junction Box",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Leaks",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Motor Base Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Top Circulation Pump",
+            "wo": "291106080",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170F",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170F",
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "OTHER",
+        "equipment": [
+          {
+            "name": "Sand Separator",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Associated Piping",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Sand Separator",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Associated Piping",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "In-Line Drainers (North and South)",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Associated Piping",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Level Tank",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Associated Piping",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "LV 7",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Leaks",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Descaler Pumps (SOSPERSE)",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Associated Piping",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Pumps are running",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Defoamer Pumps (Buckman)",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Associated Piping",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Pumps are running",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "CHIP CHUTE",
+        "equipment": [
+          {
+            "name": "Chip Chute",
+            "wo": "291106080",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Motor",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Coupling",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Leaks",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Pump Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Pump IB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Pump OB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              }
+            ]
+          },
+          {
+            "name": "Sand Separator Dump Tank",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Associated Piping",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Agitator Running?",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "BOTTOM CIRCULATION",
+        "equipment": [
+          {
+            "name": "Bottom Circulation Motor",
+            "wo": "291106080",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Coupling",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Leaks",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Bottom Circulation Pump",
+            "wo": "291106080",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "TRIM LIQUOR",
+        "equipment": [
+          {
+            "name": "Trim Liquor Motor",
+            "wo": "291106080",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Coupling",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Leaks",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Trim Liquor Pump",
+            "wo": "291106080",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "MCC WHITE LIQUOR",
+        "equipment": [
+          {
+            "name": "MCC White Liquor Motor",
+            "wo": "291106080",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Coupling",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Leaks",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "MCC White Liquor Pump",
+            "wo": "291106080",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "COLD BLOW",
+        "equipment": [
+          {
+            "name": "Cold Blow Motor",
+            "wo": "291120080",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Coupling",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Leaks",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Cold Blow Pump",
+            "wo": "291120080",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "MAKEUP LIQUOR",
+        "equipment": [
+          {
+            "name": "Makeup Liquor Motor",
+            "wo": "291120080",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Coupling",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Leaks",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Makeup Liquor Pump",
+            "wo": "291120080",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "SEAL WATER",
+        "equipment": [
+          {
+            "name": "South Seal Water Motor",
+            "wo": "291120080",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Coupling",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Leaks",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "South Seal Water Pump",
+            "wo": "291120080",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "North Seal Water Motor",
+            "wo": "291120080",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Coupling",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Leaks",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "North Seal Water Pump",
+            "wo": "291120080",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "Route 3 - BH Strip Turp": {
+    "sections": [
+      {
+        "name": "Chip Bin Floor",
+        "equipment": []
+      },
+      {
+        "name": "Top 2 Floors (#2 Stripper Area)",
+        "equipment": []
+      },
+      {
+        "name": "Entrainment Separator Floor",
+        "equipment": [
+          {
+            "name": "Kamyr North WL Pump",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170F",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170F",
+                "isMeasurement": true
+              },
+              {
+                "name": "IB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Kamyr South WL Pump",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": ">170F",
+                "isMeasurement": true
+              },
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170F",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170F",
+                "isMeasurement": true
+              },
+              {
+                "name": "IB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Vibrations",
+                "type": "ips",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "Route 4 - Screening and Washing": {
+    "sections": [
+      {
+        "name": "3rd Floor Bleach Plant",
+        "equipment": []
+      },
+      {
+        "name": "2nd Floor Bleach Plant",
+        "equipment": [
+          {
+            "name": "A1 Screen",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Plugged",
+                "type": "YES  /  NO",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "A2 Screen",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Plugged",
+                "type": "YES  /  NO",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "A3 Screen",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Plugged",
+                "type": "YES  /  NO",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Cleaner Feed Tank",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Associated Piping",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "A1 MC Pump",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "A2 MC Pump",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Ground Floor Bleach Plant (Inside Building)",
+        "equipment": [
+          {
+            "name": "A1 Seal Tank",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Associated Piping",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "A1 Vat Dilution Pump",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "A1 HD Dilution Pump",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "A1 Diffuser Shower Pump",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "A2 Seal Tank",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Associated Piping",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "A2 Vat Dilution Pump",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "A2 HD Dilution Pump",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "A2 Diffuser Shower Pump",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Reject Refiner Feed Tank",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Associated Piping",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Reject Refiner Feed Tank Agitator",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Associated Piping",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Motor Running",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Belts",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Reject Refiner Feed Pump",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": ">170",
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "A-Line Cleaners",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Manually Dump #1",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Manually Dump #2",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Ground Floor Bleach Plant (Outside Building)",
+        "equipment": [
+          {
+            "name": "Screen Feed Tank",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Associated Piping",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Screen Feed Tank Agitator",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Associated Piping and guarding clean?",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Motor Running",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Belts",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Screen Feed Tank Pump",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "Oil Level",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Packing/Mech Seal",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "OB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Seal Water",
+                "type": "Yes  / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "#1 Reject Refiner",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Motor",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Coupling",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Leaks",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "#2 Reject Refiner",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Motor Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Motor",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "IB Bearing Temp",
+                "type": "˚F",
+                "threshold": null,
+                "isMeasurement": true
+              },
+              {
+                "name": "Coupling",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Guarding",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Leaks",
+                "type": "Yes / No",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          },
+          {
+            "name": "Reject Refiner Lube Oil System",
+            "wo": "WO#:",
+            "items": [
+              {
+                "name": "General Condition",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              },
+              {
+                "name": "Associated Piping",
+                "type": "OK / Not OK",
+                "threshold": null,
+                "isMeasurement": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
