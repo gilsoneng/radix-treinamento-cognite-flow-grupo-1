@@ -20,6 +20,18 @@ docs/
 
 ---
 
+## CDF / data models (stack React)
+
+| Canal | Auth | Uso |
+| --- | --- | --- |
+| App no Fusion | `@cognite/app-sdk` | Runtime do checklist |
+| MCP **`cognite-cdf`** (Cursor) | Client credentials em **`.env`** | Explorar data model no agente |
+| MCP **`cognite-docs`** | HTTP público | Documentação Cognite |
+
+Guia do MCP CDF: [`mcp-cdf.md`](mcp-cdf.md). Credenciais: [`.env_example`](../.env_example). **Sem Python** no MCP.
+
+---
+
 ## SDD-workflow-definition/
 
 Documentação completa do processo **Spec Driven Development** adotado pelo time.

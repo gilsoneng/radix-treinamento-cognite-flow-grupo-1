@@ -23,12 +23,13 @@
     "setup-https": "npx @cognite/cli@latest apps setup-https",
     "spec:check": "node scripts/spec-check.mjs",
     "spec:check:strict": "node scripts/spec-check.mjs --strict",
-    "spec:new": "node scripts/spec-new.mjs"
+    "spec:new": "node scripts/spec-new.mjs",
+    "mcp:cdf": "node scripts/cdf-mcp/server.mjs"
   },
   "dependencies": {
+    "@cognite/app-sdk": "^0.5.1",
     "@cognite/aura": "^0.1.7",
     "@cognite/sdk": "^10.3.0",
-    "@cognite/app-sdk": "^0.5.1",
     "@tabler/icons-react": "^3.35.0",
     "@tanstack/react-query": "^5.90.10",
     "clsx": "^2.1.1",
@@ -38,6 +39,7 @@
   },
   "devDependencies": {
     "@eslint/js": "9.39.4",
+    "@modelcontextprotocol/sdk": "^1.29.0",
     "@tailwindcss/vite": "^4.1.17",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
@@ -61,6 +63,7 @@
     "typescript": "^5.0.0",
     "typescript-eslint": "^8.46.4",
     "vite": "7.3.2",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.8",
+    "zod": "^4.4.3"
   }
 }
