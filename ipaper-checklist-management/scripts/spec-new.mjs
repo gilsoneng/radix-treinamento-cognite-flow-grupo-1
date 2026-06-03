@@ -17,9 +17,9 @@
  * Ref: docs/SDD-workflow-definition/avaliacao_sdd.md §34
  */
 
-import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSync, copyFileSync } from 'node:fs';
-import { join, basename } from 'node:path';
 import { execSync } from 'node:child_process';
+import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from 'node:fs';
+import { join } from 'node:path';
 
 // ---------------------------------------------------------------------------
 // Config
@@ -185,6 +185,6 @@ console.log('Arquivos gerados:');
 TEMPLATE_FILES.forEach((f) => console.log(`  specs/${featureId}/${f}`));
 console.log('\nPróximos passos:');
 console.log(`  1. Preencher specs/${featureId}/spec.md com FRs reais (sem placeholders {{}})`);
-console.log(`  2. Resolver clarificações em research.md`);
-console.log(`  3. Criar tasks.md com ordem Test-First`);
-console.log(`  4. npm run spec:check — verificar disciplina SDD`);
+console.log('  2. Resolver clarificações em research.md');
+console.log('  3. Criar tasks.md com ordem Test-First');
+console.log('  4. npm run spec:check — verificar disciplina SDD');

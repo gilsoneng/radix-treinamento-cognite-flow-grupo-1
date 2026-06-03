@@ -7,6 +7,16 @@
 - If `SPEC.md` is empty or contains only commented `<!-- -->` placeholders, proactively offer to populate it before writing implementation code. Do not silently skip.
 - When user-visible behavior changes, update the relevant `SPEC.md` section before or alongside the code change.
 
+### Software architecture
+
+The durable software architecture (DDD + Clean Architecture + SOLID adapted to Cognite Flows) lives in **`docs/architecture/`**. Read it before creating new modules, layers, or services. This document (`AGENTS.md`) defines **how** to write each piece; `docs/architecture/` defines **where** code lives and **how dependencies flow**.
+
+- [`docs/architecture/README.md`](docs/architecture/README.md) — principles, the golden rule, dependency diagram.
+- [`docs/architecture/folder-structure.md`](docs/architecture/folder-structure.md) — `src/` layout and Angular→React/Flows mapping.
+- [`docs/architecture/layers.md`](docs/architecture/layers.md) — layer responsibilities and import rules.
+
+Key rule: only `modules/<bc>/infrastructure` may touch `@cognite/sdk`; `domain` is pure TS; `presentation` consumes domain contracts via DI and never sees raw DMS instances.
+
 ---
 
 ## 1. UI Components
