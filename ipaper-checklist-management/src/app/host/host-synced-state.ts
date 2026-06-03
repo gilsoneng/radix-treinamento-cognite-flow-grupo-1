@@ -54,7 +54,7 @@ export function parseAppState(raw: string | undefined): AppState {
     return {
       page: migrated.page,
       checklistId: readOptionalString(parsed, 'checklistId'),
-      analyticsTab: migrated.page === 'analytics' ? analyticsTab ?? 'results' : undefined,
+      analyticsTab: migrated.page === 'analytics' ? analyticsTab ?? 'trends' : undefined,
     };
   } catch {
     return DEFAULT_APP_STATE;

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { CHECKLIST_ITEM_VIEW } from './apm-dm.constants';
+import { MEASUREMENT_TREND_VIEW } from './ip-dm.constants';
 import { readViewProperties } from './read-view-properties';
 
 describe(readViewProperties.name, () => {
@@ -32,5 +33,28 @@ describe(readViewProperties.name, () => {
       CHECKLIST_ITEM_VIEW,
     );
     expect(props.note).toBe('Anomaly detected');
+  });
+
+  it('reads MeasurementTrend numeric properties from instance space', () => {
+    const props = readViewProperties<{
+      lastValue: number;
+      avg30dValue: number;
+    }>(
+      {
+        space: 'flows_radix_checklist_group1',
+        properties: {
+          flows_radix_checklist_group1: {
+            'MeasurementTrend/v1': {
+              lastValue: 220.77,
+              avg30dValue: 200.04,
+              maxValue: 263.3,
+            },
+          },
+        },
+      },
+      MEASUREMENT_TREND_VIEW,
+    );
+    expect(props.lastValue).toBe(220.77);
+    expect(props.avg30dValue).toBe(200.04);
   });
 });

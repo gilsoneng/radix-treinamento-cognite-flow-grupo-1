@@ -1,5 +1,8 @@
 export const APM_DM_SPACE = 'cdf_apm';
 
+/** Instance space for Radix grupo-1 seed (CKM_* external IDs). */
+export const CHECKLIST_INSTANCE_SPACE = 'flows_radix_checklist_group1';
+
 export const CHECKLIST_VIEW = {
   space: APM_DM_SPACE,
   externalId: 'Checklist',

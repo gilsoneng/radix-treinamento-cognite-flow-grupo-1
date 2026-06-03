@@ -1,4 +1,4 @@
-import { Card, CardContent, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@cognite/aura/components';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@cognite/aura/components';
 import { useEffect, useMemo, useState } from 'react';
 
 import { IpDataTable, type IpDataTableColumn } from '../../../../../design-system/components/ip-data-table/ip-data-table';
@@ -47,7 +47,7 @@ const COLUMNS: IpDataTableColumn<ChecklistSummary>[] = [
 ];
 
 export function ChecklistsPage() {
-  const { cursor, page, canGoBack, goNext, goPrevious, reset } = useCursorPagination();
+  const { cursor, page, reset } = useCursorPagination();
   const notOkQuery = useNotOkChecklistIdsQuery();
   const pageQuery = useChecklistSummariesPageQuery(notOkQuery.data, cursor);
   const [statusFilter, setStatusFilter] = useState('all');
@@ -91,29 +91,6 @@ export function ChecklistsPage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <Card>
-        <CardContent className="flex flex-wrap items-center gap-3 py-4">
-          <span className="text-sm text-muted-foreground">CDF page</span>
-          <span className="text-sm font-medium tabular-nums">#{page}</span>
-          <button
-            type="button"
-            className="text-sm text-link-foreground underline-offset-2 hover:underline disabled:opacity-40"
-            disabled={!canGoBack}
-            onClick={goPrevious}
-          >
-            Previous CDF page
-          </button>
-          <button
-            type="button"
-            className="text-sm text-link-foreground underline-offset-2 hover:underline disabled:opacity-40"
-            disabled={!pageQuery.data?.hasMore}
-            onClick={() => goNext(pageQuery.data?.nextCursor)}
-          >
-            Next CDF page
-          </button>
-        </CardContent>
-      </Card>
-
       <IpDataTable
         title="Checklists"
         rows={rows}

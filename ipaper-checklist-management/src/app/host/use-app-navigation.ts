@@ -21,7 +21,7 @@ export function useAppNavigation(): AppNavigationViewModel {
 
   return {
     page: state.page,
-    analyticsTab: state.analyticsTab ?? 'results',
+    analyticsTab: state.analyticsTab ?? 'trends',
     navigate,
     setAnalyticsTab,
   };

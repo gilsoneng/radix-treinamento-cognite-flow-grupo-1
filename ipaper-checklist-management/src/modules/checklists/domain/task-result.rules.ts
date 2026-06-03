@@ -7,6 +7,14 @@ export function categorizeTaskResult(note: string | null, status: string): TaskR
     return 'nok';
   }
   const normalized = status.trim().toLowerCase();
+  if (
+    normalized === 'not ok' ||
+    normalized === 'not_ok' ||
+    normalized === 'notok' ||
+    normalized === 'failed'
+  ) {
+    return 'nok';
+  }
   if (normalized === 'completed' || normalized === 'done') {
     return 'ok';
   }

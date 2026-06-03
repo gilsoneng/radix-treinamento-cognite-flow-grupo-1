@@ -16,7 +16,8 @@ export interface ChecklistRepository {
     limit?: number,
   ): Promise<PagedResult<ChecklistSummary>>;
   listTaskResultsPage(cursor?: string, limit?: number): Promise<PagedResult<TaskResultItem>>;
-  fetchTaskResultsSample(maxPages?: number): Promise<TaskResultItem[]>;
+  /** Paginated full scan of grupo-1 ChecklistItems (250 per CDF page by default). */
+  fetchTaskResultsSample(pageSize?: number, maxPages?: number): Promise<TaskResultItem[]>;
   listMeasurementTrends(limit?: number): Promise<MeasurementTrendPoint[]>;
   listRouteKpiSnapshots(limit?: number): Promise<TimeSeriesKpiPoint[]>;
   summarizeTaskResults(period?: AnalyticsPeriod, items?: readonly TaskResultItem[]): Promise<TaskResultSummary>;

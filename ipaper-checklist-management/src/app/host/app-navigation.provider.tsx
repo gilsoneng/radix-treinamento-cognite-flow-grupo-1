@@ -31,7 +31,7 @@ export function AppNavigationProvider({ children, initialAppState }: AppNavigati
       const next: AppState = {
         page,
         checklistId: options?.checklistId,
-        analyticsTab: page === 'analytics' ? options?.analyticsTab ?? state.analyticsTab ?? 'results' : undefined,
+        analyticsTab: page === 'analytics' ? options?.analyticsTab ?? state.analyticsTab ?? 'trends' : undefined,
       };
       pushState(next);
     },

@@ -1,6 +1,8 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { createContext, useContext, useMemo } from 'react';
 
+import { buildTaskResultAnalytics } from '../../domain/task-result-analytics.rules';
+
 import { useCdfClient } from '../../../../core/sdk/cdf-client';
 import { DEFAULT_TABLE_PAGE_SIZE } from '../../domain/checklist-kpi.model';
 import type { OperationalAlert } from '../../domain/alert.model';
@@ -23,7 +25,7 @@ import {
   listTaskResultsPageQueryFn,
   measurementTrendsQueryFn,
   routeKpiSnapshotsQueryFn,
-  taskAnalyticsQueryFn,
+  taskAnalyticsItemsQueryFn,
 } from './checklist-data.queries';
 
 function useDefaultChecklistRepository(): ChecklistRepository {
@@ -44,7 +46,7 @@ export function useChecklistKpiQuery(
   return useQuery({
     queryKey: checklistDataQueryKeys.kpiSummary(templateExternalId),
     queryFn: checklistKpiSummaryQueryFn(repository, templateExternalId),
-    staleTime: 60_000,
+    staleTime: 300_000,
     refetchOnWindowFocus: false,
   });
 }
@@ -98,13 +100,28 @@ export function useTaskResultAnalyticsQuery(
 ): UseQueryResult<TaskResultAnalyticsBundle> {
   const { useChecklistRepository } = useContext(UseChecklistDataQueriesContext);
   const repository = useChecklistRepository();
-  return useQuery({
-    queryKey: checklistDataQueryKeys.taskAnalytics(period),
-    queryFn: taskAnalyticsQueryFn(repository, period),
-    staleTime: 30_000,
-    refetchOnWindowFocus: true,
-    enabled: options?.enabled ?? true,
+  const enabled = options?.enabled ?? true;
+
+  const itemsQuery = useQuery({
+    queryKey: checklistDataQueryKeys.taskAnalyticsItems,
+    queryFn: taskAnalyticsItemsQueryFn(repository),
+    staleTime: 300_000,
+    refetchOnWindowFocus: false,
+    enabled,
   });
+
+  const bundle = useMemo(
+    () =>
+      itemsQuery.data !== undefined
+        ? buildTaskResultAnalytics(itemsQuery.data, period)
+        : undefined,
+    [itemsQuery.data, period],
+  );
+
+  return {
+    ...itemsQuery,
+    data: bundle,
+  } as UseQueryResult<TaskResultAnalyticsBundle>;
 }
 
 export function useMeasurementTrendsQuery(

@@ -5,16 +5,16 @@ import type { CdfReadClient, InstanceNodeDto } from '../../../core/sdk/cdf-clien
 import { CdfChecklistRepository } from './cdf-checklist.repository';
 
 function makeClient(checklists: InstanceNodeDto[], items: InstanceNodeDto[]): CdfReadClient {
-  let checklistCalls = 0;
+  let listCalls = 0;
   return {
     project: 'radix-dev',
     instances: {
       list: vi.fn(async () => {
-        checklistCalls += 1;
-        if (checklistCalls === 1) {
-          return { items: checklists };
+        listCalls += 1;
+        if (listCalls === 1) {
+          return { items };
         }
-        return { items };
+        return { items: checklists };
       }),
     },
   };

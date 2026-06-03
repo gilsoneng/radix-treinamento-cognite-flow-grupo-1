@@ -8,11 +8,19 @@ export type ViewReference = {
   version: string;
 };
 
+export type InstancesListFilter = {
+  equals: {
+    property: string[];
+    value: string;
+  };
+};
+
 export type InstancesListRequest = {
   instanceType: 'node';
   sources: Array<{ source: ViewReference }>;
   limit: number;
   cursor?: string;
+  filter?: InstancesListFilter;
 };
 
 export type InstanceNodeDto = {
@@ -53,6 +61,7 @@ function toCdfReadClient(sdk: CogniteClient): CdfReadClient {
           })),
           limit: request.limit,
           cursor: request.cursor,
+          ...(request.filter ? { filter: request.filter } : {}),
         });
         return {
           items: response.items as InstanceNodeDto[],

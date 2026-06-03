@@ -1,4 +1,9 @@
-import { CHECKLIST_ITEM_VIEW, CHECKLIST_VIEW, OBSERVATION_VIEW } from '../../../core/dm/apm-dm.constants';
+import {
+  CHECKLIST_INSTANCE_SPACE,
+  CHECKLIST_ITEM_VIEW,
+  CHECKLIST_VIEW,
+  OBSERVATION_VIEW,
+} from '../../../core/dm/apm-dm.constants';
 import {
   MEASUREMENT_TREND_VIEW,
   ROUTE_KPI_SNAPSHOT_VIEW,
@@ -8,9 +13,12 @@ import { cdfTaskRunner } from '../../../shared/utils/semaphore';
 import { buildChecklistAlerts, sortAlertsByPriority } from '../domain/alert.rules';
 import type { OperationalAlert } from '../domain/alert.model';
 import {
+  ANALYTICS_TASK_RESULT_MAX_PAGES,
+  ANALYTICS_TASK_RESULT_PAGE_SIZE,
   DEFAULT_CHECKLIST_LIST_LIMIT,
   DEFAULT_TABLE_PAGE_SIZE,
-  KPI_SUMMARY_MAX_PAGES,
+  GRUPO1_CDF_FULL_SCAN_MAX_PAGES,
+  GRUPO1_CDF_FULL_SCAN_PAGE_SIZE,
   type ChecklistKpiSummary,
   type ChecklistSummary,
 } from '../domain/checklist-kpi.model';
@@ -35,9 +43,39 @@ import {
 } from './mappers/measurement-trend.mapper';
 import { toCriticalObservationAlerts } from './mappers/observation.mapper';
 
-const ANALYTICS_TASK_RESULT_MAX_PAGES = 5;
-
 const ALERT_CHECKLIST_MAX_PAGES = 3;
+
+const ROUTE_KPI_SNAPSHOT_MAX_PAGES = 6;
+
+const grupo1List = { instanceSpace: CHECKLIST_INSTANCE_SPACE } as const;
+
+function aggregateRouteKpiByPeriod(points: readonly TimeSeriesKpiPoint[]): TimeSeriesKpiPoint[] {
+  const byPeriod = new Map<
+    string,
+    { weightedNotOk: number; totalChecklists: number; weight: number }
+  >();
+
+  for (const point of points) {
+    const bucket = byPeriod.get(point.period) ?? {
+      weightedNotOk: 0,
+      totalChecklists: 0,
+      weight: 0,
+    };
+    const weight = Math.max(point.totalChecklists, 1);
+    bucket.weightedNotOk += point.notOkRate * weight;
+    bucket.weight += weight;
+    bucket.totalChecklists += point.totalChecklists;
+    byPeriod.set(point.period, bucket);
+  }
+
+  return [...byPeriod.entries()]
+    .map(([period, agg]) => ({
+      period,
+      notOkRate: agg.weight > 0 ? Math.round(agg.weightedNotOk / agg.weight) : 0,
+      totalChecklists: agg.totalChecklists,
+    }))
+    .sort((a, b) => a.period.localeCompare(b.period));
+}
 
 export class CdfChecklistRepository implements ChecklistRepository {
   constructor(private readonly client: CdfReadClient) {}
@@ -46,13 +84,17 @@ export class CdfChecklistRepository implements ChecklistRepository {
     return cdfTaskRunner.schedule(() => this.loadNotOkChecklistIds(), { key: 'not-ok-ids' });
   }
 
-  private async loadNotOkChecklistIds(): Promise<Set<string>> {
+  private async loadNotOkChecklistIds(
+    pageSize = GRUPO1_CDF_FULL_SCAN_PAGE_SIZE,
+    maxPages: number | undefined = GRUPO1_CDF_FULL_SCAN_MAX_PAGES,
+  ): Promise<Set<string>> {
     const itemNodes = await listChecklistItemsWithNotes(
       this.client,
       CHECKLIST_ITEM_VIEW,
       readChecklistItemNote,
-      DEFAULT_CHECKLIST_LIST_LIMIT,
-      undefined,
+      pageSize,
+      maxPages,
+      grupo1List,
     );
     return toNotOkChecklistIds(itemNodes as ChecklistItemInstanceDto[]);
   }
@@ -75,6 +117,7 @@ export class CdfChecklistRepository implements ChecklistRepository {
         CHECKLIST_VIEW,
         limit,
         cursor,
+        grupo1List,
       );
 
       return {
@@ -87,15 +130,14 @@ export class CdfChecklistRepository implements ChecklistRepository {
 
   async computeKpiSummary(templateExternalId?: string): Promise<ChecklistKpiSummary> {
     return cdfTaskRunner.schedule(async () => {
-      const [checklistNodes, notOkIds] = await Promise.all([
-        listAllViewNodes(
-          this.client,
-          CHECKLIST_VIEW,
-          DEFAULT_CHECKLIST_LIST_LIMIT,
-          KPI_SUMMARY_MAX_PAGES,
-        ),
-        this.loadNotOkChecklistIds(),
-      ]);
+      const notOkIds = await this.fetchNotOkChecklistIds();
+      const checklistNodes = await listAllViewNodes(
+        this.client,
+        CHECKLIST_VIEW,
+        GRUPO1_CDF_FULL_SCAN_PAGE_SIZE,
+        GRUPO1_CDF_FULL_SCAN_MAX_PAGES,
+        grupo1List,
+      );
 
       const summaries = this.mapChecklistPage(checklistNodes as ChecklistInstanceDto[], notOkIds);
       const filtered = filterChecklistsByTemplate(summaries, templateExternalId);
@@ -118,6 +160,7 @@ export class CdfChecklistRepository implements ChecklistRepository {
         CHECKLIST_ITEM_VIEW,
         limit,
         cursor,
+        grupo1List,
       );
 
       return {
@@ -128,44 +171,46 @@ export class CdfChecklistRepository implements ChecklistRepository {
     });
   }
 
-  fetchTaskResultsSample(maxPages = ANALYTICS_TASK_RESULT_MAX_PAGES): Promise<TaskResultItem[]> {
+  fetchTaskResultsSample(
+    pageSize = ANALYTICS_TASK_RESULT_PAGE_SIZE,
+    maxPages: number | undefined = ANALYTICS_TASK_RESULT_MAX_PAGES,
+  ): Promise<TaskResultItem[]> {
     return cdfTaskRunner.schedule(async () => {
-      const [pagedNodes, notedNodes] = await Promise.all([
-        listAllViewNodes(
-          this.client,
-          CHECKLIST_ITEM_VIEW,
-          DEFAULT_CHECKLIST_LIST_LIMIT,
-          maxPages,
-        ),
-        listChecklistItemsWithNotes(
-          this.client,
-          CHECKLIST_ITEM_VIEW,
-          readChecklistItemNote,
-          DEFAULT_CHECKLIST_LIST_LIMIT,
-          maxPages,
-        ),
-      ]);
+      const nodes = await listAllViewNodes(
+        this.client,
+        CHECKLIST_ITEM_VIEW,
+        pageSize,
+        maxPages,
+        grupo1List,
+      );
 
-      const byExternalId = new Map<string, ChecklistItemInstanceDto>();
-      for (const node of [...pagedNodes, ...notedNodes]) {
-        byExternalId.set(node.externalId, node as ChecklistItemInstanceDto);
-      }
-
-      return toTaskResultItems([...byExternalId.values()]);
+      return toTaskResultItems(nodes as ChecklistItemInstanceDto[]);
     });
   }
 
   listMeasurementTrends(limit = 40): Promise<MeasurementTrendPoint[]> {
     return cdfTaskRunner.schedule(async () => {
-      const nodes = await listAllViewNodes(this.client, MEASUREMENT_TREND_VIEW, limit, 2);
+      const nodes = await listAllViewNodes(
+        this.client,
+        MEASUREMENT_TREND_VIEW,
+        limit,
+        2,
+        grupo1List,
+      );
       return nodes.map(toMeasurementTrendPoint);
     });
   }
 
-  listRouteKpiSnapshots(limit = 24): Promise<TimeSeriesKpiPoint[]> {
+  listRouteKpiSnapshots(limit = 50): Promise<TimeSeriesKpiPoint[]> {
     return cdfTaskRunner.schedule(async () => {
-      const nodes = await listAllViewNodes(this.client, ROUTE_KPI_SNAPSHOT_VIEW, limit, 2);
-      return nodes.map(toTimeSeriesKpiPoint).sort((a, b) => a.period.localeCompare(b.period));
+      const nodes = await listAllViewNodes(
+        this.client,
+        ROUTE_KPI_SNAPSHOT_VIEW,
+        limit,
+        ROUTE_KPI_SNAPSHOT_MAX_PAGES,
+        grupo1List,
+      );
+      return aggregateRouteKpiByPeriod(nodes.map(toTimeSeriesKpiPoint));
     });
   }
 
@@ -190,9 +235,10 @@ export class CdfChecklistRepository implements ChecklistRepository {
           CHECKLIST_VIEW,
           DEFAULT_CHECKLIST_LIST_LIMIT,
           ALERT_CHECKLIST_MAX_PAGES,
+          grupo1List,
         ),
-        this.loadNotOkChecklistIds(),
-        listAllViewNodes(this.client, OBSERVATION_VIEW, 50, 2),
+        this.fetchNotOkChecklistIds(),
+        listAllViewNodes(this.client, OBSERVATION_VIEW, 50, 2, grupo1List),
       ]);
 
       const checklists = this.mapChecklistPage(
