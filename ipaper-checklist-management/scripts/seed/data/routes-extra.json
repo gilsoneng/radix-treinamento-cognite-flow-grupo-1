@@ -1,0 +1,106 @@
+[
+  {
+    "slug": "route5",
+    "title": "Route 5 — Evaporators & Recovery Boiler",
+    "section": "5F",
+    "equipmentCount": 28,
+    "equipments": [
+      { "slug": "evaporator-e1", "name": "Evaporator Body E1", "categoryCode": "vessel", "measurements": ["INLET-TEMP-DEGF","OUTLET-TEMP-DEGF","STEAM-PRESSURE-PSI","LEVEL-PERCENT"] },
+      { "slug": "evaporator-e2", "name": "Evaporator Body E2", "categoryCode": "vessel", "measurements": ["INLET-TEMP-DEGF","OUTLET-TEMP-DEGF","STEAM-PRESSURE-PSI","LEVEL-PERCENT"] },
+      { "slug": "evaporator-e3", "name": "Evaporator Body E3", "categoryCode": "vessel", "measurements": ["INLET-TEMP-DEGF","OUTLET-TEMP-DEGF","STEAM-PRESSURE-PSI","LEVEL-PERCENT"] },
+      { "slug": "condensate-pump-a", "name": "Condensate Pump A", "categoryCode": "rotating-pump", "measurements": ["IB-BEARING-TEMP","OB-BEARING-TEMP","MOTOR-AMPS","FLOW-GPM"] },
+      { "slug": "condensate-pump-b", "name": "Condensate Pump B", "categoryCode": "rotating-pump", "measurements": ["IB-BEARING-TEMP","OB-BEARING-TEMP","MOTOR-AMPS","FLOW-GPM"] },
+      { "slug": "bl-supply-pump-a", "name": "Black Liquor Supply Pump A", "categoryCode": "rotating-pump", "measurements": ["IB-BEARING-TEMP","MOTOR-AMPS","INLET-PRESSURE-PSI","OUTLET-PRESSURE-PSI"] },
+      { "slug": "bl-supply-pump-b", "name": "Black Liquor Supply Pump B", "categoryCode": "rotating-pump", "measurements": ["IB-BEARING-TEMP","MOTOR-AMPS","INLET-PRESSURE-PSI","OUTLET-PRESSURE-PSI"] },
+      { "slug": "smelt-dissolving-tank", "name": "Smelt Dissolving Tank", "categoryCode": "vessel", "measurements": ["TEMP-DEGF","LEVEL-PERCENT"] },
+      { "slug": "dissolving-agitator", "name": "Dissolving Tank Agitator", "categoryCode": "agitator", "measurements": ["MOTOR-AMPS","IB-VIBRATION-IPS"] },
+      { "slug": "weak-liquor-pump", "name": "Weak Liquor Pump", "categoryCode": "rotating-pump", "measurements": ["MOTOR-AMPS","FLOW-GPM","IB-BEARING-TEMP"] }
+    ],
+    "inspectionItems": [
+      { "title": "Evaporator E1 body temperature", "categoryCode": "vessel", "measSlug": "INLET-TEMP-DEGF", "isMeasurement": true, "unit": "°F", "min": 180, "max": 280, "threshold": 275 },
+      { "title": "Evaporator E2 steam pressure", "categoryCode": "vessel", "measSlug": "STEAM-PRESSURE-PSI", "isMeasurement": true, "unit": "PSI", "min": 15, "max": 45, "threshold": 43 },
+      { "title": "Condensate pump A bearing temperature", "categoryCode": "rotating-pump", "measSlug": "IB-BEARING-TEMP", "isMeasurement": true, "unit": "°F", "min": 70, "max": 180, "threshold": 175 },
+      { "title": "Condensate pump A motor current", "categoryCode": "rotating-pump", "measSlug": "MOTOR-AMPS", "isMeasurement": true, "unit": "A", "min": 10, "max": 55, "threshold": 52 },
+      { "title": "Dissolving tank level", "categoryCode": "vessel", "measSlug": "LEVEL-PERCENT", "isMeasurement": true, "unit": "%", "min": 20, "max": 85, "threshold": 82 },
+      { "title": "Smelt spout condition OK", "isMeasurement": false },
+      { "title": "Dissolving agitator seal condition", "isMeasurement": false },
+      { "title": "Black liquor pump seal water OK", "isMeasurement": false }
+    ]
+  },
+  {
+    "slug": "route6",
+    "title": "Route 6 — Causticizing & Lime Kiln",
+    "section": "6F",
+    "equipmentCount": 32,
+    "equipments": [
+      { "slug": "green-liquor-clarifier", "name": "Green Liquor Clarifier", "categoryCode": "vessel", "measurements": ["LEVEL-PERCENT","TEMP-DEGF"] },
+      { "slug": "gl-pump-a", "name": "Green Liquor Pump A", "categoryCode": "rotating-pump", "measurements": ["MOTOR-AMPS","IB-BEARING-TEMP","FLOW-GPM"] },
+      { "slug": "slaker-agitator", "name": "Slaker Agitator", "categoryCode": "agitator", "measurements": ["MOTOR-AMPS","IB-VIBRATION-IPS"] },
+      { "slug": "causticizer-agitator-1", "name": "Causticizer Agitator #1", "categoryCode": "agitator", "measurements": ["MOTOR-AMPS","IB-VIBRATION-IPS"] },
+      { "slug": "causticizer-agitator-2", "name": "Causticizer Agitator #2", "categoryCode": "agitator", "measurements": ["MOTOR-AMPS","IB-VIBRATION-IPS"] },
+      { "slug": "causticizer-agitator-3", "name": "Causticizer Agitator #3", "categoryCode": "agitator", "measurements": ["MOTOR-AMPS","IB-VIBRATION-IPS"] },
+      { "slug": "lime-kiln-drive", "name": "Lime Kiln Drive Motor", "categoryCode": "motor", "measurements": ["MOTOR-TEMP","MOTOR-AMPS","IB-BEARING-TEMP","OB-BEARING-TEMP"] },
+      { "slug": "kiln-id-fan", "name": "Kiln ID Fan", "categoryCode": "compressor", "measurements": ["MOTOR-AMPS","IB-BEARING-TEMP","INLET-PRESSURE-PSI"] },
+      { "slug": "milk-of-lime-pump", "name": "Milk of Lime Pump", "categoryCode": "rotating-pump", "measurements": ["MOTOR-AMPS","FLOW-GPM"] }
+    ],
+    "inspectionItems": [
+      { "title": "Slaker temperature", "categoryCode": "vessel", "measSlug": "TEMP-DEGF", "isMeasurement": true, "unit": "°F", "min": 180, "max": 220, "threshold": 215 },
+      { "title": "Causticizer agitator #1 motor current", "categoryCode": "agitator", "measSlug": "MOTOR-AMPS", "isMeasurement": true, "unit": "A", "min": 8, "max": 40, "threshold": 38 },
+      { "title": "Lime kiln drive bearing temperature", "categoryCode": "motor", "measSlug": "IB-BEARING-TEMP", "isMeasurement": true, "unit": "°F", "min": 70, "max": 185, "threshold": 180 },
+      { "title": "Lime kiln drive motor current", "categoryCode": "motor", "measSlug": "MOTOR-AMPS", "isMeasurement": true, "unit": "A", "min": 50, "max": 150, "threshold": 145 },
+      { "title": "Kiln mud seal condition OK", "isMeasurement": false },
+      { "title": "White liquor filter condition OK", "isMeasurement": false },
+      { "title": "Classifier overflow condition", "isMeasurement": false }
+    ]
+  },
+  {
+    "slug": "route7",
+    "title": "Route 7 — Bleach Plant",
+    "section": "7F",
+    "equipmentCount": 30,
+    "equipments": [
+      { "slug": "clo2-feed-pump", "name": "Chlorine Dioxide Feed Pump", "categoryCode": "chemical-system", "measurements": ["MOTOR-AMPS","FLOW-GPM","OUTLET-PRESSURE-PSI"] },
+      { "slug": "d0-washer-drive", "name": "D0 Stage Washer Drive", "categoryCode": "motor", "measurements": ["MOTOR-AMPS","IB-BEARING-TEMP","OB-BEARING-TEMP"] },
+      { "slug": "caustic-pump", "name": "Caustic/Oxygen Feed Pump", "categoryCode": "rotating-pump", "measurements": ["MOTOR-AMPS","FLOW-GPM","IB-BEARING-TEMP"] },
+      { "slug": "eo-washer-drive", "name": "E/O Stage Washer Drive", "categoryCode": "motor", "measurements": ["MOTOR-AMPS","IB-BEARING-TEMP","MOTOR-TEMP"] },
+      { "slug": "d1-tower-pump", "name": "D1 High-Density Tower Pump", "categoryCode": "rotating-pump", "measurements": ["MOTOR-AMPS","FLOW-GPM","IB-BEARING-TEMP"] },
+      { "slug": "clo2-generator", "name": "ClO2 Generator", "categoryCode": "chemical-system", "measurements": ["TEMP-DEGF","INLET-PRESSURE-PSI","LEVEL-PERCENT"] }
+    ],
+    "inspectionItems": [
+      { "title": "D0 ClO2 feed pump motor current", "categoryCode": "chemical-system", "measSlug": "MOTOR-AMPS", "isMeasurement": true, "unit": "A", "min": 5, "max": 35, "threshold": 33 },
+      { "title": "D0 washer drive bearing temperature", "categoryCode": "motor", "measSlug": "IB-BEARING-TEMP", "isMeasurement": true, "unit": "°F", "min": 70, "max": 175, "threshold": 170 },
+      { "title": "ClO2 generator temperature", "categoryCode": "chemical-system", "measSlug": "TEMP-DEGF", "isMeasurement": true, "unit": "°F", "min": 50, "max": 120, "threshold": 115 },
+      { "title": "Caustic pump seal water OK", "isMeasurement": false },
+      { "title": "ClO2 storage tank ventilation OK", "isMeasurement": false },
+      { "title": "E/O stage bleach tower level OK", "isMeasurement": false }
+    ]
+  },
+  {
+    "slug": "route8",
+    "title": "Route 8 — Power & Utilities",
+    "section": "8F",
+    "equipmentCount": 35,
+    "equipments": [
+      { "slug": "turbine-drive", "name": "Steam Turbine Drive", "categoryCode": "motor", "measurements": ["IB-BEARING-TEMP","OB-BEARING-TEMP","IB-VIBRATION-IPS","SPEED-RPM"] },
+      { "slug": "condensate-return-pump", "name": "Condensate Return Pump", "categoryCode": "rotating-pump", "measurements": ["IB-BEARING-TEMP","MOTOR-AMPS","FLOW-GPM"] },
+      { "slug": "compressor-a", "name": "Air Compressor A", "categoryCode": "compressor", "measurements": ["IB-BEARING-TEMP","MOTOR-AMPS","OUTLET-PRESSURE-PSI","MOTOR-TEMP"] },
+      { "slug": "compressor-b", "name": "Air Compressor B", "categoryCode": "compressor", "measurements": ["IB-BEARING-TEMP","MOTOR-AMPS","OUTLET-PRESSURE-PSI","MOTOR-TEMP"] },
+      { "slug": "cooling-tower-fan-a", "name": "Cooling Tower Fan A", "categoryCode": "motor", "measurements": ["MOTOR-AMPS","IB-BEARING-TEMP","IB-VIBRATION-IPS"] },
+      { "slug": "cooling-tower-fan-b", "name": "Cooling Tower Fan B", "categoryCode": "motor", "measurements": ["MOTOR-AMPS","IB-BEARING-TEMP","IB-VIBRATION-IPS"] },
+      { "slug": "circ-water-pump-a", "name": "Circulating Water Pump A", "categoryCode": "rotating-pump", "measurements": ["IB-BEARING-TEMP","MOTOR-AMPS","FLOW-GPM","OUTLET-PRESSURE-PSI"] },
+      { "slug": "clarifier-drive", "name": "Water Clarifier Drive", "categoryCode": "agitator", "measurements": ["MOTOR-AMPS","IB-VIBRATION-IPS"] }
+    ],
+    "inspectionItems": [
+      { "title": "Steam turbine IB bearing temperature", "categoryCode": "motor", "measSlug": "IB-BEARING-TEMP", "isMeasurement": true, "unit": "°F", "min": 80, "max": 190, "threshold": 185 },
+      { "title": "Steam turbine vibration IB", "categoryCode": "motor", "measSlug": "IB-VIBRATION-IPS", "isMeasurement": true, "unit": "ips", "min": 0.0, "max": 0.4, "threshold": 0.35 },
+      { "title": "Steam turbine speed", "categoryCode": "motor", "measSlug": "SPEED-RPM", "isMeasurement": true, "unit": "RPM", "min": 2800, "max": 3200, "threshold": 3180 },
+      { "title": "Compressor A discharge pressure", "categoryCode": "compressor", "measSlug": "OUTLET-PRESSURE-PSI", "isMeasurement": true, "unit": "PSI", "min": 80, "max": 120, "threshold": 115 },
+      { "title": "Compressor A bearing temperature", "categoryCode": "compressor", "measSlug": "IB-BEARING-TEMP", "isMeasurement": true, "unit": "°F", "min": 70, "max": 180, "threshold": 175 },
+      { "title": "Cooling tower fan A bearing temp", "categoryCode": "motor", "measSlug": "IB-BEARING-TEMP", "isMeasurement": true, "unit": "°F", "min": 70, "max": 165, "threshold": 160 },
+      { "title": "Circulating water pump A flow", "categoryCode": "rotating-pump", "measSlug": "FLOW-GPM", "isMeasurement": true, "unit": "GPM", "min": 800, "max": 2000, "threshold": 1950 },
+      { "title": "Air dryer condition OK", "isMeasurement": false },
+      { "title": "Compressed air receiver drain OK", "isMeasurement": false },
+      { "title": "Cooling tower basin level OK", "isMeasurement": false }
+    ]
+  }
+]

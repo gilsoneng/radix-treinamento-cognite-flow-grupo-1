@@ -1,0 +1,747 @@
+# ip_checklist_dm native views — SST lookups, KPIs, analytics, and audit trail.
+# Each view and property includes a description optimized for Atlas AI semantic retrieval.
+
+- space: ip_checklist_dm
+  externalId: EquipmentCategory
+  version: "v1"
+  name: Equipment Category
+  description: >
+    SST (Single Source of Truth) lookup table for equipment taxonomy on A-Line inspection routes.
+    Classifies mill equipment into categories: Centrifugal Pump (PUMP), Electric Motor (MOTOR),
+    Fan (FAN), Refiner (REFINER), Dryer (DRYER), Heat Exchanger (HEX), Valve (VALVE), etc.
+    Used to group assets, drive EquipmentHealthIndex aggregation, and enrich Atlas AI equipment queries.
+    Query example: "How many pumps are currently in Degraded health status?"
+  
+  properties:
+    code:
+      container:
+        space: ip_checklist_dm
+        externalId: EquipmentCategory
+      containerPropertyIdentifier: code
+      description: Short uppercase code (e.g., PUMP, MOTOR, FAN). Filter key for equipment-type analytics.
+    name:
+      container:
+        space: ip_checklist_dm
+        externalId: EquipmentCategory
+      containerPropertyIdentifier: name
+      description: Full category name displayed in dashboards (e.g., "Centrifugal Pump", "Electric Motor").
+    description:
+      container:
+        space: ip_checklist_dm
+        externalId: EquipmentCategory
+      containerPropertyIdentifier: description
+      description: Equipment category context including typical failure modes and inspection focus areas.
+    icon:
+      container:
+        space: ip_checklist_dm
+        externalId: EquipmentCategory
+      containerPropertyIdentifier: icon
+      description: Icon identifier for UI rendering in the inspection app and Atlas AI card responses.
+    typicalMeasurements:
+      container:
+        space: ip_checklist_dm
+        externalId: EquipmentCategory
+      containerPropertyIdentifier: typicalMeasurements
+      description: >
+        List of measurement slugs typically monitored for this equipment type
+        (e.g., ["IB-BEARING-TEMP", "OB-VIBRATION-IPS", "MOTOR-AMPS"]).
+        Atlas AI uses this to suggest relevant measurements when querying equipment health.
+
+- space: ip_checklist_dm
+  externalId: InspectionShift
+  version: "v1"
+  name: Inspection Shift
+  description: >
+    SST lookup for the three daily operational inspection shifts at the mill.
+    Day Shift (D): 06:00–14:00 | Afternoon Shift (A): 14:00–22:00 | Night Shift (N): 22:00–06:00.
+    Every Checklist execution is assigned to a shift based on its startTime.
+    Enables Atlas AI shift-comparison queries: "Which shift has the highest NOK rate on Route 2?"
+  
+  properties:
+    name:
+      container:
+        space: ip_checklist_dm
+        externalId: InspectionShift
+      containerPropertyIdentifier: name
+      description: Full shift name ("Day Shift", "Afternoon Shift", "Night Shift") for display.
+    startHour:
+      container:
+        space: ip_checklist_dm
+        externalId: InspectionShift
+      containerPropertyIdentifier: startHour
+      description: Shift start hour (0–23, local mill time UTC-5). Day=6, Afternoon=14, Night=22.
+    endHour:
+      container:
+        space: ip_checklist_dm
+        externalId: InspectionShift
+      containerPropertyIdentifier: endHour
+      description: Shift end hour (0–23). Day=14, Afternoon=22, Night=6 (next calendar day).
+    shiftCode:
+      container:
+        space: ip_checklist_dm
+        externalId: InspectionShift
+      containerPropertyIdentifier: shiftCode
+      description: Single-letter code used in externalIds and KPI labels (D, A, N).
+
+- space: ip_checklist_dm
+  externalId: ObservationCategory
+  version: "v1"
+  name: Observation Category
+  description: >
+    SST lookup for classifying anomaly observations raised by field operators.
+    Categories: Safety (immediate personnel risk), Maintenance (equipment degradation),
+    Quality (product quality impact), Environmental (regulatory compliance), Process (operational).
+    Drives work order routing and escalation. Atlas AI: "Show all Safety observations open > 48h."
+  
+  properties:
+    name:
+      container:
+        space: ip_checklist_dm
+        externalId: ObservationCategory
+      containerPropertyIdentifier: name
+      description: Category name (Safety, Maintenance, Quality, Environmental, Process).
+    description:
+      container:
+        space: ip_checklist_dm
+        externalId: ObservationCategory
+      containerPropertyIdentifier: description
+      description: Definition of what observations belong to this category, with response procedure context.
+    requiresWorkOrder:
+      container:
+        space: ip_checklist_dm
+        externalId: ObservationCategory
+      containerPropertyIdentifier: requiresWorkOrder
+      description: True if this category auto-triggers a CMMS work order. Safety and Maintenance = true.
+
+- space: ip_checklist_dm
+  externalId: SeverityLevel
+  version: "v1"
+  name: Severity Level
+  description: >
+    SST lookup for observation severity with SLA response time commitments.
+    P1 Critical (2h), P2 High (8h), P3 Medium (24h), P4 Low (72h).
+    Severity determines healthScore deduction in EquipmentHealthIndex and escalation routing.
+    Atlas AI: "List all P1 observations not resolved within SLA on Route 4."
+  
+  properties:
+    name:
+      container:
+        space: ip_checklist_dm
+        externalId: SeverityLevel
+      containerPropertyIdentifier: name
+      description: Severity label with code (e.g., "Critical (P1)", "High (P2)").
+    numericLevel:
+      container:
+        space: ip_checklist_dm
+        externalId: SeverityLevel
+      containerPropertyIdentifier: numericLevel
+      description: Numeric rank 1–4 (1=Critical). Lower = higher urgency. Used for sorting and scoring.
+    colorCode:
+      container:
+        space: ip_checklist_dm
+        externalId: SeverityLevel
+      containerPropertyIdentifier: colorCode
+      description: Hex color for dashboard heatmaps (e.g., #FF0000 for P1 Critical).
+    slaHours:
+      container:
+        space: ip_checklist_dm
+        externalId: SeverityLevel
+      containerPropertyIdentifier: slaHours
+      description: Maximum hours to resolve. P1=2, P2=8, P3=24, P4=72. SLA breach triggers escalation.
+    escalateTo:
+      container:
+        space: ip_checklist_dm
+        externalId: SeverityLevel
+      containerPropertyIdentifier: escalateTo
+      description: Role to notify on SLA breach (e.g., "Maintenance Supervisor", "Plant Manager").
+
+- space: ip_checklist_dm
+  externalId: MeasurementUnit
+  version: "v1"
+  name: Measurement Unit
+  description: >
+    SST lookup for process-specific measurement units used in mill rotating equipment inspections.
+    Supplements CogniteUnit catalog with: °F (temperature), ips (vibration velocity),
+    PSI (pressure), GPM (flow), RPM (shaft speed), mm (gap), % (level), A (current).
+    Linked to CogniteTimeSeries.sourceUnit and MeasurementReading for unit-aware analytics.
+  
+  properties:
+    symbol:
+      container:
+        space: ip_checklist_dm
+        externalId: MeasurementUnit
+      containerPropertyIdentifier: symbol
+      description: Unit symbol as shown in readings (°F, ips, PSI, GPM, RPM, mm, %, A).
+    description:
+      container:
+        space: ip_checklist_dm
+        externalId: MeasurementUnit
+      containerPropertyIdentifier: description
+      description: Full unit name and mill context (e.g., "ips — vibration velocity in inches per second").
+    quantityType:
+      container:
+        space: ip_checklist_dm
+        externalId: MeasurementUnit
+      containerPropertyIdentifier: quantityType
+      description: Physical dimension (Temperature, Vibration, Pressure, Flow, Speed, Current, Level, Length).
+
+- space: ip_checklist_dm
+  externalId: InspectionItemType
+  version: "v1"
+  name: Inspection Item Type
+  description: >
+    SST lookup configuring how field operators record each checklist item response.
+    Types: OK/NOK (binary pass/fail), Yes/No (compliance), Numeric (measured value with limits),
+    Count (discrete integer), Text (free-form note).
+    isMeasurement=true items are linked to CogniteTimeSeries for trend analysis.
+  
+  properties:
+    name:
+      container:
+        space: ip_checklist_dm
+        externalId: InspectionItemType
+      containerPropertyIdentifier: name
+      description: Response type name (OK/NOK, Yes/No, Numeric, Count, Text).
+    responseOptions:
+      container:
+        space: ip_checklist_dm
+        externalId: InspectionItemType
+      containerPropertyIdentifier: responseOptions
+      description: Allowed label values for label-type items (e.g., ["OK", "Not OK"]). Validates stringReading.
+    isMeasurement:
+      container:
+        space: ip_checklist_dm
+        externalId: InspectionItemType
+      containerPropertyIdentifier: isMeasurement
+      description: >
+        True for Numeric items linked to a CogniteTimeSeries (bearing temp, vibration, etc.).
+        Only isMeasurement=true items appear in MeasurementTrend.
+
+- space: ip_checklist_dm
+  externalId: ChecklistKpi
+  version: "v1"
+  name: Checklist KPI
+  description: >
+    Pre-calculated KPI snapshot per checklist execution (one node per APM Checklist).
+    Aggregates completion %, NOK rate, observation counts, and duration from raw inspection data.
+    Updated after each inspection route is completed and approved by a supervisor.
+    Primary source for Atlas AI operational queries without requiring real-time aggregation.
+    Key relationships: checklistRef → ApmChecklist, shiftRef → InspectionShift.
+    Query examples:
+    - "What is the average NOK rate on Route 1 this week?"
+    - "Which inspector has the highest completion rate in January?"
+    - "How many P1 observations were raised on the Night Shift last month?"
+  
+  properties:
+    checklistRef:
+      container:
+        space: ip_checklist_dm
+        externalId: ChecklistKpi
+      containerPropertyIdentifier: checklistRef
+      description: Link to the ApmChecklist that this KPI was calculated from. Join for route and operator details.
+      type:
+        type: direct_relation
+        list: false
+      source:
+        space: ip_checklist_dm
+        externalId: ApmChecklist
+        version: v1
+    shiftRef:
+      container:
+        space: ip_checklist_dm
+        externalId: ChecklistKpi
+      containerPropertyIdentifier: shiftRef
+      description: Link to the InspectionShift (Day/Afternoon/Night) during which this checklist was executed.
+      type:
+        type: direct_relation
+        list: false
+      source:
+        space: ip_checklist_dm
+        externalId: InspectionShift
+        version: v1
+    totalItems:
+      container:
+        space: ip_checklist_dm
+        externalId: ChecklistKpi
+      containerPropertyIdentifier: totalItems
+      description: Total checklist items in this route (denominator for completion and NOK rate).
+    completedItems:
+      container:
+        space: ip_checklist_dm
+        externalId: ChecklistKpi
+      containerPropertyIdentifier: completedItems
+      description: Items that received any response (OK/NOK/N/A). completedItems/totalItems = completionPercent.
+    okItems:
+      container:
+        space: ip_checklist_dm
+        externalId: ChecklistKpi
+      containerPropertyIdentifier: okItems
+      description: Items where operator recorded OK or passing result. High value = healthy equipment.
+    nokItems:
+      container:
+        space: ip_checklist_dm
+        externalId: ChecklistKpi
+      containerPropertyIdentifier: nokItems
+      description: Items recorded as Not OK. Each NOK item generates an Observation. Key anomaly metric.
+    naItems:
+      container:
+        space: ip_checklist_dm
+        externalId: ChecklistKpi
+      containerPropertyIdentifier: naItems
+      description: Items skipped or marked Not Applicable. High N/A may indicate equipment downtime.
+    completionPercent:
+      container:
+        space: ip_checklist_dm
+        externalId: ChecklistKpi
+      containerPropertyIdentifier: completionPercent
+      description: Route completion 0–100%. Target ≥ 98%. Below 95% triggers supervisor alert.
+    nokRate:
+      container:
+        space: ip_checklist_dm
+        externalId: ChecklistKpi
+      containerPropertyIdentifier: nokRate
+      description: >
+        NOK items / completed items (0.0–1.0). Target < 5%. Above 10% is abnormal and warrants review.
+        Core metric for EquipmentHealthIndex and RouteKpiSnapshot rollup.
+    openObservations:
+      container:
+        space: ip_checklist_dm
+        externalId: ChecklistKpi
+      containerPropertyIdentifier: openObservations
+      description: Unresolved observations from this checklist. High count = maintenance backlog.
+    criticalObservations:
+      container:
+        space: ip_checklist_dm
+        externalId: ChecklistKpi
+      containerPropertyIdentifier: criticalObservations
+      description: P1/P2 observations requiring immediate action. Non-zero escalates to supervisor.
+    durationMinutes:
+      container:
+        space: ip_checklist_dm
+        externalId: ChecklistKpi
+      containerPropertyIdentifier: durationMinutes
+      description: Execution time (startTime to endTime) in minutes. Typical 45–90 min per route.
+    inspectorId:
+      container:
+        space: ip_checklist_dm
+        externalId: ChecklistKpi
+      containerPropertyIdentifier: inspectorId
+      description: Field operator who executed this inspection. Use for operator performance analysis.
+    approverId:
+      container:
+        space: ip_checklist_dm
+        externalId: ChecklistKpi
+      containerPropertyIdentifier: approverId
+      description: Supervisor who approved the completed inspection. Required for compliance tracking.
+    approvedAt:
+      container:
+        space: ip_checklist_dm
+        externalId: ChecklistKpi
+      containerPropertyIdentifier: approvedAt
+      description: Timestamp of supervisor approval. Delta from endTime measures supervisor response latency.
+
+- space: ip_checklist_dm
+  externalId: EquipmentHealthIndex
+  version: "v1"
+  name: Equipment Health Index
+  description: >
+    Aggregated health score per piece of A-Line equipment (one node per CogniteAsset).
+    Synthesizes 7d/30d NOK rates, open observations, consecutive failures, and measurement trends
+    into a 0–100 score: 90–100=Healthy, 70–89=Monitor, 50–69=Degraded, 0–49=Critical.
+    Updated after each inspection cycle. Atlas AI primary input for predictive maintenance.
+    Key relationships: assetRef → IpCogniteAsset, categoryRef → EquipmentCategory.
+    Query examples:
+    - "Which pumps on A-Line have a health score below 60?"
+    - "Show equipment with 3 or more consecutive NOK inspection runs."
+    - "What is the MTBF for motors on Route 5?"
+    - "Which assets are trending towards Critical health status?"
+  
+  properties:
+    assetRef:
+      container:
+        space: ip_checklist_dm
+        externalId: EquipmentHealthIndex
+      containerPropertyIdentifier: assetRef
+      description: Link to IpCogniteAsset (equipment). Join for asset name, route, and category.
+      type:
+        type: direct_relation
+        list: false
+      source:
+        space: ip_checklist_dm
+        externalId: IpCogniteAsset
+        version: v1
+    categoryRef:
+      container:
+        space: ip_checklist_dm
+        externalId: EquipmentHealthIndex
+      containerPropertyIdentifier: categoryRef
+      description: Link to EquipmentCategory SST. Enables category-segmented health analysis.
+      type:
+        type: direct_relation
+        list: false
+      source:
+        space: ip_checklist_dm
+        externalId: EquipmentCategory
+        version: v1
+    healthScore:
+      container:
+        space: ip_checklist_dm
+        externalId: EquipmentHealthIndex
+      containerPropertyIdentifier: healthScore
+      description: >
+        Composite health score 0–100. Score = 100 − (nokRate7d×40) − (openObservations×5) − (consecutiveNokRuns×10).
+        90–100=Healthy, 70–89=Monitor, 50–69=Degraded, 0–49=Critical.
+    nokRate7d:
+      container:
+        space: ip_checklist_dm
+        externalId: EquipmentHealthIndex
+      containerPropertyIdentifier: nokRate7d
+      description: 7-day rolling NOK rate (0.0–1.0). Short-term anomaly indicator. Spike = recent deterioration.
+    nokRate30d:
+      container:
+        space: ip_checklist_dm
+        externalId: EquipmentHealthIndex
+      containerPropertyIdentifier: nokRate30d
+      description: 30-day rolling NOK rate (0.0–1.0). Long-term baseline. Compare with nokRate7d for trend.
+    alarmCount30d:
+      container:
+        space: ip_checklist_dm
+        externalId: EquipmentHealthIndex
+      containerPropertyIdentifier: alarmCount30d
+      description: P1/P2 observations in past 30 days. High counts = chronically problematic equipment.
+    openObservations:
+      container:
+        space: ip_checklist_dm
+        externalId: EquipmentHealthIndex
+      containerPropertyIdentifier: openObservations
+      description: Current unresolved observations for this asset. Each one deducts from healthScore.
+    consecutiveNokRuns:
+      container:
+        space: ip_checklist_dm
+        externalId: EquipmentHealthIndex
+      containerPropertyIdentifier: consecutiveNokRuns
+      description: Consecutive inspection cycles with at least one NOK item. 3+ triggers predictive alert.
+    trendDirection:
+      container:
+        space: ip_checklist_dm
+        externalId: EquipmentHealthIndex
+      containerPropertyIdentifier: trendDirection
+      description: Health score trend direction (IMPROVING, STABLE, DEGRADING). Atlas AI degradation queries.
+    mtbf_days:
+      container:
+        space: ip_checklist_dm
+        externalId: EquipmentHealthIndex
+      containerPropertyIdentifier: mtbf_days
+      description: Mean Time Between Failures in days. Higher = more reliable. Used for maintenance interval optimization.
+    lastInspectedAt:
+      container:
+        space: ip_checklist_dm
+        externalId: EquipmentHealthIndex
+      containerPropertyIdentifier: lastInspectedAt
+      description: Timestamp of last inspection covering this equipment. Use to find overdue assets.
+    lastCalculatedAt:
+      container:
+        space: ip_checklist_dm
+        externalId: EquipmentHealthIndex
+      containerPropertyIdentifier: lastCalculatedAt
+      description: When this health index was last recalculated. If > 24h ago, may not reflect recent inspections.
+
+- space: ip_checklist_dm
+  externalId: RouteKpiSnapshot
+  version: "v1"
+  name: Route KPI Snapshot
+  description: >
+    Aggregated KPI snapshot per inspection route per time period (weekly or monthly).
+    One node per route × period (e.g., Route 3 / 2025-W03). Enables trend analysis:
+    "Is Route 5 (Dry End) improving or degrading over the past quarter?"
+    Used in supervisor dashboard for route-level performance benchmarking.
+    Key relationships: templateRef → ApmTemplate (route definition).
+    Query examples:
+    - "Which route had the highest average NOK rate in January?"
+    - "Show month-over-month completion trend for all routes."
+    - "How many critical observations were raised on Route 1 in Q1 2025?"
+  
+  properties:
+    templateRef:
+      container:
+        space: ip_checklist_dm
+        externalId: RouteKpiSnapshot
+      containerPropertyIdentifier: templateRef
+      description: Link to the ApmTemplate defining this inspection route. Join for route name and rootLocation.
+      type:
+        type: direct_relation
+        list: false
+      source:
+        space: ip_checklist_dm
+        externalId: ApmTemplate
+        version: v1
+    periodType:
+      container:
+        space: ip_checklist_dm
+        externalId: RouteKpiSnapshot
+      containerPropertyIdentifier: periodType
+      description: Aggregation granularity ("weekly" or "monthly"). Filter for dashboard time-range selection.
+    periodLabel:
+      container:
+        space: ip_checklist_dm
+        externalId: RouteKpiSnapshot
+      containerPropertyIdentifier: periodLabel
+      description: Human-readable period (e.g., "2025-W03" for ISO week, "2025-01" for month). Chart axis label.
+    periodStart:
+      container:
+        space: ip_checklist_dm
+        externalId: RouteKpiSnapshot
+      containerPropertyIdentifier: periodStart
+      description: UTC start of aggregation period. Use as lower bound in time-range filters.
+    periodEnd:
+      container:
+        space: ip_checklist_dm
+        externalId: RouteKpiSnapshot
+      containerPropertyIdentifier: periodEnd
+      description: UTC end of aggregation period. Use as upper bound in time-range filters.
+    totalChecklists:
+      container:
+        space: ip_checklist_dm
+        externalId: RouteKpiSnapshot
+      containerPropertyIdentifier: totalChecklists
+      description: Total checklist executions in period. Expected 21/week (3 shifts × 7 days). Below = missed inspections.
+    completedChecklists:
+      container:
+        space: ip_checklist_dm
+        externalId: RouteKpiSnapshot
+      containerPropertyIdentifier: completedChecklists
+      description: Checklists with ≥ 95% completion. completedChecklists/totalChecklists = compliance rate.
+    avgNokRate:
+      container:
+        space: ip_checklist_dm
+        externalId: RouteKpiSnapshot
+      containerPropertyIdentifier: avgNokRate
+      description: Average NOK rate across all route checklists in period. Target < 5%. Benchmark across routes.
+    avgCompletionPercent:
+      container:
+        space: ip_checklist_dm
+        externalId: RouteKpiSnapshot
+      containerPropertyIdentifier: avgCompletionPercent
+      description: Average inspection completion % in period. Target ≥ 98%. Below 90% = systemic access issues.
+    avgDurationMinutes:
+      container:
+        space: ip_checklist_dm
+        externalId: RouteKpiSnapshot
+      containerPropertyIdentifier: avgDurationMinutes
+      description: Average route execution time in minutes. Typical 45–90 min. Trend upward = accessibility issues.
+    totalObservations:
+      container:
+        space: ip_checklist_dm
+        externalId: RouteKpiSnapshot
+      containerPropertyIdentifier: totalObservations
+      description: All observations raised for this route in the period. High totals = aging equipment or backlog.
+    criticalObservations:
+      container:
+        space: ip_checklist_dm
+        externalId: RouteKpiSnapshot
+      containerPropertyIdentifier: criticalObservations
+      description: P1/P2 severity observations in period. Requires supervisor review and CMMS work order.
+
+- space: ip_checklist_dm
+  externalId: MeasurementTrend
+  version: "v1"
+  name: Measurement Trend
+  description: >
+    Time-series trend analytics per inspection measurement item per equipment.
+    Bridges manual inspection readings (APM MeasurementReading) with CogniteTimeSeries sensor data.
+    One node per TemplateItem × Asset combination (e.g., IB Bearing Temp on ROUTE1-DIFFUSER-BODY).
+    Enables Atlas AI predictive analytics: "Is any bearing temperature within 7 days of the alarm threshold?"
+    Key relationships: templateItemRef → ApmTemplateItem, assetRef → IpCogniteAsset, timeSeriesRef → IpCogniteTimeSeries.
+    Query examples:
+    - "Which measurements will reach their alarm threshold within 14 days?"
+    - "Show equipment with bearing vibration exceeding threshold more than 3 times in 30 days."
+    - "What is the average motor temperature trend on Route 2 over the past month?"
+  
+  properties:
+    templateItemRef:
+      container:
+        space: ip_checklist_dm
+        externalId: MeasurementTrend
+      containerPropertyIdentifier: templateItemRef
+      description: Link to ApmTemplateItem defining the measurement task. Join for measurement name and limits.
+      type:
+        type: direct_relation
+        list: false
+      source:
+        space: ip_checklist_dm
+        externalId: ApmTemplateItem
+        version: v1
+    assetRef:
+      container:
+        space: ip_checklist_dm
+        externalId: MeasurementTrend
+      containerPropertyIdentifier: assetRef
+      description: Link to IpCogniteAsset for the monitored equipment. Join for asset name and route.
+      type:
+        type: direct_relation
+        list: false
+      source:
+        space: ip_checklist_dm
+        externalId: IpCogniteAsset
+        version: v1
+    timeSeriesRef:
+      container:
+        space: ip_checklist_dm
+        externalId: MeasurementTrend
+      containerPropertyIdentifier: timeSeriesRef
+      description: Link to IpCogniteTimeSeries sensor data correlated with this manual measurement point.
+      type:
+        type: direct_relation
+        list: false
+      source:
+        space: ip_checklist_dm
+        externalId: IpCogniteTimeSeries
+        version: v1
+    lastValue:
+      container:
+        space: ip_checklist_dm
+        externalId: MeasurementTrend
+      containerPropertyIdentifier: lastValue
+      description: Most recent field reading in engineering units (e.g., 152.3 for 152.3°F). Compare with threshold.
+    avg7dValue:
+      container:
+        space: ip_checklist_dm
+        externalId: MeasurementTrend
+      containerPropertyIdentifier: avg7dValue
+      description: 7-day rolling average. Short-term smoothed baseline. Spike in lastValue vs avg7d = anomaly.
+    avg30dValue:
+      container:
+        space: ip_checklist_dm
+        externalId: MeasurementTrend
+      containerPropertyIdentifier: avg30dValue
+      description: 30-day rolling average. Long-term process baseline. Slow drift vs avg30d = gradual degradation.
+    maxValue:
+      container:
+        space: ip_checklist_dm
+        externalId: MeasurementTrend
+      containerPropertyIdentifier: maxValue
+      description: Historical maximum reading. Atlas AI - "Has this pump ever exceeded the bearing temp threshold?"
+    threshold:
+      container:
+        space: ip_checklist_dm
+        externalId: MeasurementTrend
+      containerPropertyIdentifier: threshold
+      description: Engineering alarm threshold (same units as lastValue). lastValue > threshold = alarm condition.
+    exceedanceCount30d:
+      container:
+        space: ip_checklist_dm
+        externalId: MeasurementTrend
+      containerPropertyIdentifier: exceedanceCount30d
+      description: Readings exceeding threshold in past 30 days. Count > 3 = persistent alarm (not transient spike).
+    trendSlope:
+      container:
+        space: ip_checklist_dm
+        externalId: MeasurementTrend
+      containerPropertyIdentifier: trendSlope
+      description: >
+        Linear regression slope (units/day) over 30 days. Positive = values increasing.
+        Example: 0.5 °F/day means temperature rising half a degree daily. Used for predictedDaysToAlarm.
+    predictedDaysToAlarm:
+      container:
+        space: ip_checklist_dm
+        externalId: MeasurementTrend
+      containerPropertyIdentifier: predictedDaysToAlarm
+      description: >
+        Days until lastValue reaches threshold at current trendSlope. Null if trend stable/decreasing.
+        Atlas AI top use case: "Which measurements will reach alarm within 7 days?"
+    lastCalculatedAt:
+      container:
+        space: ip_checklist_dm
+        externalId: MeasurementTrend
+      containerPropertyIdentifier: lastCalculatedAt
+      description: When trend was last recalculated. If > 24h since last inspection, prediction may be stale.
+
+- space: ip_checklist_dm
+  externalId: SeedManifest
+  version: "v1"
+  name: Seed Manifest
+  description: >
+    Audit trail node for each seed script execution into CDF.
+    Records provenance (source file, hash), execution parameters (route, period, dry-run flag),
+    and outcome (node/edge counts, errors). Enables data lineage tracking.
+    Not intended for operational queries — internal data governance use only.
+  
+  properties:
+    runId:
+      container:
+        space: ip_checklist_dm
+        externalId: SeedManifest
+      containerPropertyIdentifier: runId
+      description: Unique run ID (e.g., "run-2025-01-01-0CE7B8EB"). Matches output directory name.
+    executedAt:
+      container:
+        space: ip_checklist_dm
+        externalId: SeedManifest
+      containerPropertyIdentifier: executedAt
+      description: UTC timestamp when the seed script started executing.
+    scriptVersion:
+      container:
+        space: ip_checklist_dm
+        externalId: SeedManifest
+      containerPropertyIdentifier: scriptVersion
+      description: Semantic version of the seed script. Detects breaking schema changes between runs.
+    sourceFile:
+      container:
+        space: ip_checklist_dm
+        externalId: SeedManifest
+      containerPropertyIdentifier: sourceFile
+      description: Source Excel filename (e.g., "A Line OEC Routes 2 (1).xlsx"). Data provenance.
+    sourceHash:
+      container:
+        space: ip_checklist_dm
+        externalId: SeedManifest
+      containerPropertyIdentifier: sourceHash
+      description: SHA-256 hash of source file. Detects source modifications between seed runs.
+    routeSlug:
+      container:
+        space: ip_checklist_dm
+        externalId: SeedManifest
+      containerPropertyIdentifier: routeSlug
+      description: Route covered by this seed run (e.g., "route1" or "all" for full A-Line).
+    periodStart:
+      container:
+        space: ip_checklist_dm
+        externalId: SeedManifest
+      containerPropertyIdentifier: periodStart
+      description: ISO 8601 start date of seeded inspection period (e.g., "2025-01-01").
+    periodEnd:
+      container:
+        space: ip_checklist_dm
+        externalId: SeedManifest
+      containerPropertyIdentifier: periodEnd
+      description: ISO 8601 end date of seeded period (e.g., "2025-12-31"). Full year = ~8,760 checklists.
+    isDryRun:
+      container:
+        space: ip_checklist_dm
+        externalId: SeedManifest
+      containerPropertyIdentifier: isDryRun
+      description: True = JSON generated but NOT ingested to CDF. False = actual production ingestion run.
+    totalNodes:
+      container:
+        space: ip_checklist_dm
+        externalId: SeedManifest
+      containerPropertyIdentifier: totalNodes
+      description: Total DMS nodes upserted. Full-year run ≈ 250,000 nodes.
+    totalEdges:
+      container:
+        space: ip_checklist_dm
+        externalId: SeedManifest
+      containerPropertyIdentifier: totalEdges
+      description: Total DMS edges upserted. Full-year run ≈ 300,000 edges.
+    errors:
+      container:
+        space: ip_checklist_dm
+        externalId: SeedManifest
+      containerPropertyIdentifier: errors
+      description: JSON array of ingestion errors (batchId, message, affectedExternalIds). Empty = clean run.
+    mapping:
+      container:
+        space: ip_checklist_dm
+        externalId: SeedManifest
+      containerPropertyIdentifier: mapping
+      description: JSON map of externalId assignments used in this run for traceability.

@@ -1,0 +1,20 @@
+{
+  "runId": "29735B16895F",
+  "generatedAt": "2026-06-03T07:16:18.957Z",
+  "stats": {
+    "classification": 42,
+    "assets": 84,
+    "timeseries": 223,
+    "templates": 8,
+    "templateItems": 92,
+    "checklists": 8760,
+    "checklistItems": 96249,
+    "measurements": 66134,
+    "observations": 7571,
+    "checklistKpis": 7721,
+    "healthIndexes": 75,
+    "routeKpis": 96,
+    "measurementTrends": 47
+  },
+  "runDir": "C:\\Training_Flows\\radix-treinamento-cognite-flow-grupo-1\\ipaper-checklist-management\\docs\\Seed\\generated\\run-2025-01-01-29735B16"
+}

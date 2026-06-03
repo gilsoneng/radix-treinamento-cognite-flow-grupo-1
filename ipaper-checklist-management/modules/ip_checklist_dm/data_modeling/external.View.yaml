@@ -1,0 +1,783 @@
+# Views projetadas de ApmAppData (cdf_apm) e CogniteCore (cdf_cdm).
+# SEM implements — properties mapeadas diretamente nos containers de origem.
+# Isso evita herança do schema completo do tipo base, expondo apenas
+# os campos efetivamente usados no seed e no Atlas AI.
+# O front do CDF só consulta o que está declarado aqui → sem _UnknownType.
+
+# ---------------------------------------------------------------------------
+# ApmAppData — Template v8
+# ---------------------------------------------------------------------------
+- space: ip_checklist_dm
+  externalId: ApmTemplate
+  version: "v1"
+  name: Template (IP subset)
+  description: >
+    APM inspection route template (Template:v8) as used by ip_checklist_dm.
+    Each Template represents one A-Line inspection route (Route 1–8) with a defined set of
+    TemplateItems (tasks). Templates are reused across shifts: each execution generates a Checklist.
+    rootLocation links the route to its primary CogniteAsset anchor.
+    Atlas AI: "Show all active inspection templates for A-Line routes."
+  properties:
+    title:
+      container:
+        space: cdf_core
+        externalId: Describable
+      containerPropertyIdentifier: title
+      description: Inspection route name (e.g., "Route 1 — Wet End", "Route 5 — Dry End Section A").
+    description:
+      container:
+        space: cdf_core
+        externalId: Describable
+      containerPropertyIdentifier: description
+      description: Route description including sections covered, equipment types, and inspection focus areas.
+    labels:
+      container:
+        space: cdf_core
+        externalId: Describable
+      containerPropertyIdentifier: labels
+      description: Text labels for generic filtering.
+    status:
+      container:
+        space: cdf_apm
+        externalId: Template
+      containerPropertyIdentifier: status
+      description: Template lifecycle status ("ready" for active routes, "draft" for routes under review).
+    assignedTo:
+      container:
+        space: cdf_apm
+        externalId: Template
+      containerPropertyIdentifier: assignedTo
+      description: List of disciplines or operator roles assigned to execute this route.
+    rootLocation:
+      container:
+        space: cdf_apm
+        externalId: Template
+      containerPropertyIdentifier: rootLocation
+      description: Direct relation to the CogniteAsset anchoring this route geographically.
+      type:
+        type: direct_relation
+        list: false
+      source:
+        space: ip_checklist_dm
+        externalId: IpCogniteAsset
+        version: v1
+    visibility:
+      container:
+        space: cdf_apps_shared
+        externalId: Creatable
+      containerPropertyIdentifier: visibility
+      description: Access control ("PUBLIC" = visible to all operators and supervisors).
+    isArchived:
+      container:
+        space: cdf_apps_shared
+        externalId: Creatable
+      containerPropertyIdentifier: isArchived
+      description: False for active templates. True archives the route from the inspection app.
+    createdBy:
+      container:
+        space: cdf_apps_shared
+        externalId: Creatable
+      containerPropertyIdentifier: createdBy
+      description: CDF user who created this template node.
+    updatedBy:
+      container:
+        space: cdf_apps_shared
+        externalId: Creatable
+      containerPropertyIdentifier: updatedBy
+      description: CDF user who last updated this template node.
+
+# ---------------------------------------------------------------------------
+# ApmAppData — TemplateItem v7
+# ---------------------------------------------------------------------------
+- space: ip_checklist_dm
+  externalId: ApmTemplateItem
+  version: "v1"
+  name: TemplateItem (IP subset)
+  description: >
+    APM individual inspection task definition (TemplateItem:v7) as used by ip_checklist_dm.
+    Each TemplateItem defines one inspection point within an A-Line route.
+    Linked to a specific CogniteAsset (equipment) and ordered within the route.
+    Atlas AI: "List all temperature measurement tasks on Route 2."
+  properties:
+    title:
+      container:
+        space: cdf_core
+        externalId: Describable
+      containerPropertyIdentifier: title
+      description: Task name displayed to the field operator.
+    description:
+      container:
+        space: cdf_core
+        externalId: Describable
+      containerPropertyIdentifier: description
+      description: Inspection instructions and acceptance criteria.
+    labels:
+      container:
+        space: cdf_core
+        externalId: Describable
+      containerPropertyIdentifier: labels
+      description: Text labels for generic filtering.
+    order:
+      container:
+        space: cdf_apm
+        externalId: TemplateItem
+      containerPropertyIdentifier: order
+      description: Execution sequence within the route (1-based integer).
+    asset:
+      container:
+        space: cdf_apm
+        externalId: TemplateItem
+      containerPropertyIdentifier: asset
+      description: Direct relation to the CogniteAsset (equipment) this task inspects.
+      type:
+        type: direct_relation
+        list: false
+      source:
+        space: ip_checklist_dm
+        externalId: IpCogniteAsset
+        version: v1
+    visibility:
+      container:
+        space: cdf_apps_shared
+        externalId: Creatable
+      containerPropertyIdentifier: visibility
+      description: Access control ("PUBLIC").
+    isArchived:
+      container:
+        space: cdf_apps_shared
+        externalId: Creatable
+      containerPropertyIdentifier: isArchived
+      description: False for active tasks.
+    createdBy:
+      container:
+        space: cdf_apps_shared
+        externalId: Creatable
+      containerPropertyIdentifier: createdBy
+      description: CDF user who created this template item.
+    updatedBy:
+      container:
+        space: cdf_apps_shared
+        externalId: Creatable
+      containerPropertyIdentifier: updatedBy
+      description: CDF user who last updated this template item.
+    inspectionTypeRef:
+      container:
+        space: ip_checklist_dm
+        externalId: ApmTemplateItemExtended
+      containerPropertyIdentifier: inspectionTypeRef
+      description: >
+        Direct relation to the InspectionItemType SST node (OK/NOK, Numeric, Yes/No, Count, Text).
+        Enables Atlas AI to filter template items by response type and aggregate NOK rates per type.
+      type:
+        type: direct_relation
+        list: false
+      source:
+        space: ip_checklist_dm
+        externalId: InspectionItemType
+        version: v1
+    unitRef:
+      container:
+        space: ip_checklist_dm
+        externalId: ApmTemplateItemExtended
+      containerPropertyIdentifier: unitRef
+      description: >
+        Direct relation to the MeasurementUnit SST node for numeric measurement tasks.
+        Null for binary items. Enables unit-aware queries like "show all temperature readings above 180°F".
+      type:
+        type: direct_relation
+        list: false
+      source:
+        space: ip_checklist_dm
+        externalId: MeasurementUnit
+        version: v1
+
+# ---------------------------------------------------------------------------
+# ApmAppData — Checklist v7
+# ---------------------------------------------------------------------------
+- space: ip_checklist_dm
+  externalId: ApmChecklist
+  version: "v1"
+  name: Checklist (IP subset)
+  description: >
+    APM executed inspection instance (Checklist:v7) as used by ip_checklist_dm.
+    One Checklist is created per route × shift × day execution.
+    Linked to ChecklistItems and a ChecklistKpi (aggregated metrics).
+    Atlas AI: "Show all checklists executed on Route 1 with NOK items this week."
+  properties:
+    title:
+      container:
+        space: cdf_core
+        externalId: Describable
+      containerPropertyIdentifier: title
+      description: Checklist execution label (e.g., "Route 1 — Day Shift — 2025-03-15").
+    description:
+      container:
+        space: cdf_core
+        externalId: Describable
+      containerPropertyIdentifier: description
+      description: Execution context notes.
+    labels:
+      container:
+        space: cdf_core
+        externalId: Describable
+      containerPropertyIdentifier: labels
+      description: Text labels for generic filtering.
+    status:
+      container:
+        space: cdf_apm
+        externalId: Checklist
+      containerPropertyIdentifier: status
+      description: Execution status ("created", "inProgress", "done", "approved").
+    type:
+      container:
+        space: cdf_apm
+        externalId: Checklist
+      containerPropertyIdentifier: type
+      description: Inspection type ("Inspection" for routine A-Line rounds).
+    assignedTo:
+      container:
+        space: cdf_apm
+        externalId: Checklist
+      containerPropertyIdentifier: assignedTo
+      description: List of operator identifiers assigned to execute this checklist.
+    rootLocation:
+      container:
+        space: cdf_apm
+        externalId: Checklist
+      containerPropertyIdentifier: rootLocation
+      description: Direct relation to the CogniteAsset route anchor.
+      type:
+        type: direct_relation
+        list: false
+      source:
+        space: ip_checklist_dm
+        externalId: IpCogniteAsset
+        version: v1
+    startTime:
+      container:
+        space: cdf_core
+        externalId: Schedulable
+      containerPropertyIdentifier: startTime
+      description: UTC timestamp when the operator started the inspection.
+    endTime:
+      container:
+        space: cdf_core
+        externalId: Schedulable
+      containerPropertyIdentifier: endTime
+      description: UTC timestamp when the operator submitted the completed inspection.
+    visibility:
+      container:
+        space: cdf_apps_shared
+        externalId: Creatable
+      containerPropertyIdentifier: visibility
+      description: Access visibility ("PUBLIC").
+    isArchived:
+      container:
+        space: cdf_apps_shared
+        externalId: Creatable
+      containerPropertyIdentifier: isArchived
+      description: False for active checklists.
+    createdBy:
+      container:
+        space: cdf_apps_shared
+        externalId: Creatable
+      containerPropertyIdentifier: createdBy
+      description: CDF user who created this checklist execution node.
+    updatedBy:
+      container:
+        space: cdf_apps_shared
+        externalId: Creatable
+      containerPropertyIdentifier: updatedBy
+      description: CDF user who last updated this checklist node.
+
+# ---------------------------------------------------------------------------
+# ApmAppData — ChecklistItem v7
+# ---------------------------------------------------------------------------
+- space: ip_checklist_dm
+  externalId: ApmChecklistItem
+  version: "v1"
+  name: ChecklistItem (IP subset)
+  description: >
+    APM executed inspection task instance (ChecklistItem:v7) as used by ip_checklist_dm.
+    One ChecklistItem per TemplateItem per Checklist execution.
+    Records the operator response: OK/NOK status, measurement reading, notes.
+    Atlas AI: "Which checklist items on Route 4 were Not OK in the last 7 days?"
+  properties:
+    title:
+      container:
+        space: cdf_core
+        externalId: Describable
+      containerPropertyIdentifier: title
+      description: Task name (inherited from TemplateItem title).
+    description:
+      container:
+        space: cdf_core
+        externalId: Describable
+      containerPropertyIdentifier: description
+      description: Operator notes or observed conditions for this specific execution.
+    labels:
+      container:
+        space: cdf_core
+        externalId: Describable
+      containerPropertyIdentifier: labels
+      description: Text labels for generic filtering.
+    status:
+      container:
+        space: cdf_apm
+        externalId: ChecklistItem
+      containerPropertyIdentifier: status
+      description: Item execution status ("ok", "notOk", "na").
+    order:
+      container:
+        space: cdf_apm
+        externalId: ChecklistItem
+      containerPropertyIdentifier: order
+      description: Execution sequence within the checklist.
+    note:
+      container:
+        space: cdf_apm
+        externalId: ChecklistItem
+      containerPropertyIdentifier: note
+      description: Free-form operator note describing observed condition.
+    asset:
+      container:
+        space: cdf_apm
+        externalId: ChecklistItem
+      containerPropertyIdentifier: asset
+      description: Direct relation to the CogniteAsset (equipment) being inspected.
+      type:
+        type: direct_relation
+        list: false
+      source:
+        space: ip_checklist_dm
+        externalId: IpCogniteAsset
+        version: v1
+    startTime:
+      container:
+        space: cdf_core
+        externalId: Schedulable
+      containerPropertyIdentifier: startTime
+      description: UTC timestamp when the operator started this item.
+    endTime:
+      container:
+        space: cdf_core
+        externalId: Schedulable
+      containerPropertyIdentifier: endTime
+      description: UTC timestamp when the operator completed this item.
+    visibility:
+      container:
+        space: cdf_apps_shared
+        externalId: Creatable
+      containerPropertyIdentifier: visibility
+      description: Access visibility ("PUBLIC").
+    isArchived:
+      container:
+        space: cdf_apps_shared
+        externalId: Creatable
+      containerPropertyIdentifier: isArchived
+      description: False for active items.
+    createdBy:
+      container:
+        space: cdf_apps_shared
+        externalId: Creatable
+      containerPropertyIdentifier: createdBy
+      description: CDF user who created this checklist item.
+    updatedBy:
+      container:
+        space: cdf_apps_shared
+        externalId: Creatable
+      containerPropertyIdentifier: updatedBy
+      description: CDF user who last updated this item.
+
+# ---------------------------------------------------------------------------
+# ApmAppData — MeasurementReading v4
+# ---------------------------------------------------------------------------
+- space: ip_checklist_dm
+  externalId: ApmMeasurementReading
+  version: "v1"
+  name: MeasurementReading (IP subset)
+  description: >
+    APM field measurement record (MeasurementReading:v4) as used by ip_checklist_dm.
+    Captures the actual value recorded by an operator for a numeric measurement task,
+    or the OK/NOK label for binary inspection items.
+    Atlas AI: "What was the IB bearing temperature on ROUTE2-PUMP1 during the last Night Shift?"
+  properties:
+    title:
+      container:
+        space: cdf_core
+        externalId: Describable
+      containerPropertyIdentifier: title
+      description: Measurement point name.
+    description:
+      container:
+        space: cdf_core
+        externalId: Describable
+      containerPropertyIdentifier: description
+      description: Measurement description including context, expected range, and alarm conditions.
+    labels:
+      container:
+        space: cdf_core
+        externalId: Describable
+      containerPropertyIdentifier: labels
+      description: Text labels for generic filtering.
+    type:
+      container:
+        space: cdf_apm
+        externalId: MeasurementReading
+      containerPropertyIdentifier: type
+      description: Reading type ("numerical" or "label").
+    order:
+      container:
+        space: cdf_apm
+        externalId: MeasurementReading
+      containerPropertyIdentifier: order
+      description: Execution order within the checklist.
+    min:
+      container:
+        space: cdf_apm
+        externalId: MeasurementReading
+      containerPropertyIdentifier: min
+      description: Lower engineering limit for numeric readings.
+    max:
+      container:
+        space: cdf_apm
+        externalId: MeasurementReading
+      containerPropertyIdentifier: max
+      description: Upper engineering alarm threshold for numeric readings.
+    measuredAt:
+      container:
+        space: cdf_apm
+        externalId: MeasurementReading
+      containerPropertyIdentifier: measuredAt
+      description: UTC timestamp when the operator recorded this reading.
+    numericReading:
+      container:
+        space: cdf_apm
+        externalId: MeasurementReading
+      containerPropertyIdentifier: numericReading
+      description: Actual numeric measurement value in engineering units.
+    stringReading:
+      container:
+        space: cdf_apm
+        externalId: MeasurementReading
+      containerPropertyIdentifier: stringReading
+      description: Actual label value for binary or multi-choice readings.
+    visibility:
+      container:
+        space: cdf_apps_shared
+        externalId: Creatable
+      containerPropertyIdentifier: visibility
+      description: Access visibility ("PUBLIC").
+    isArchived:
+      container:
+        space: cdf_apps_shared
+        externalId: Creatable
+      containerPropertyIdentifier: isArchived
+      description: False for active readings.
+    createdBy:
+      container:
+        space: cdf_apps_shared
+        externalId: Creatable
+      containerPropertyIdentifier: createdBy
+      description: CDF user who created this measurement reading.
+    updatedBy:
+      container:
+        space: cdf_apps_shared
+        externalId: Creatable
+      containerPropertyIdentifier: updatedBy
+      description: CDF user who last updated this measurement reading.
+
+# ---------------------------------------------------------------------------
+# ApmAppData — Observation v5
+# ---------------------------------------------------------------------------
+- space: ip_checklist_dm
+  externalId: ApmObservation
+  version: "v1"
+  name: Observation (IP subset)
+  description: >
+    APM anomaly report (Observation:v5) as used by ip_checklist_dm.
+    Created when a field operator records a Not OK result on a checklist item.
+    Classified by type, priority (P1-P4), and status (draft → submitted → resolved).
+    Atlas AI: "Show all open P1 observations on Route 3 pumps with dueDate overdue."
+  properties:
+    title:
+      container:
+        space: cdf_core
+        externalId: Describable
+      containerPropertyIdentifier: title
+      description: Observation title summarizing the anomaly.
+    description:
+      container:
+        space: cdf_core
+        externalId: Describable
+      containerPropertyIdentifier: description
+      description: Detailed anomaly description.
+    labels:
+      container:
+        space: cdf_core
+        externalId: Describable
+      containerPropertyIdentifier: labels
+      description: Text labels for generic filtering.
+    status:
+      container:
+        space: cdf_apm
+        externalId: Observation
+      containerPropertyIdentifier: status
+      description: Resolution lifecycle ("draft", "submitted", "inProgress", "resolved").
+    type:
+      container:
+        space: cdf_apm
+        externalId: Observation
+      containerPropertyIdentifier: type
+      description: Observation type ("Malfunction report", "Maintenance request", "Safety hazard").
+    priority:
+      container:
+        space: cdf_apm
+        externalId: Observation
+      containerPropertyIdentifier: priority
+      description: Response priority ("Urgent"=P1, "High"=P2, "Medium"=P3, "Low"=P4).
+    assignedTo:
+      container:
+        space: cdf_apm
+        externalId: Observation
+      containerPropertyIdentifier: assignedTo
+      description: List of maintenance technician identifiers assigned to resolve this observation.
+    dueDate:
+      container:
+        space: cdf_apm
+        externalId: Observation
+      containerPropertyIdentifier: dueDate
+      description: UTC deadline for resolution based on SeverityLevel.slaHours.
+    troubleshooting:
+      container:
+        space: cdf_apm
+        externalId: Observation
+      containerPropertyIdentifier: troubleshooting
+      description: Technician troubleshooting notes. Populated when status=resolved.
+    asset:
+      container:
+        space: cdf_apm
+        externalId: Observation
+      containerPropertyIdentifier: asset
+      description: Direct relation to the CogniteAsset where the anomaly was observed.
+      type:
+        type: direct_relation
+        list: false
+      source:
+        space: ip_checklist_dm
+        externalId: IpCogniteAsset
+        version: v1
+    rootLocation:
+      container:
+        space: cdf_apm
+        externalId: Observation
+      containerPropertyIdentifier: rootLocation
+      description: Direct relation to the route-level CogniteAsset.
+      type:
+        type: direct_relation
+        list: false
+      source:
+        space: ip_checklist_dm
+        externalId: IpCogniteAsset
+        version: v1
+    visibility:
+      container:
+        space: cdf_apps_shared
+        externalId: Creatable
+      containerPropertyIdentifier: visibility
+      description: Access visibility ("PUBLIC").
+    isArchived:
+      container:
+        space: cdf_apps_shared
+        externalId: Creatable
+      containerPropertyIdentifier: isArchived
+      description: False for active observations.
+    createdBy:
+      container:
+        space: cdf_apps_shared
+        externalId: Creatable
+      containerPropertyIdentifier: createdBy
+      description: CDF user who raised this observation.
+    updatedBy:
+      container:
+        space: cdf_apps_shared
+        externalId: Creatable
+      containerPropertyIdentifier: updatedBy
+      description: CDF user who last updated this observation.
+    categoryRef:
+      container:
+        space: ip_checklist_dm
+        externalId: ApmObservationExtended
+      containerPropertyIdentifier: categoryRef
+      description: >
+        Direct relation to the ObservationCategory SST node (Safety, Maintenance, Quality,
+        Environmental, Housekeeping, Reliability). Enables structured category-based filtering
+        in dashboards and Atlas AI queries like "show all Safety observations this week".
+      type:
+        type: direct_relation
+        list: false
+      source:
+        space: ip_checklist_dm
+        externalId: ObservationCategory
+        version: v1
+    severityRef:
+      container:
+        space: ip_checklist_dm
+        externalId: ApmObservationExtended
+      containerPropertyIdentifier: severityRef
+      description: >
+        Direct relation to the SeverityLevel SST node (P1 Critical → P4 Low).
+        Provides structured, queryable SLA priority beyond the free-text priority field.
+        Enables SLA compliance KPIs and Atlas AI escalation queries.
+      type:
+        type: direct_relation
+        list: false
+      source:
+        space: ip_checklist_dm
+        externalId: SeverityLevel
+        version: v1
+
+# ---------------------------------------------------------------------------
+# CogniteCore — CogniteAsset v1
+# ---------------------------------------------------------------------------
+- space: ip_checklist_dm
+  externalId: IpCogniteAsset
+  version: "v1"
+  name: CogniteAsset (IP subset)
+  description: >
+    CogniteCore asset hierarchy (CogniteAsset:v1) projected for ip_checklist_dm use.
+    Represents the physical equipment and location hierarchy of the A-Line paper machine.
+    ExternalId prefix: IP.ASSET.ALINE.{ROUTE}.{EQUIPMENT}
+    Atlas AI: "List all equipment on Route 2 with their current health scores."
+  properties:
+    name:
+      container:
+        space: cdf_cdm
+        externalId: CogniteDescribable
+      containerPropertyIdentifier: name
+      description: Asset display name.
+    description:
+      container:
+        space: cdf_cdm
+        externalId: CogniteDescribable
+      containerPropertyIdentifier: description
+      description: Asset description including equipment type and location.
+    tags:
+      container:
+        space: cdf_cdm
+        externalId: CogniteDescribable
+      containerPropertyIdentifier: tags
+      description: Labels for filtering (e.g., ["ip", "a-line", "route2", "PUMP"]).
+    parent:
+      container:
+        space: cdf_cdm
+        externalId: CogniteAsset
+      containerPropertyIdentifier: assetHierarchy_parent
+      description: Direct relation to the parent CogniteAsset in the hierarchy.
+      type:
+        type: direct_relation
+        list: false
+      source:
+        space: ip_checklist_dm
+        externalId: IpCogniteAsset
+        version: v1
+    root:
+      container:
+        space: cdf_cdm
+        externalId: CogniteAsset
+      containerPropertyIdentifier: assetHierarchy_root
+      description: Direct relation to the root CogniteAsset (always IP.ASSET.ALINE).
+      type:
+        type: direct_relation
+        list: false
+      source:
+        space: ip_checklist_dm
+        externalId: IpCogniteAsset
+        version: v1
+    path:
+      container:
+        space: cdf_cdm
+        externalId: CogniteAsset
+      containerPropertyIdentifier: assetHierarchy_path
+      description: Ordered list of ancestor asset references from root to this node.
+    assetClass:
+      container:
+        space: cdf_cdm
+        externalId: CogniteAsset
+      containerPropertyIdentifier: assetClass
+      description: Direct relation to the CogniteAssetClass for this equipment type.
+    type:
+      container:
+        space: cdf_cdm
+        externalId: CogniteAsset
+      containerPropertyIdentifier: type
+      description: Direct relation to the CogniteAssetType for this asset.
+
+# ---------------------------------------------------------------------------
+# CogniteCore — CogniteTimeSeries v1
+# ---------------------------------------------------------------------------
+- space: ip_checklist_dm
+  externalId: IpCogniteTimeSeries
+  version: "v1"
+  name: CogniteTimeSeries (IP subset)
+  description: >
+    CogniteCore time series (CogniteTimeSeries:v1) projected for ip_checklist_dm use.
+    Each time series captures continuous sensor data for one measurement point on A-Line equipment.
+    ExternalId prefix: IP.TS.ALINE.{ROUTE}.{EQUIPMENT}.{MEASUREMENT}
+    Atlas AI: "What is the current bearing temperature trend for all pumps on Route 2?"
+  properties:
+    name:
+      container:
+        space: cdf_cdm
+        externalId: CogniteDescribable
+      containerPropertyIdentifier: name
+      description: Time series display name.
+    description:
+      container:
+        space: cdf_cdm
+        externalId: CogniteDescribable
+      containerPropertyIdentifier: description
+      description: Measurement description including physical quantity and location.
+    type:
+      container:
+        space: cdf_cdm
+        externalId: CogniteTimeSeries
+      containerPropertyIdentifier: type
+      description: Data type ("numeric" for continuous measurements).
+    isStep:
+      container:
+        space: cdf_cdm
+        externalId: CogniteTimeSeries
+      containerPropertyIdentifier: isStep
+      description: False for all A-Line measurement time series.
+    sourceUnit:
+      container:
+        space: cdf_cdm
+        externalId: CogniteTimeSeries
+      containerPropertyIdentifier: sourceUnit
+      description: Engineering unit string (e.g., "°F", "ips", "PSI", "GPM", "RPM").
+    unit:
+      container:
+        space: cdf_cdm
+        externalId: CogniteTimeSeries
+      containerPropertyIdentifier: unit
+      description: Direct relation to the CogniteUnit from the CDM unit catalog.
+    assets:
+      container:
+        space: cdf_cdm
+        externalId: CogniteTimeSeries
+      containerPropertyIdentifier: assets
+      description: Direct relation list to the CogniteAsset(s) this time series belongs to.
+      type:
+        type: direct_relation
+        list: true
+      source:
+        space: ip_checklist_dm
+        externalId: IpCogniteAsset
+        version: v1
+    equipment:
+      container:
+        space: cdf_cdm
+        externalId: CogniteTimeSeries
+      containerPropertyIdentifier: equipment
+      description: Direct relation to the CogniteEquipment node for this time series.

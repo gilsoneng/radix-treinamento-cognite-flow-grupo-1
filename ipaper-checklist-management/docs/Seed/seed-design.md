@@ -41,17 +41,29 @@ O ApmAppData cobre o **fluxo operacional** (checklist, templates, observações)
 | Metadados do seed (auditoria, proveniência) | Sem rastreabilidade de geração | View `SeedManifest v1` |
 | Rotas adicionais (além das 4 do Excel) | Mais dados → melhor demonstração de KPIs | Novos `Template` + `TemplateItem` |
 
-### Decisão: **Criar `ip_checklist_dm`**
+### Decisão: **Criar `ip_gp1_checklist_dm`**
 
 ```
-Space: ip_checklist_dm
+Space:       ip_checklist_dm
+DataModel:   ip_gp1_checklist_dm  (externalId — nome distinto do space)
+Version:     v1
 Importa de: cdf_apm (ApmAppData v13) + cdf_cdm (CogniteCore v1)
 Não duplica: nenhuma entidade existente — apenas estende e classifica
 ```
 
 ---
 
-## 3. Arquitetura do DM Solution `ip_checklist_dm`
+## 3. Arquitetura do DM Solution `ip_gp1_checklist_dm`
+
+> **Coordenadas CDF:** space = `ip_checklist_dm` · externalId = `ip_gp1_checklist_dm` · version = `v1`
+>
+> **Views externas (ApmAppData + CogniteCore):** definidas em `external.View.yaml` **sem `implements`** —
+> cada propriedade mapeia diretamente seu container de origem (`cdf_apm`, `cdf_cdm`, `cdf_core`, `cdf_apps_shared`).
+> Isso expõe somente os campos usados no seed e no Atlas AI, evitando conflitos de herança de schema.
+>
+> **`type: view` nas referências do DataModel:** obrigatório em cada entrada de view no
+> `ip_checklist_dm.DataModel.yaml` para que o SDK Python interprete o item como `ViewId`
+> (referência) e não como `ViewApply` (definição inline vazia → erro 400 na API).
 
 ### 3.1 Views de classificação / lookup (SST)
 
@@ -1224,17 +1236,55 @@ consegue traversar o grafo completo — inspeção manual ↔ sensor ↔ health 
 
 ---
 
-## 11. Próximos passos
+## 11. Status e próximos passos
 
-1. **Criar `ip_checklist_dm` no CDF `radix-dev`** via Cognite Toolkit (Atividade 4)
-2. **Escrever `scripts/seed/index.mjs`** com toda a arquitetura acima (Atividade 3), incluindo:
-   - Fase 1: SST lookups (EquipmentCategory, InspectionShift, etc.)
-   - Fase 2: `CogniteAsset` hierarquia IP em `radix_space`
-   - Fase 2b: `CogniteTimeSeries` linkadas aos assets IP em `radix_space` (~960 nodes)
-   - Fase 3: Templates + TemplateItems
-   - Fase 4: Checklists (8.760) + ChecklistItems + MeasurementReadings
-   - Fase 5: Aggregate KPIs (EquipmentHealthIndex, RouteKpiSnapshot, MeasurementTrend com `timeSeriesRef`)
-   - Fase 6: SeedManifest
-3. **Gerar dry-run** para validar volumes e externalIds antes de gravar
-4. **Ingerir** via Cognite Toolkit ou CDF SDK (Atividade 5)
-5. **Validar** via MCP `cdf_list_instances` em cada view
+### Concluído ✅
+
+| Item | Detalhe |
+|---|---|
+| Data Model `ip_gp1_checklist_dm` | Deployado no `radix-dev` (space `ip_checklist_dm`, version `v1`) — 11 containers, 19 views |
+| Views com typed direct relations | `type: direct_relation` + `source` declarados — grafo de relacionamentos visível no CDF UI |
+| `scripts/seed/index.mjs` | Gerador completo: SST → Assets → TimeSeries → Templates → Checklists → KPIs → SeedManifest |
+| `scripts/seed/ingest.mjs` | Ingestão com `--only <fase>` e `--dry-run` — APM + CDM ingeridos no `radix-dev` |
+| `scripts/seed/clean.mjs` | Limpeza de instâncias com `--only <grupo>` — sem risco de deletar dados de outras seeds |
+| Bug fix: `MeasurementTrend` | Propriedade corrigida de `p?.value` → `p?.numericReading` (47 trends gerados) |
+| Bug fix: `EquipmentHealthIndex` | Deduplicação por `equipSlug` — eliminou IDs duplicados cross-route (83→71 nós únicos) |
+| Bug fix: `SeedManifest` | Nomes de propriedades corrigidos: `fromDate→periodStart`, `toDate→periodEnd`, `dryRun→isDryRun`, `generatedAt→executedAt` |
+
+### Scripts npm disponíveis
+
+```bash
+# ── Geração ──────────────────────────────────────────────────────
+npm run seed:generate           # dry-run — gera JSONs sem tocar no CDF
+npm run seed:generate:full      # Jan–Dez 2025
+
+# ── Ingestão ─────────────────────────────────────────────────────
+npm run seed:ingest             # ingere tudo do último run
+npm run seed:ingest:dry         # valida payload sem gravar
+npm run seed:ingest:assets      # só CogniteAsset + CogniteTimeSeries
+npm run seed:ingest:apm-schema  # só Templates + TemplateItems + edges
+npm run seed:ingest:apm-checklists  # só Checklists + Items + Measurements + Observations
+npm run seed:ingest:ip-schema   # só SST Classification
+npm run seed:ingest:kpis        # só KPIs + SeedManifest
+
+# ── Limpeza ──────────────────────────────────────────────────────
+npm run seed:clean              # deleta todas as instâncias do último run
+npm run seed:clean:dry          # preview do que seria deletado
+npm run seed:clean:ip           # deleta só ip_checklist_dm (SST + KPIs) — APM/CDM intactos
+npm run seed:clean:ip:dry       # preview do clean:ip
+npm run seed:clean:kpis         # deleta só KPIs + SeedManifest
+npm run seed:clean:assets       # deleta todas as instâncias do space flows_radix_space_group1
+npm run seed:clean:checklist    # deleta todas as instâncias do space flows_radix_checklist_group1
+```
+
+### Concluído nesta sessão ✅ (adicionado em 2026-06-03)
+
+| Item | Detalhe |
+|---|---|
+| Extension containers | `ApmTemplateItemExtended` (inspectionTypeRef+unitRef) + `ApmObservationExtended` (categoryRef+severityRef) |
+| Views externas enriquecidas | `ApmTemplateItem` e `ApmObservation` ganham relações tipadas para SST lookups |
+| Multi-source upsert | `templateItemNode` e `observationNode` escrevem em APM container + extensão ip_checklist_dm simultaneamente |
+| Retry exponencial | `BatchUpserter` retenta 503/409/429 automaticamente — até 5x com backoff 1s→32s |
+| Seed completo validado | Todas as views verificadas via MCP — relações tipadas confirmadas nas instâncias |
+
+### ✅ Seed completo — nenhuma pendência
