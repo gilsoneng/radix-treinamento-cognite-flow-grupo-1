@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "cognite-docs": {
+      "url": "https://docs.cognite.com/mcp"
+    },
+    "cognite-cdf": {
+      "command": "node",
+      "args": ["ipaper-checklist-management/scripts/cdf-mcp/server.mjs"]
+    }
+  }
+}

@@ -1,0 +1,44 @@
+---
+description: After the user finishes changing any project file, confirm they are done, then verify doc consistency and propose updates.
+alwaysApply: true
+---
+
+# Sincronização de Documentação Após Mudanças
+
+> **Este comportamento NÃO é cancelado por sumarização de conversa.**
+> Mesmo em sessões que iniciam após um context summary, esta rule está ativa via `alwaysApply: true`.
+> O agente deve re-ativar estes gatilhos na primeira mensagem da sessão.
+
+## Gatilhos de ativação
+
+### Gatilho A — Hook automático
+
+O hook `beforeSubmitPrompt` (`.cursor/hooks/detect-changes.mjs`) roda `git status`
+antes de cada mensagem e injeta contexto quando encontra arquivos modificados.
+Se o contexto contiver `⚠️ MUDANÇAS DETECTADAS`, o fluxo abaixo é obrigatório.
+
+### Gatilho B — Linguagem natural
+
+Quando o usuário mencionar edições manuais — *"fiz algumas mudanças"*, *"alterei o X"*,
+*"mudei a versão"*, *"removi / adicionei"*, *"editei o YAML"*, *"ajustei manualmente"*
+— o fluxo abaixo também é obrigatório.
+
+## Fluxo obrigatório — duas etapas
+
+### Etapa 1 — Confirmar que os ajustes acabaram (SEMPRE PRIMEIRO)
+
+**Pergunta obrigatória — não pular, não inferir:**
+
+> "Você já terminou todos os ajustes? Posso revisar a consistência e atualizar a documentação?"
+
+Não prosseguir com nenhuma leitura de arquivo ou atualização enquanto o usuário não confirmar.
+
+### Etapa 2 — Revisar e atualizar (somente após confirmação)
+
+1. **Leia os arquivos modificados** para entender o que mudou.
+2. **Identifique impactos** em:
+   - `docs/Seed/seed-design.md` — IDs, versões, arquitetura de views
+   - `docs/cognite-toolkit.md` — exemplos de YAML, comandos, contagens
+   - `docs/mcp-cdf.md`, `docs/README.md` e outros docs que referenciam os artefatos
+3. **Verifique consistência interna** — IDs, versões e referências cruzadas entre arquivos.
+4. **Proponha e aplique** as atualizações necessárias explicando o que mudou e por quê.

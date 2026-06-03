@@ -1,0 +1,175 @@
+---
+description: Mapa de orientação do projeto — lido em toda sessão Cursor
+alwaysApply: true
+---
+
+# ipaper-checklist-management — orientação rápida
+
+**App:** Gerenciamento digital de checklists de inspeção OEC (Operator Equipment Checklist) para linhas de produção da **International Paper (IP)**.
+**Stack:** React 18 + TypeScript + Vite · `@cognite/aura` · `@cognite/app-sdk` · `@cognite/sdk` · react-query.
+**Ambiente CDF:** projeto `radix-dev` · cluster `az-eastus-1` · space principal `cdf_apm`.
+**Estilo arquitetural:** DDD + Clean Architecture + SOLID, adaptado ao Cognite Flows.
+
+---
+
+## Onde ler o quê
+
+| Preciso entender... | Leia |
+|---|---|
+| O que o app faz (produto, personas, requisitos) | `SPEC.md` |
+| Padrões de código / como escrever cada peça | `AGENTS.md` |
+| Onde o código mora e como as dependências fluem | `docs/architecture/README.md` |
+| Estrutura de pastas `src/` anotada | `docs/architecture/folder-structure.md` |
+| Responsabilidades por camada + regras de import | `docs/architecture/layers.md` |
+| Schema completo do data model ApmAppData v13 | `docs/datamodel.md` (seção ApmAppData) |
+| Schema do CogniteCore (cdf_cdm / v1) | `docs/datamodel.md` (seção CogniteCore) |
+| Quais features existem e seu status atual | `specs/README.md` |
+| Regras de negócio de uma feature específica | `specs/<NNN>-<slug>/spec.md` |
+| Progresso de desenvolvimento de uma feature | `specs/<NNN>-<slug>/progress.md` |
+| Princípios SDD (DoR, DoD, hierarquia) | `specs/CONSTITUTION.md` |
+| Playbook SDD completo (operacional, 4 fases) | `docs/SDD-workflow-definition/avaliacao_sdd.md` |
+| Governança SDD — resumo 1 página | `docs/SDD-workflow-definition/sdd-governance.md` |
+| Como usar o MCP CDF no agente Cursor | `docs/mcp-cdf.md` |
+| Cognite Toolkit — instalação, estrutura, comandos | `docs/cognite-toolkit.md` |
+| Seed data fonte (Excel OEC) | `docs/Seed/A Line OEC Routes 2 (1).xlsx` |
+| Análise completa do Excel (inventário, tipos, guia de seed) | `docs/Seed/excel-analysis.md` |
+| Design do seed (DM solution, analytics, SST, script architecture) | `docs/Seed/seed-design.md` |
+| IP Design System → Aura mapping | `docs/Design.md` |
+| Decisões arquiteturais (ADRs) | `docs/architecture/adr/` |
+| Rastreamento da fundação técnica (000) | `specs/000-technical-foundation/progress.md` |
+
+---
+
+## Status de desenvolvimento (Jun 2026)
+
+| Feature | Status |
+|---|---|
+| `001-checklist-management` | In progress — arquitetura definida, módulo `health` como exemplo; implementação real pendente |
+| `002-dataseed` | ✅ Done — schema `ip_gp1_checklist_dm` deployado; grafo completo de relações; seed completo ingerido e validado no `radix-dev` |
+| `003-checklist-kpis` | Not started |
+| `004-task-result-dashboards` | Not started |
+| `005-alerts-notifications` | Not started |
+
+### Roadmap — todas as atividades da fundação técnica concluídas ✅
+
+Próximas features: `001-checklist-management` (implementação React), `003-checklist-kpis`, `004-task-result-dashboards`, `005-alerts-notifications`.
+
+---
+
+## Regras inegociáveis (resumo rápido)
+
+- Só `modules/<bc>/infrastructure` toca `@cognite/sdk` / DMS. Domain é TS puro.
+- Presentation consome contratos de domain via DI — nunca vê DTO/instância DMS crua.
+- `@cognite/aura` é a fundação de UI; `design-system/` implementa IP **sobre** o Aura.
+- Cobertura de testes ≥ 80% (gate de certificação Flows).
+- Estado navegável → host-synced (`app-sdk`); estado de servidor → react-query.
+
+---
+
+## Protocolo de sincronização de documentação (SEMPRE ATIVO — não ignorar após sumarização)
+
+> **Este bloco é obrigatório em TODA sessão**, incluindo sessões que começaram após uma
+> sumarização automática de conversa anterior. A sumarização não cancela estes comportamentos.
+
+### Gatilho 1 — Mudanças detectadas pelo hook
+
+Se o contexto da mensagem contiver `⚠️ MUDANÇAS DETECTADAS` (injetado pelo hook
+`beforeSubmitPrompt`), o agente DEVE:
+1. **Perguntar primeiro:** "Você já terminou todos os ajustes? Posso revisar a consistência e atualizar a documentação?"
+2. **Aguardar confirmação.** Não atualizar nenhum doc antes disso.
+
+### Gatilho 2 — Usuário menciona edições manuais em linguagem natural
+
+Frases como *"fiz algumas mudanças"*, *"alterei o X"*, *"mudei a versão"*, *"removi / adicionei"*,
+*"ajustei o YAML"*, *"editei o arquivo"* → mesma pergunta obrigatória do Gatilho 1.
+
+### Gatilho 3 — Após concluir qualquer implementação
+
+Quando o agente termina de editar arquivos (código, YAML, scripts), verificar se os documentos
+abaixo precisam de atualização. Atualizar sem perguntar (o agente é quem fez a mudança):
+
+| Quando o agente faz isto... | Deve atualizar estes documentos |
+
+| Quando o agente faz isto... | Deve atualizar estes documentos |
+|---|---|
+| Adiciona / modifica view ou data model no CDF | `docs/datamodel.md` |
+| Muda estrutura de pastas em `src/` | `docs/architecture/folder-structure.md` |
+| Muda regras de import entre camadas | `docs/architecture/layers.md` + seção relevante de `architecture.mdc` |
+| Cria nova decisão arquitetural | `docs/architecture/adr/<NNNN>-<slug>.md` + linha na tabela de `docs/architecture/README.md` |
+| Adiciona ou remove dependência crítica do stack | tabela §2 de `docs/architecture/README.md` + seção relevante de `AGENTS.md` |
+| Cria nova feature / spec | `specs/README.md` (linha nova) + 5 arquivos em `specs/<NNN>-<slug>/` |
+| Muda comportamento visível ao usuário | `SPEC.md` (seção relevante) |
+| Conclui ou avança uma tarefa de uma feature | `specs/<NNN>-<slug>/progress.md` + `tasks.md` |
+| Conclui ou avança qualquer entrega de fundação técnica | `specs/000-technical-foundation/progress.md` |
+| Instala / configura nova ferramenta de infra (Toolkit, MCP, etc.) | `docs/<ferramenta>.md` + `specs/000-technical-foundation/progress.md` |
+| Adiciona / altera módulo no `modules/` (Toolkit) | `docs/cognite-toolkit.md` + `specs/000-technical-foundation/progress.md` |
+| Altera a hierarquia ou os princípios SDD | `specs/CONSTITUTION.md` + `docs/SDD-workflow-definition/sdd-governance.md` |
+
+### Sequência de contexto para sessão nova
+
+1. Este arquivo já foi injetado automaticamente (alwaysApply).
+2. Ler `AGENTS.md` — padrões de código (como escrever).
+3. Ler `specs/README.md` — quais features existem e em que estado.
+4. Se a tarefa envolve CDF: ler `docs/datamodel.md`.
+5. Se a tarefa envolve nova feature: ler `specs/CONSTITUTION.md` (DoR/DoD).
+6. Se a tarefa é de infra/fundação: ler `specs/000-technical-foundation/progress.md`.
+
+---
+
+## Protocolo de onboarding de sessão (OBRIGATÓRIO em Agent mode)
+
+> **PRIMEIRA AÇÃO OBRIGATÓRIA — SEM EXCEÇÃO:**
+> Antes de responder qualquer mensagem que envolva escrita de código ou edição de arquivos,
+> o agente DEVE:
+> 1. Ler `specs/README.md`
+> 2. Verificar se o usuário já informou uma spec nesta conversa (número de spec, "006", "bug fix", etc.)
+> 3. Se NÃO informou → apresentar o menu abaixo e PARAR. Não editar nenhum arquivo.
+
+```
+Olá! Antes de começar, preciso confirmar em qual contexto vamos trabalhar:
+
+① Trabalhar em spec existente
+   → Informe o número (ex: "001") ou eu listo as specs com tasks [ ] pendentes
+
+② Nova atividade / feature
+   → Descreva o que será feito → criarei a spec (fluxo completo ou leve)
+   → Nenhum arquivo editado sem spec confirmada
+
+③ Bugs & ajustes menores
+   → Spec 006-bugs-and-minor-actions (fluxo leve, sem SDD completo)
+   → Descreva o bug/ajuste → registro em tasks.md e executo
+
+④ Análise / Exploração (sem implementação)
+   → Modo read-only: leio, analiso, proponho — não executo sem confirmação explícita
+   → Não requer spec
+```
+
+---
+
+## Gate de implementação (BLOQUEANTE — NUNCA IGNORAR)
+
+**Condição de bloqueio:** o usuário NÃO mencionou spec nesta conversa E a tarefa implica
+editar, criar ou deletar qualquer arquivo no repositório.
+
+**Ação obrigatória quando bloqueado — copiar e colar literalmente:**
+
+```
+⛔ SPEC REQUIRED
+
+Nenhum arquivo será editado nesta sessão sem spec confirmada.
+Specs disponíveis (lidas de specs/README.md):
+  [listar número + nome + status de cada spec]
+
+Qual opção do protocolo de onboarding você escolhe? (①②③④)
+```
+
+**Exceções que dispensam spec (únicas):**
+- Opção ④ explicitamente declarada (análise/exploração)
+- Usuário já mencionou número de spec ou "006"/"bug fix"/"ajuste" no início da conversa
+
+**O agente NÃO pode inferir uma spec implicitamente.** Mesmo que a tarefa pareça óbvia
+ou seja uma continuação de conversa anterior: se não há spec confirmada → bloquear.
+
+> ⚠️ Esta regra existe porque agentes novos não herdam contexto de sessões anteriores.
+> Sem o gate, o agente pode editar arquivos fora do escopo de qualquer spec, gerando
+> trabalho não rastreado e potencial regressão.

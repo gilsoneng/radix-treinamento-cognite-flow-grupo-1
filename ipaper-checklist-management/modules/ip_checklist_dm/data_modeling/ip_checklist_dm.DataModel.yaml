@@ -1,0 +1,97 @@
+- externalId: ip_gp1_checklist_dm
+  space: ip_checklist_dm
+  name: IP Checklist Data Model
+  description: > 
+    Custom Data Model Solution (CKM) for ipaper-checklist-management, 
+    supporting preventive maintenance inspections on a pulp & paper mill A-Line. 
+    Operators execute inspection routes across equipment (pumps, motors, fans, refiners, 
+    dryers, etc.) during Day, Afternoon, and Night shifts. 
+    The model includes SST lookup tables, APM projections (templates, checklists, 
+    readings, observations), CDM projections (assets and time series), 
+    KPI entities (completion, NOK rate, health score, trends), and audit metadata. 
+    Atlas AI uses this model to answer operational, maintenance, reliability, and 
+    inspection performance questions, including equipment health, 
+    observation tracking, route performance, operator activity, and measurement trends.
+  version: "v1"
+  views:
+    # --- SST / Lookup views (ip_checklist_dm space) ---
+    - space: ip_checklist_dm
+      externalId: EquipmentCategory
+      version: "v1"
+      type: view
+    - space: ip_checklist_dm
+      externalId: InspectionShift
+      version: "v1"
+      type: view
+    - space: ip_checklist_dm
+      externalId: ObservationCategory
+      version: "v1"
+      type: view
+    - space: ip_checklist_dm
+      externalId: SeverityLevel
+      version: "v1"
+      type: view
+    - space: ip_checklist_dm
+      externalId: MeasurementUnit
+      version: "v1"
+      type: view
+    - space: ip_checklist_dm
+      externalId: InspectionItemType
+      version: "v1"
+      type: view
+    # --- KPI / Analytics views ---
+    - space: ip_checklist_dm
+      externalId: ChecklistKpi
+      version: "v1"
+      type: view
+    - space: ip_checklist_dm
+      externalId: EquipmentHealthIndex
+      version: "v1"
+      type: view
+    - space: ip_checklist_dm
+      externalId: RouteKpiSnapshot
+      version: "v1"
+      type: view
+    - space: ip_checklist_dm
+      externalId: MeasurementTrend
+      version: "v1"
+      type: view
+    # --- Audit view ---
+    - space: ip_checklist_dm
+      externalId: SeedManifest
+      version: "v1"
+      type: view
+    # --- ApmAppData projections (cdf_apm subset) ---
+    - space: ip_checklist_dm
+      externalId: ApmTemplate
+      version: "v1"
+      type: view
+    - space: ip_checklist_dm
+      externalId: ApmTemplateItem
+      version: "v1"
+      type: view
+    - space: ip_checklist_dm
+      externalId: ApmChecklist
+      version: "v1"
+      type: view
+    - space: ip_checklist_dm
+      externalId: ApmChecklistItem
+      version: "v1"
+      type: view
+    - space: ip_checklist_dm
+      externalId: ApmMeasurementReading
+      version: "v1"
+      type: view
+    - space: ip_checklist_dm
+      externalId: ApmObservation
+      version: "v1"
+      type: view
+    # --- CogniteCore projections (cdf_cdm subset) ---
+    - space: ip_checklist_dm
+      externalId: IpCogniteAsset
+      version: "v1"
+      type: view
+    - space: ip_checklist_dm
+      externalId: IpCogniteTimeSeries
+      version: "v1"
+      type: view

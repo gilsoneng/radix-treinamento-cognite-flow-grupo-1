@@ -3,6 +3,10 @@
     "cognite-docs": {
       "type": "http",
       "url": "https://docs.cognite.com/mcp"
+    },
+    "cognite-cdf": {
+      "command": "node",
+      "args": ["scripts/cdf-mcp/server.mjs"]
     }
   }
 }

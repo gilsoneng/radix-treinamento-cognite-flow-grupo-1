@@ -4,6 +4,8 @@ node_modules
 # Build output
 dist
 coverage
+# Cognite Toolkit build output
+build/
 
 # Retained app bundles from `cognite apps deploy` (signed before publish)
 .cognite-bundles

@@ -2,6 +2,10 @@
   "mcpServers": {
     "cognite-docs": {
       "url": "https://docs.cognite.com/mcp"
+    },
+    "cognite-cdf": {
+      "command": "node",
+      "args": ["scripts/cdf-mcp/server.mjs"]
     }
   }
 }

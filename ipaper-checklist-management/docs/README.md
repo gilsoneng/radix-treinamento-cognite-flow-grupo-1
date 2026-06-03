@@ -37,6 +37,18 @@ docs/
 
 ---
 
+## CDF / data models (stack React)
+
+| Canal | Auth | Uso |
+| --- | --- | --- |
+| App no Fusion | `@cognite/app-sdk` | Runtime do checklist |
+| MCP **`cognite-cdf`** (Cursor) | Client credentials em **`.env`** | Explorar data model no agente |
+| MCP **`cognite-docs`** | HTTP público | Documentação Cognite |
+
+Schema do data model explorado: **[`datamodel.md`](datamodel.md)** — dois modelos: `ApmAppData` v13 (space `cdf_apm`) + `CogniteCore` v1 (space `cdf_cdm`). Guia do MCP CDF: [`mcp-cdf.md`](mcp-cdf.md). Credenciais: [`.env_example`](../.env_example). **Sem Python** no MCP.
+
+---
+
 ## prototype/ — Protótipo Lovable
 
 Referência UX do use case **International Paper — InField Challenge** (gerado no Lovable, código em `prototype/fieldops-insights/`).

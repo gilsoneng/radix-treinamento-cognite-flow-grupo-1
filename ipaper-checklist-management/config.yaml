@@ -1,0 +1,18 @@
+name: ipaper-checklist-management
+environment: dev
+# Toolkit docs: https://docs.cognite.com/cdf/deploy/cdf_toolkit/
+
+# Modules deployed by this project
+modules:
+  - infra
+  - ip_checklist_dm
+
+# CDF connection — values read from .env (see .env_example)
+cognite_client:
+  project: ${CDF_PROJECT}
+  cdf_url: ${CDF_URL}
+  login_flow: client_credentials
+  idp_client_id: ${IDP_CLIENT_ID}
+  idp_client_secret: ${IDP_CLIENT_SECRET}
+  idp_token_url: ${IDP_TOKEN_URL}
+  idp_scopes: ${IDP_SCOPES}

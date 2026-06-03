@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeSubmitPrompt": [
+      {
+        "type": "command",
+        "command": "cmd /c node .cursor/hooks/detect-changes.mjs",
+        "timeout": 10,
+        "matcher": "UserPromptSubmit"
+      }
+    ]
+  }
+}

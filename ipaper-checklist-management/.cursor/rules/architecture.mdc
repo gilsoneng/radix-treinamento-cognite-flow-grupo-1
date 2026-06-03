@@ -1,7 +1,6 @@
 ---
-description: Fronteiras de arquitetura (DDD/Clean) ao editar código em src/
-globs: ipaper-checklist-management/src/**/*.{ts,tsx}
-alwaysApply: false
+description: Fronteiras de arquitetura (DDD/Clean) — aplicado em toda sessão
+alwaysApply: true
 ---
 
 # Arquitetura — fronteiras de camada

@@ -21,12 +21,15 @@
 
 ## Índice de features
 
-| ID | Slug | Epic owner | Status | Rigor |
-| --- | --- | --- | --- | --- |
-| 004 | alerts-notifications | Caio | not-started | completo |
-| 003 | task-result-trends | Caio | not-started | completo |
-| 002 | checklist-kpis | João | not-started | completo |
-| 001 | checklist-management (app foundation) | Guilherme | in-progress | completo |
+| ID | Slug | Epic owner | Status | Owner | Rigor | PR |
+| --- | --- | --- | --- | --- | --- | --- |
+| 000 | technical-foundation | — | in-progress | time-grupo-1 | leve | — |
+| 001 | checklist-management | Guilherme | in-progress | time-grupo-1 | completo | — |
+| 002 | dataseed | — | in-progress | time-grupo-1 | leve | — |
+| 003 | checklist-kpis | João | not-started | time-grupo-1 | completo | — |
+| 004 | task-result-dashboards | Caio | not-started | time-grupo-1 | completo | — |
+| 005 | alerts-notifications | Caio | not-started | time-grupo-1 | completo | — |
+| 006 | bugs-and-minor-actions | — | in-progress | time-grupo-1 | leve | — |
 
 Cada feature **completo** inclui: `spec.md`, `research.md`, `plan.md`, `tasks.md`, `progress.md`.
 

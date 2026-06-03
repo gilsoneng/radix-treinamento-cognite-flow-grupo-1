@@ -1,0 +1,12 @@
+[
+  { "externalId": "op.john.martinez",  "name": "John Martinez",  "shift": "D", "specialty": "Kraft Digester",       "routes": ["route1","route2"], "nokRateBase": 0.06 },
+  { "externalId": "op.sarah.chen",     "name": "Sarah Chen",     "shift": "A", "specialty": "Digester/Bleach",      "routes": ["route1","route7"], "nokRateBase": 0.05 },
+  { "externalId": "op.mike.torres",    "name": "Mike Torres",    "shift": "N", "specialty": "Feed Systems (junior)", "routes": ["route2","route3"], "nokRateBase": 0.11 },
+  { "externalId": "op.linda.kowalski", "name": "Linda Kowalski", "shift": "D", "specialty": "Washing & Screens",    "routes": ["route3","route4"], "nokRateBase": 0.04 },
+  { "externalId": "op.james.osei",     "name": "James Osei",     "shift": "A", "specialty": "Bleach/Utilities",     "routes": ["route4","route8"], "nokRateBase": 0.07 },
+  { "externalId": "op.anna.petrov",    "name": "Anna Petrov",    "shift": "N", "specialty": "Chemical Recovery",    "routes": ["route5","route6"], "nokRateBase": 0.06 },
+  { "externalId": "op.carlos.rivera",  "name": "Carlos Rivera",  "shift": "D", "specialty": "Recovery & Causticizing", "routes": ["route6","route5"], "nokRateBase": 0.05 },
+  { "externalId": "op.fatima.ali",     "name": "Fatima Ali",     "shift": "A", "specialty": "Utilities & Power",    "routes": ["route7","route8"], "nokRateBase": 0.08 },
+  { "externalId": "sup.david.nguyen",  "name": "David Nguyen",   "shift": "D", "specialty": "Maintenance",          "routes": ["all"],            "nokRateBase": 0.00, "isSupervisor": true },
+  { "externalId": "sup.carol.bishop",  "name": "Carol Bishop",   "shift": "A", "specialty": "Operations",           "routes": ["all"],            "nokRateBase": 0.00, "isSupervisor": true }
+]

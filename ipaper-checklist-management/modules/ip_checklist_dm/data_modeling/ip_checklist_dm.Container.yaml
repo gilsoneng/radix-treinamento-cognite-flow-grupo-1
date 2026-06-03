@@ -1,0 +1,931 @@
+- space: ip_checklist_dm
+  externalId: EquipmentCategory
+  name: EquipmentCategory
+  description: >
+    SST — Single Source of Truth for equipment taxonomy in the pulp & paper mill.
+    Classifies rotating and static equipment on A-Line inspection routes into categories
+    (e.g., Centrifugal Pump, Electric Motor, Fan, Refiner, Dryer, Heat Exchanger).
+    Used to group TemplateItems by equipment type and drive EquipmentHealthIndex aggregation.
+  usedFor: node
+  properties:
+    code:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        Short uppercase code identifying the equipment category (e.g., PUMP, MOTOR, FAN, REFINER).
+        Used as a tag on CogniteAsset nodes and as a filter key in inspection analytics.
+    name:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        Human-readable category name (e.g., "Centrifugal Pump", "Electric Motor").
+        Displayed in inspection dashboards and Atlas AI responses.
+    description:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        Detailed description of the equipment category including typical failure modes,
+        inspection focus areas, and relevant measurement types. Enriches Atlas AI context.
+    icon:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        Icon identifier for UI rendering (e.g., Aura icon name or SVG key).
+        Used in the inspection app checklist and dashboard views.
+    typicalMeasurements:
+      type:
+        type: text
+        list: true
+        collation: ucs_basic
+      nullable: true
+      description: >
+        List of measurement slugs typically collected for this equipment category
+        (e.g., ["IB-BEARING-TEMP", "OB-VIBRATION-IPS", "MOTOR-AMPS"]).
+        Drives MeasurementTrend generation and Atlas AI measurement queries.
+
+- space: ip_checklist_dm
+  externalId: InspectionShift
+  name: InspectionShift
+  description: >
+    SST — Single Source of Truth for the three daily operational inspection shifts at the mill.
+    Shifts divide the 24-hour production day: Day (06:00–14:00), Afternoon (14:00–22:00),
+    Night (22:00–06:00). Used to correlate checklist execution time with shift context,
+    enabling shift-based KPI comparisons and anomaly pattern detection.
+  usedFor: node
+  properties:
+    name:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        Full shift name: "Day Shift", "Afternoon Shift", or "Night Shift".
+        Displayed in KPI dashboards and Atlas AI shift-comparison queries.
+    startHour:
+      type:
+        type: int32
+        list: false
+      nullable: true
+      description: >
+        Hour (0–23, UTC-5) when the shift begins. Day=6, Afternoon=14, Night=22.
+        Used to classify checklist execution time into the correct shift bucket.
+    endHour:
+      type:
+        type: int32
+        list: false
+      nullable: true
+      description: >
+        Hour (0–23, UTC-5) when the shift ends. Day=14, Afternoon=22, Night=6 (next day).
+        Combined with startHour to determine shift duration and boundary conditions.
+    shiftCode:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        Single-letter shift code used in checklist externalIds and KPI keys: D (Day), A (Afternoon), N (Night).
+        Compact identifier for time-series labels and operator assignment strings.
+
+- space: ip_checklist_dm
+  externalId: ObservationCategory
+  name: ObservationCategory
+  description: >
+    SST — Single Source of Truth for classifying anomaly observations raised during inspections.
+    Categories include Safety (immediate risk to personnel), Maintenance (equipment degradation
+    requiring planned intervention), Quality (product quality impact), and Environmental.
+    Drives routing logic for work order creation and escalation workflows.
+  usedFor: node
+  properties:
+    name:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        Category name: "Safety", "Maintenance", "Quality", "Environmental", or "Process".
+        Used in Atlas AI queries like "show all Safety observations on Route 1 this week".
+    description:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        Detailed explanation of what observations belong to this category, typical examples,
+        and expected response procedures. Critical for Atlas AI to classify and route anomalies.
+    requiresWorkOrder:
+      type:
+        type: boolean
+        list: false
+      nullable: true
+      description: >
+        Flag indicating whether observations in this category automatically trigger a work order
+        in the CMMS. Safety=true, Maintenance=true, Quality=false (typically).
+
+- space: ip_checklist_dm
+  externalId: SeverityLevel
+  name: SeverityLevel
+  description: >
+    SST — Single Source of Truth for observation severity classification with SLA response times.
+    Four levels: P1 (Critical, 2h SLA), P2 (High, 8h SLA), P3 (Medium, 24h SLA), P4 (Low, 72h SLA).
+    Used to prioritize maintenance response and drive escalation in EquipmentHealthIndex scoring.
+  usedFor: node
+  properties:
+    name:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        Severity level name: "Critical (P1)", "High (P2)", "Medium (P3)", or "Low (P4)".
+        Displayed in observation lists, dashboards, and Atlas AI priority queries.
+    numericLevel:
+      type:
+        type: int32
+        list: false
+      nullable: true
+      description: >
+        Numeric severity rank (1=Critical, 4=Low) used for sorting and health index scoring.
+        Lower numbers = higher urgency. P1 observations contribute most to healthScore degradation.
+    colorCode:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        Hex color code for UI rendering (e.g., "#FF0000" for P1 Critical, "#FFA500" for P2 High).
+        Used in dashboard heatmaps and observation list color-coding.
+    slaHours:
+      type:
+        type: int32
+        list: false
+      nullable: true
+      description: >
+        Maximum hours allowed to resolve an observation at this severity level.
+        P1=2h, P2=8h, P3=24h, P4=72h. Used in SLA compliance KPIs and Atlas AI time-to-close queries.
+    escalateTo:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        Role or user group to escalate to if the SLA is breached (e.g., "Maintenance Supervisor",
+        "Plant Manager"). Drives notification routing in the observation workflow.
+
+- space: ip_checklist_dm
+  externalId: MeasurementUnit
+  name: MeasurementUnit
+  description: >
+    SST — Single Source of Truth for process-specific measurement units used in mill inspections.
+    Supplements CogniteUnit with units specific to rotating equipment monitoring:
+    °F (bearing/motor temperature), ips (vibration velocity), PSI (pressure), GPM (flow),
+    RPM (shaft speed), mm (gap), % (level/completion), A (motor current).
+    Used to enrich MeasurementReading context and Atlas AI unit-aware queries.
+  usedFor: node
+  properties:
+    symbol:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        Unit symbol as displayed in inspection readings (e.g., "°F", "ips", "PSI", "GPM", "RPM").
+        Matches the sourceUnit field on CogniteTimeSeries nodes for unit consistency.
+    description:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        Full unit name and context (e.g., "Degrees Fahrenheit — bearing and motor temperature in imperial units").
+        Used by Atlas AI to understand measurement context and answer unit-conversion questions.
+    quantityType:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        Physical quantity type measured by this unit: "Temperature", "Vibration", "Pressure",
+        "Flow", "Speed", "Current", "Level", "Length". Enables Atlas AI to group measurements
+        by physical dimension and apply engineering judgment.
+
+- space: ip_checklist_dm
+  externalId: InspectionItemType
+  name: InspectionItemType
+  description: >
+    SST — Single Source of Truth for inspection item response types and their UI configuration.
+    Defines how field operators record each checklist item response:
+    OK/NOK (binary pass/fail), Yes/No (compliance check), Numeric (measured value),
+    Count (discrete count), Text (free-form note). Drives MeasurementReading type assignment.
+  usedFor: node
+  properties:
+    name:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        Response type name: "OK/NOK", "Yes/No", "Numeric", "Count", or "Text".
+        Determines UI widget rendered in the inspection app for this checklist item.
+    responseOptions:
+      type:
+        type: text
+        list: true
+        collation: ucs_basic
+      nullable: true
+      description: >
+        Allowed response values for label-type items (e.g., ["OK", "Not OK"] or ["Yes", "No"]).
+        Used to validate MeasurementReading.stringReading values and populate UI dropdowns.
+    isMeasurement:
+      type:
+        type: boolean
+        list: false
+      nullable: true
+      description: >
+        True if this item type captures a numeric measurement linked to a CogniteTimeSeries.
+        Numeric=true, OK/NOK=false. Determines whether MeasurementTrend analysis is applicable.
+
+- space: ip_checklist_dm
+  externalId: ChecklistKpi
+  name: ChecklistKpi
+  description: >
+    Pre-calculated KPI snapshot per checklist execution (one node per APM Checklist instance).
+    Computed after each inspection route completion. Contains completion metrics, NOK rates,
+    observation counts, and duration — enabling Atlas AI to answer operational questions
+    without requiring real-time aggregation queries.
+    ExternalId pattern: CKM_CHKLKPI_GR1_{ROUTE}_{DATE}_{SHIFT}
+  usedFor: node
+  properties:
+    checklistRef:
+      type:
+        type: direct
+        list: false
+      nullable: true
+      description: >
+        Direct relation to the APM Checklist (ApmChecklist view) that was executed to generate
+        this KPI. Join to retrieve checklist title, status, assignedTo, and startTime.
+    shiftRef:
+      type:
+        type: direct
+        list: false
+      nullable: true
+      description: >
+        Direct relation to the InspectionShift SST node (Day/Afternoon/Night) during which
+        this checklist was executed. Enables shift-segmented KPI comparison queries.
+    totalItems:
+      type:
+        type: int32
+        list: false
+      nullable: true
+      description: >
+        Total number of checklist items (tasks) in the executed inspection route.
+        Denominator for completion and NOK rate calculations.
+    completedItems:
+      type:
+        type: int32
+        list: false
+      nullable: true
+      description: >
+        Number of checklist items that received a response (OK, NOK, or N/A).
+        completedItems / totalItems = completionPercent.
+    okItems:
+      type:
+        type: int32
+        list: false
+      nullable: true
+      description: >
+        Number of items where the operator recorded an OK or passing result.
+        A high okItems count indicates healthy equipment during this inspection.
+    nokItems:
+      type:
+        type: int32
+        list: false
+      nullable: true
+      description: >
+        Number of items where the operator recorded a Not OK or failing result.
+        Triggers observation creation. Key metric for anomaly rate trending.
+    naItems:
+      type:
+        type: int32
+        list: false
+      nullable: true
+      description: >
+        Number of items skipped or marked Not Applicable (N/A) during execution.
+        High N/A counts may indicate equipment outages or access restrictions.
+    completionPercent:
+      type:
+        type: float64
+        list: false
+      nullable: true
+      description: >
+        Inspection route completion percentage (0.0–100.0): completedItems / totalItems × 100.
+        Target is 100%. Values below 95% trigger supervisor alerts.
+    nokRate:
+      type:
+        type: float64
+        list: false
+      nullable: true
+      description: >
+        Ratio of Not OK items to completed items (0.0–1.0): nokItems / completedItems.
+        A nokRate > 0.10 (10%) is considered abnormal and warrants supervisor review.
+        Core metric for EquipmentHealthIndex and RouteKpiSnapshot calculations.
+    openObservations:
+      type:
+        type: int32
+        list: false
+      nullable: true
+      description: >
+        Count of Observation nodes created from this checklist that have not yet been resolved.
+        High open observation counts indicate a maintenance backlog for this route.
+    criticalObservations:
+      type:
+        type: int32
+        list: false
+      nullable: true
+      description: >
+        Count of P1/P2 severity Observations from this checklist requiring immediate action.
+        Non-zero value escalates automatically to Maintenance Supervisor.
+    durationMinutes:
+      type:
+        type: int32
+        list: false
+      nullable: true
+      description: >
+        Total time in minutes from checklist startTime to endTime.
+        Typical range: 45–90 min per route. Outliers indicate access problems or equipment issues.
+    inspectorId:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        User identifier (email or display name) of the field operator who executed this inspection.
+        Used for operator performance analysis and accountability tracking.
+    approverId:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        User identifier of the supervisor who approved this completed inspection.
+        Required for compliance: all checklists must be approved before shift end.
+    approvedAt:
+      type:
+        type: timestamp
+        list: false
+      nullable: true
+      description: >
+        UTC timestamp when the supervisor approved the inspection report.
+        Time delta between checklist endTime and approvedAt measures supervisor response latency.
+
+- space: ip_checklist_dm
+  externalId: EquipmentHealthIndex
+  name: EquipmentHealthIndex
+  description: >
+    Aggregated health index per piece of equipment (one node per CogniteAsset).
+    Synthesizes inspection history (NOK rates, observation counts, consecutive failures)
+    with time-series trends to produce a 0–100 health score.
+    Score interpretation: 90–100=Healthy, 70–89=Monitor, 50–69=Degraded, 0–49=Critical.
+    Updated after each inspection cycle. Primary Atlas AI input for predictive maintenance queries.
+    ExternalId pattern: CKM_EHI_GR1_{ROUTE}_{EQUIPMENT}
+  usedFor: node
+  properties:
+    assetRef:
+      type:
+        type: direct
+        list: false
+      nullable: true
+      description: >
+        Direct relation to the IpCogniteAsset (CogniteAsset/v1) node representing this equipment.
+        Join to retrieve asset name, description, tags, and parent route hierarchy.
+    categoryRef:
+      type:
+        type: direct
+        list: false
+      nullable: true
+      description: >
+        Direct relation to the EquipmentCategory SST node.
+        Enables category-segmented health analysis (e.g., "average health of all PUMP assets on A-Line").
+    healthScore:
+      type:
+        type: float64
+        list: false
+      nullable: true
+      description: >
+        Composite health score 0–100 calculated from nokRate7d, openObservations,
+        consecutiveNokRuns, and measurement threshold exceedances.
+        Score = 100 − (nokRate7d×40) − (openObservations×5) − (consecutiveNokRuns×10).
+        Use for equipment ranking and predictive maintenance prioritization.
+    nokRate7d:
+      type:
+        type: float64
+        list: false
+      nullable: true
+      description: >
+        Average NOK rate (0.0–1.0) across all inspections of this equipment in the past 7 days.
+        Short-term anomaly indicator. Spike indicates recent deterioration requiring attention.
+    nokRate30d:
+      type:
+        type: float64
+        list: false
+      nullable: true
+      description: >
+        Average NOK rate (0.0–1.0) across all inspections of this equipment in the past 30 days.
+        Long-term baseline. Compare with nokRate7d to detect accelerating degradation.
+    alarmCount30d:
+      type:
+        type: int32
+        list: false
+      nullable: true
+      description: >
+        Total count of P1/P2 observations raised for this equipment in the past 30 days.
+        High counts indicate chronically problematic equipment needing capital maintenance.
+    openObservations:
+      type:
+        type: int32
+        list: false
+      nullable: true
+      description: >
+        Current count of unresolved Observations linked to this asset.
+        Non-zero value deducts from healthScore. Zero is the target state.
+    consecutiveNokRuns:
+      type:
+        type: int32
+        list: false
+      nullable: true
+      description: >
+        Number of consecutive inspection cycles where this equipment had at least one NOK item.
+        3+ consecutive NOK runs triggers predictive maintenance alert.
+    trendDirection:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        Health trend direction derived from healthScore history: "IMPROVING", "STABLE", or "DEGRADING".
+        Atlas AI uses this to answer "which equipment is getting worse?" queries.
+    mtbf_days:
+      type:
+        type: float64
+        list: false
+      nullable: true
+      description: >
+        Mean Time Between Failures in days, estimated from observation history.
+        Higher MTBF = more reliable equipment. Used for maintenance interval optimization.
+    lastInspectedAt:
+      type:
+        type: timestamp
+        list: false
+      nullable: true
+      description: >
+        UTC timestamp of the most recent completed inspection that covered this equipment.
+        Use to identify equipment not inspected within the expected interval (overdue assets).
+    lastCalculatedAt:
+      type:
+        type: timestamp
+        list: false
+      nullable: true
+      description: >
+        UTC timestamp when this EquipmentHealthIndex node was last recalculated.
+        Staleness check: if lastCalculatedAt is > 24h ago, data may not reflect recent inspections.
+
+- space: ip_checklist_dm
+  externalId: RouteKpiSnapshot
+  name: RouteKpiSnapshot
+  description: >
+    Aggregated KPI snapshot per inspection route per time period (weekly or monthly).
+    One node per route × period combination. Enables trend analysis at route level:
+    "Is Route 3 (Wet End) improving or degrading over the past 4 weeks?"
+    Used in supervisor dashboard and Atlas AI route-performance queries.
+    ExternalId pattern: CKM_RKSN_GR1_{ROUTE}_{PERIOD_TYPE}_{PERIOD_LABEL}
+  usedFor: node
+  properties:
+    templateRef:
+      type:
+        type: direct
+        list: false
+      nullable: true
+      description: >
+        Direct relation to the ApmTemplate node for this inspection route.
+        Join to retrieve route name, assignedTo discipline, and rootLocation asset.
+    periodType:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        Aggregation period type: "weekly" or "monthly".
+        weekly snapshots cover 7-day windows; monthly cover calendar months.
+    periodLabel:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        Human-readable period identifier (e.g., "2025-W03" for ISO week 3 of 2025,
+        or "2025-01" for January 2025). Used as display label in dashboard time-series charts.
+    periodStart:
+      type:
+        type: timestamp
+        list: false
+      nullable: true
+      description: >
+        UTC timestamp marking the start of the aggregation period (00:00:00 on the first day).
+        Use as the lower bound in time-range filters when querying route KPI history.
+    periodEnd:
+      type:
+        type: timestamp
+        list: false
+      nullable: true
+      description: >
+        UTC timestamp marking the end of the aggregation period (23:59:59 on the last day).
+        Use as the upper bound in time-range filters when querying route KPI history.
+    totalChecklists:
+      type:
+        type: int32
+        list: false
+      nullable: true
+      description: >
+        Total number of checklist executions for this route during the period.
+        Expected: 3 shifts × 7 days = 21 checklists per route per week.
+        Below-expected counts indicate missed inspections.
+    completedChecklists:
+      type:
+        type: int32
+        list: false
+      nullable: true
+      description: >
+        Number of checklists with completionPercent ≥ 95% during the period.
+        completedChecklists / totalChecklists = route compliance rate.
+    avgNokRate:
+      type:
+        type: float64
+        list: false
+      nullable: true
+      description: >
+        Average NOK rate (0.0–1.0) across all checklists in the period for this route.
+        Benchmark: avgNokRate < 0.05 (5%) is the target for a healthy route.
+        Compare across periods to detect seasonal or degradation trends.
+    avgCompletionPercent:
+      type:
+        type: float64
+        list: false
+      nullable: true
+      description: >
+        Average inspection completion percentage across all checklists in the period.
+        Target: ≥ 98%. Values below 90% indicate systemic access or staffing issues.
+    avgDurationMinutes:
+      type:
+        type: float64
+        list: false
+      nullable: true
+      description: >
+        Average time in minutes to complete one full inspection route.
+        Typical: 45–90 minutes. Trending upward may indicate equipment accessibility issues.
+    totalObservations:
+      type:
+        type: int32
+        list: false
+      nullable: true
+      description: >
+        Total count of Observations raised across all checklists for this route during the period.
+        High totals correlate with aging equipment or systemic maintenance backlog.
+    criticalObservations:
+      type:
+        type: int32
+        list: false
+      nullable: true
+      description: >
+        Count of P1/P2 severity Observations for this route during the period.
+        Non-zero counts require immediate supervisor review and CMMS work order creation.
+
+- space: ip_checklist_dm
+  externalId: MeasurementTrend
+  name: MeasurementTrend
+  description: >
+    Time-series trend analytics per inspection measurement item per equipment.
+    Bridges manual inspection readings (MeasurementReading) with CogniteTimeSeries sensor data.
+    One node per unique combination of TemplateItem × Asset (e.g., bearing temperature on pump ROUTE1-P1).
+    Enables Atlas AI to answer predictive questions:
+    "Is the IB bearing temperature on Route 2 pump trending towards the 175°F alarm threshold?"
+    ExternalId pattern: CKM_MTREND_GR1_{ROUTE}_{EQUIPMENT}_{MEASUREMENT}
+  usedFor: node
+  properties:
+    templateItemRef:
+      type:
+        type: direct
+        list: false
+      nullable: true
+      description: >
+        Direct relation to the ApmTemplateItem node defining the inspection measurement task
+        (e.g., "Check IB Bearing Temperature"). Provides measurement name, description, and limits.
+    assetRef:
+      type:
+        type: direct
+        list: false
+      nullable: true
+      description: >
+        Direct relation to the IpCogniteAsset node for the equipment being monitored.
+        Join to retrieve equipment name, category, and inspection route hierarchy.
+    timeSeriesRef:
+      type:
+        type: direct
+        list: false
+      nullable: true
+      description: >
+        Direct relation to the IpCogniteTimeSeries node for the continuous sensor time series
+        associated with this measurement point (if available). Enables correlation between
+        manual inspection readings and automated sensor data.
+    lastValue:
+      type:
+        type: float64
+        list: false
+      nullable: true
+      description: >
+        Most recent numeric reading recorded by a field operator for this measurement.
+        In engineering units as defined by MeasurementUnit (e.g., 152.3 °F for bearing temperature).
+    avg7dValue:
+      type:
+        type: float64
+        list: false
+      nullable: true
+      description: >
+        Rolling 7-day average of inspection readings for this measurement.
+        Smoothed short-term baseline. Compare with lastValue to detect sudden spikes.
+    avg30dValue:
+      type:
+        type: float64
+        list: false
+      nullable: true
+      description: >
+        Rolling 30-day average of inspection readings for this measurement.
+        Long-term process baseline. Use to detect slow drift towards alarm condition.
+    maxValue:
+      type:
+        type: float64
+        list: false
+      nullable: true
+      description: >
+        Maximum reading recorded in the entire history for this measurement point.
+        Useful for anomaly detection: "has this pump ever exceeded the bearing temp threshold?"
+    threshold:
+      type:
+        type: float64
+        list: false
+      nullable: true
+      description: >
+        Engineering alarm threshold for this measurement (in the same units as lastValue).
+        Derived from TemplateItem spec (e.g., 175°F for IB bearing temperature).
+        lastValue > threshold = potential alarm condition requiring immediate attention.
+    exceedanceCount30d:
+      type:
+        type: int32
+        list: false
+      nullable: true
+      description: >
+        Number of inspection readings in the past 30 days that exceeded the threshold.
+        A count > 3 indicates a persistent alarm condition, not a transient spike.
+    trendSlope:
+      type:
+        type: float64
+        list: false
+      nullable: true
+      description: >
+        Linear regression slope of inspection readings over the past 30 days (units/day).
+        Positive slope = values increasing over time. Used for "days to alarm" prediction.
+        Example: slope=0.5 °F/day means temperature rising half a degree daily.
+    predictedDaysToAlarm:
+      type:
+        type: int32
+        list: false
+      nullable: true
+      description: >
+        Predicted number of days until lastValue reaches threshold, based on trendSlope.
+        Null if trend is stable or decreasing. Atlas AI top use case:
+        "Which measurements will reach alarm within 7 days?"
+    lastCalculatedAt:
+      type:
+        type: timestamp
+        list: false
+      nullable: true
+      description: >
+        UTC timestamp when this MeasurementTrend node was last recalculated.
+        Staleness check: if > 24h since last inspection, predictedDaysToAlarm may be outdated.
+
+- space: ip_checklist_dm
+  externalId: SeedManifest
+  name: SeedManifest
+  description: >
+    Audit trail node created once per seed script execution.
+    Records the provenance, execution parameters, and outcome of each CDF data ingestion run.
+    Enables data lineage tracking and supports reproducible seed operations.
+    ExternalId pattern: CKM_SEEDMFST_GR1_{ROUTE}_{RUN_ID}
+  usedFor: node
+  properties:
+    runId:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        Unique run identifier generated at seed execution time (e.g., "run-2025-01-01-0CE7B8EB").
+        Matches the output directory name in docs/Seed/generated/.
+    executedAt:
+      type:
+        type: timestamp
+        list: false
+      nullable: true
+      description: >
+        UTC timestamp when the seed script started executing.
+        Used to correlate CDF data ingestion with the generating script run.
+    scriptVersion:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        Semantic version of the seed script that generated this data (e.g., "1.0.0").
+        Enables detection of schema-breaking changes between seed runs.
+    sourceFile:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        Source Excel file name used as the route data input
+        (e.g., "A Line OEC Routes 2 (1).xlsx"). Provides data provenance chain.
+    sourceHash:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        SHA-256 hash of the source data file. Detects if the source was modified
+        between seed runs, ensuring data consistency and reproducibility.
+    routeSlug:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        Inspection route identifier this seed covers (e.g., "route1", "route3", or "all").
+        A-Line routes 1–8 correspond to different sections of the paper machine.
+    periodStart:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        ISO 8601 date string for the start of the seeded inspection period (e.g., "2025-01-01").
+        Defines the temporal scope of checklists and measurements generated by this run.
+    periodEnd:
+      type:
+        type: text
+        list: false
+        collation: ucs_basic
+      nullable: true
+      description: >
+        ISO 8601 date string for the end of the seeded inspection period (e.g., "2025-12-31").
+        Full year seeds cover 365 days × 3 shifts × 8 routes = ~8,760 checklists.
+    isDryRun:
+      type:
+        type: boolean
+        list: false
+      nullable: true
+      description: >
+        True if the seed was executed in dry-run mode (JSON generated but NOT ingested to CDF).
+        False for actual CDF ingestion runs. Dry-run nodes should not appear in production queries.
+    totalNodes:
+      type:
+        type: int32
+        list: false
+      nullable: true
+      description: >
+        Total count of DMS nodes upserted to CDF in this seed run.
+        Typical full-year run: ~250,000 nodes (assets + checklists + measurements + KPIs).
+    totalEdges:
+      type:
+        type: int32
+        list: false
+      nullable: true
+      description: >
+        Total count of DMS edges (Template→TemplateItem, Checklist→ChecklistItem, etc.)
+        upserted to CDF in this seed run. Typical full-year run: ~300,000 edges.
+    errors:
+      type:
+        type: json
+        list: false
+      nullable: true
+      description: >
+        JSON array of error objects encountered during ingestion (if any).
+        Each error includes batchId, message, and affectedExternalIds for diagnostics.
+    mapping:
+      type:
+        type: json
+        list: false
+      nullable: true
+      description: >
+        JSON object capturing the externalId mapping used in this run
+        (route slugs → asset externalIds, template → checklist mappings).
+        Enables tracing which seed run generated a specific CDF node.
+
+# ---------------------------------------------------------------------------
+# Enrichment extension — ApmTemplateItem
+# Backs the inspectionTypeRef and unitRef enrichment properties added to the
+# ApmTemplateItem projected view. Stored in ip_checklist_dm space so that
+# we own the data without modifying the cdf_apm containers.
+# ---------------------------------------------------------------------------
+- space: ip_checklist_dm
+  externalId: ApmTemplateItemExtended
+  name: ApmTemplateItemExtended
+  description: >
+    Extension container holding ip_checklist_dm enrichment properties for TemplateItem nodes.
+    Stores typed direct relations that classify each inspection task by response type and
+    measurement unit — enabling KPI aggregation by InspectionItemType and MeasurementUnit.
+  usedFor: node
+  properties:
+    inspectionTypeRef:
+      type:
+        type: direct
+        list: false
+      nullable: true
+      description: >
+        Direct relation to the InspectionItemType SST node that defines how the operator
+        records the result of this task (OK/NOK, Numeric, Yes/No, Count, Free Text).
+        Drives UI widget selection in the inspection app and MeasurementTrend eligibility.
+    unitRef:
+      type:
+        type: direct
+        list: false
+      nullable: true
+      description: >
+        Direct relation to the MeasurementUnit SST node for numeric measurement tasks.
+        Null for binary (OK/NOK, Yes/No) tasks. Enables unit-aware Atlas AI queries and
+        engineering-unit validation against CogniteTimeSeries.sourceUnit.
+
+# ---------------------------------------------------------------------------
+# Enrichment extension — ApmObservation
+# Backs the categoryRef and severityRef enrichment properties added to the
+# ApmObservation projected view. Provides structured classification of
+# anomalies beyond the free-text type/priority fields in cdf_apm.
+# ---------------------------------------------------------------------------
+- space: ip_checklist_dm
+  externalId: ApmObservationExtended
+  name: ApmObservationExtended
+  description: >
+    Extension container holding ip_checklist_dm enrichment properties for Observation nodes.
+    Stores typed direct relations that link each observation to its operational category
+    (Safety, Maintenance, Quality…) and SLA-based severity level (P1–P4).
+  usedFor: node
+  properties:
+    categoryRef:
+      type:
+        type: direct
+        list: false
+      nullable: true
+      description: >
+        Direct relation to the ObservationCategory SST node classifying the nature of the anomaly
+        (Safety, Maintenance, Quality, Environmental, Housekeeping, Reliability).
+        Drives work-order routing logic and Atlas AI category-filtered queries.
+    severityRef:
+      type:
+        type: direct
+        list: false
+      nullable: true
+      description: >
+        Direct relation to the SeverityLevel SST node (P1 Critical → P4 Low) defining the SLA
+        response time for this observation. Complements the free-text priority field in cdf_apm
+        with a structured, queryable relation that enables SLA compliance KPIs.

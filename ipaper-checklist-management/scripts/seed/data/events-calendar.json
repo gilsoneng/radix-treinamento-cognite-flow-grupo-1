@@ -1,0 +1,116 @@
+[
+  {
+    "id": "cold-startup",
+    "label": "Cold startup after annual shutdown",
+    "from": "2025-01-01", "to": "2025-01-14",
+    "routes": ["all"],
+    "naRateBoost": 0.20,
+    "tempOffset": -10,
+    "comment": "Annual restart — gradual temp ramp-up, high N/A for items not yet operational"
+  },
+  {
+    "id": "chip-shortage",
+    "label": "Chip supply shortage — LP Feeder overloaded",
+    "from": "2025-02-01", "to": "2025-02-28",
+    "routes": ["route2"],
+    "tempOffset": 8,
+    "vibrationOffset": 0.08,
+    "nokRateBoost": 0.05,
+    "comment": "Low Pressure Feeder running beyond rated capacity"
+  },
+  {
+    "id": "bearing-warning-diffuser",
+    "label": "Bearing failure warning — Diffuser Scraper",
+    "from": "2025-03-01", "to": "2025-03-31",
+    "routes": ["route1"],
+    "equipment": "diffuser-scraper",
+    "measurement": "OB-BEARING-TEMP",
+    "tempRamp": { "start": 162, "end": 183 },
+    "nokRateBoost": 0.08,
+    "comment": "OB Bearing temp rising from 162°F to 183°F across 3 weeks"
+  },
+  {
+    "id": "diffuser-replacement",
+    "label": "Unplanned downtime — Diffuser Scraper replaced",
+    "from": "2025-04-01", "to": "2025-04-04",
+    "routes": ["route1"],
+    "equipment": "diffuser-scraper",
+    "naRateBoost": 1.0,
+    "comment": "Equipment offline for 4 days"
+  },
+  {
+    "id": "planned-maint-route2",
+    "label": "Planned maintenance — Route 2",
+    "from": "2025-05-05", "to": "2025-05-11",
+    "routes": ["route2"],
+    "naRateBoost": 0.15,
+    "comment": "Scheduled PM week"
+  },
+  {
+    "id": "summer-heatwave",
+    "label": "Summer heat wave — ambient temp +15°F",
+    "from": "2025-06-15", "to": "2025-07-15",
+    "routes": ["all"],
+    "tempOffset": 8,
+    "nokRateBoost": 0.03,
+    "comment": "All motor temps elevated"
+  },
+  {
+    "id": "seal-failure-north-pump",
+    "label": "Seal failure — North Filtrate Pump",
+    "from": "2025-07-10", "to": "2025-07-25",
+    "routes": ["route1"],
+    "equipment": "north-filtrate-pump",
+    "nokRateBoost": 0.15,
+    "forcedNok": ["Seal Water OK", "Packing condition OK"],
+    "criticalObsRate": 0.8,
+    "comment": "Pump seal failed — triggers critical Observations"
+  },
+  {
+    "id": "recovery-boiler-inspection",
+    "label": "Recovery Boiler annual inspection",
+    "from": "2025-08-10", "to": "2025-08-19",
+    "routes": ["route5"],
+    "naRateBoost": 1.0,
+    "comment": "Complete offline for scheduled inspection"
+  },
+  {
+    "id": "hp-feeder-overtemp",
+    "label": "HP Feeder repeated threshold exceedance",
+    "from": "2025-09-01", "to": "2025-09-15",
+    "routes": ["route2"],
+    "equipment": "chip-feeder-hp",
+    "measurement": "MOTOR-TEMP",
+    "tempRamp": { "start": 185, "end": 196 },
+    "nokRateBoost": 0.10,
+    "comment": "Motor temp >190°F 3 times in 2 weeks"
+  },
+  {
+    "id": "new-operator",
+    "label": "New operator Mike Torres — higher variability",
+    "from": "2025-10-01", "to": "2025-12-31",
+    "routes": ["route2", "route3"],
+    "operator": "op.mike.torres",
+    "nokRateBoost": 0.04,
+    "durationBoost": 0.30,
+    "comment": "Junior operator settling in — inconsistent settings, longer inspections"
+  },
+  {
+    "id": "pre-shutdown",
+    "label": "Pre-shutdown inspection mode",
+    "from": "2025-11-01", "to": "2025-12-15",
+    "routes": ["all"],
+    "durationBoost": 0.20,
+    "nokRateBoost": 0.03,
+    "obsRateBoost": 0.10,
+    "comment": "More thorough inspections before annual shutdown"
+  },
+  {
+    "id": "shutdown-prep",
+    "label": "Annual shutdown preparation",
+    "from": "2025-12-16", "to": "2025-12-31",
+    "routes": ["all"],
+    "naRateBoost": 0.25,
+    "comment": "Equipment being progressively taken offline"
+  }
+]

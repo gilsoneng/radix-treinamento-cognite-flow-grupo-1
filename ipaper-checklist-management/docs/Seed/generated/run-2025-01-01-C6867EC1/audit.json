@@ -1,0 +1,25 @@
+{
+  "runId": "C6867EC1D979",
+  "generatedAt": "2026-06-03T11:19:40.548Z",
+  "stats": {
+    "classification": 42,
+    "assets": 84,
+    "timeseries": 223,
+    "templates": 8,
+    "templateItems": 92,
+    "measSpecs": 92,
+    "templateEdges": 92,
+    "checklists": 8760,
+    "checklistItems": 95697,
+    "checklistEdges": 95697,
+    "measurements": 91695,
+    "measEdges": 91695,
+    "observations": 7547,
+    "obsEdges": 7547,
+    "checklistKpis": 7717,
+    "healthIndexes": 83,
+    "routeKpis": 96,
+    "measurementTrends": 47
+  },
+  "runDir": "C:\\Training_Flows\\radix-treinamento-cognite-flow-grupo-1\\ipaper-checklist-management\\docs\\Seed\\generated\\run-2025-01-01-C6867EC1"
+}
