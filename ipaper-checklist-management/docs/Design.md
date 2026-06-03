@@ -86,11 +86,14 @@ Usar quando integrar navegação lateral ou shell alinhado ao layout IP (§10 do
 
 | Recurso | Caminho |
 | --- | --- |
+| **Protótipo Lovable (UX InField Challenge)** | [`prototype/LOVABLE-PROTOTYPE.md`](prototype/LOVABLE-PROTOTYPE.md) · código: [`../prototype/fieldops-insights/`](../prototype/fieldops-insights/) |
 | Logos e workshop | [`references/brand/`](../references/brand/) |
 | Spinner / assets | [`references/utils/`](../references/utils/) (ex.: `grun-ip-spinner.gif`, `poweredbyradix.svg`) |
 | Hero / logos | [`references/hero.jpg`](../references/hero.jpg), [`references/ip-logo-white.svg`](../references/ip-logo-white.svg), [`references/radix_wedge.svg`](../references/radix_wedge.svg) |
 | Design system completo | [`design/IP-DESIGN-SYSTEM.md`](design/IP-DESIGN-SYSTEM.md) |
 | Cópia junto aos assets | [`references/app/IP-DESIGN-SYSTEM.md`](../references/app/IP-DESIGN-SYSTEM.md) |
+
+Ao implementar KPI cards, tabelas densas e gráficos do use case IP, use o protótipo para **layout e hierarquia**; use Aura + tokens `--ip-*` para **implementação**.
 
 ---
 

@@ -1,52 +1,59 @@
-# Research — Checklist Management (scaffold Flows)
+# Research — App Foundation & Fusion Shell
 
 > **ID:** 001-checklist-management
-> Decisões arquiteturais do scaffold e adoção do SDD.
 
 ---
 
-## ADR-001 — Adoção do processo SDD no projeto
+## ADR-001 — Adoção SDD no projeto
 
-**Contexto:** O projeto `ipaper-checklist-management` tinha padrões de engenharia definidos em `AGENTS.md` e um `SPEC.md` macro vazio. Não havia rastreabilidade entre requisitos e testes, nem tracking de andamento por feature.
+**Contexto:** Padrões em `AGENTS.md`, specs por feature em `specs/`.
 
-**Decisão:** Adotar Spec Driven Development com pasta `specs/` (plural, compatível com Cognite Flows / Spec Kit), gate CI em modo warn por padrão (strict via label `sdd-strict`), fluxo completo (7 etapas) e leve (3 etapas), e feature `001` como baseline legado.
+**Decisão:** SDD com `specs/<NNN>-<slug>/`, gate warn, feature `001` como **foundation** (não apenas scaffold dev).
 
-**Consequência:** Toda mudança de comportamento em `src/` requer spec em `specs/<NNN>/`. Features novas em `002+`. Overhead adicional de documentação compensado por rastreabilidade e facilidade de onboarding.
+**Consequência:** 001 bloqueia 002–004; shell e host-sync implementados uma vez.
 
 ---
 
-## ADR-002 — `spec/` vs `specs/`
+## ADR-002 — `specs/` (plural)
 
-**Contexto:** A proposta original usava `spec/` (singular). O ecossistema Cognite Flows, Spec Kit e a skill `flows-app-brief` esperam `specs/<NNN>-<feature>/spec.md`.
-
-**Decisão:** Adotar `specs/` (plural) para compatibilidade com o tooling Flows. Manter `SPEC.md` macro na raiz com nome distinto.
-
-**Consequência:** Pre-scan do `flows-app-brief` coach funciona automaticamente. Colisão visual `SPEC.md` × `specs/` é aceita — contexto (arquivo vs pasta) diferencia os dois.
+**Decisão:** Compatível com Cognite Flows / Spec Kit / `flows-app-brief`.
 
 ---
 
 ## ADR-003 — Gate CI warn vs strict
 
-**Contexto:** Gate bloqueante desde o dia 1 cria fricção antes do hábito estar formado.
-
-**Decisão:** Gate padrão em modo warn (exit 0 mesmo com avisos). Strict ativado por label `sdd-strict` no PR — para features `done` e PRs de release.
-
-**Consequência:** Primeiros PRs não são bloqueados; time aprende o processo sem atrito. Convenção de label é manual mas explícita.
+**Decisão:** Warn padrão; strict via label `sdd-strict`.
 
 ---
 
-## ADR-004 — `cross-env` vs flags `.mjs` para modo strict
+## ADR-004 — Flags `.mjs` para strict (sem cross-env)
 
-**Contexto:** Projeto roda em Windows (PowerShell) e CI Linux. `cross-env` resolveria a portabilidade mas adiciona dependência. Alternativa: flags no script Node.
+**Decisão:** `node scripts/spec-check.mjs --strict`.
 
-**Decisão:** Usar flags `--strict` no `.mjs` (`process.argv.includes('--strict')`). Zero dependência extra; portável em qualquer shell.
+---
 
-**Consequência:** `npm run spec:check:strict` = `node scripts/spec-check.mjs --strict`. Sem `cross-env` no `package.json`.
+## ADR-005 — 001 como foundation, não welcome permanente
+
+**Contexto:** Scaffold Flows (Plan/Explore/Deploy) útil para onboarding dev, mas não atende use case IP InField.
+
+**Decisão:** Reframing 001 para **App Foundation & Fusion Shell**. Welcome removido quando FR-005 done (FR-013). Protótipo Lovable define shell de produção.
+
+**Consequência:** Testes do splash atualizados/removidos em T11. Sidebar + host-sync são DoR para 002.
+
+---
+
+## ADR-006 — Navegação host-synced (enum `page`)
+
+**Contexto:** AGENTS.md §2 exige sync para view/filtros. Protótipo usa TanStack Router; Flows app usa host URL state.
+
+**Decisão:** v1 com `AppState.page` enum serializado em `syncInternalState`. Filtros de 002 adicionam campos ao mesmo JSON.
+
+**Consequência:** Sem react-router no app Flows v1; deep link checklist via `checklistId` no state.
 
 ---
 
 ## Clarificações resolvidas
 
-- [x] Pasta dentro do app ou na raiz do monorepo? — Dentro de `ipaper-checklist-management/` (CI roda na raiz do app). — 2026-06-02
-- [x] `fetch-depth` no CI — necessário `fetch-depth: 0` no checkout para `git diff` funcionar em PRs. — 2026-06-02
-- [x] Comportamento do gate em `push: main` — C4 usa `HEAD~1` quando `GITHUB_BASE_REF` está vazio; impreciso mas aceito. — 2026-06-02
+- [x] 001 bloqueia 002–004 — sim, shell primeiro. — 2026-06-02
+- [x] Protótipo é referência UX, Aura é implementação — `docs/prototype/LOVABLE-PROTOTYPE.md`. — 2026-06-02
+- [x] Auth via CogniteSdkProvider only — AGENTS.md §8. — 2026-06-02

@@ -15,6 +15,10 @@ Always check `@cognite/aura/components` before reaching for a raw HTML element o
 
 Before implementing layouts, colors, typography, or IP-specific patterns (KPIs, tables, shell), read **`docs/Design.md`** — it maps International Paper brand and reference UI to Aura primitives (no custom design-system widgets).
 
+For **business UI** (overview, checklists, analytics, alerts), read **`docs/prototype/LOVABLE-PROTOTYPE.md`** and the matching **`specs/<NNN>-<slug>/spec.md`**. Prototype code: `prototype/fieldops-insights/` (reference only).
+
+Requirements: **`docs/requirements/APPLICATION-REQUIREMENTS.md`**, **`docs/requirements/TASKS-DIVISION.md`**.
+
 ---
 
 ## 2. Host integration (`@cognite/app-sdk`)

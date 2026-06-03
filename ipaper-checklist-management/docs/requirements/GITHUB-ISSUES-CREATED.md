@@ -1,0 +1,29 @@
+# GitHub Issues - InField Challenge
+
+| Key | Issue | URL |
+| --- | --- | --- |
+| 001-1 | #9 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/9 |
+| 001-2 | #10 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/10 |
+| 001-3 | #11 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/11 |
+| 001-4 | #12 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/12 |
+| 001-5 | #13 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/13 |
+| 002-1 | #15 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/15 |
+| 002-2 | #16 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/16 |
+| 002-3 | #17 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/17 |
+| 002-4 | #18 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/18 |
+| 002-5 | #19 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/19 |
+| 002-6 | #20 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/20 |
+| 003-1 | #22 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/22 |
+| 003-2 | #23 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/23 |
+| 003-3 | #24 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/24 |
+| 003-4 | #25 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/25 |
+| 003-5 | #26 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/26 |
+| 004-1 | #28 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/28 |
+| 004-2 | #29 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/29 |
+| 004-3 | #30 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/30 |
+| 004-4 | #31 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/31 |
+| 004-5 | #32 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/32 |
+| EPIC-001 | #8 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/8 |
+| EPIC-002 | #14 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/14 |
+| EPIC-003 | #21 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/21 |
+| EPIC-004 | #27 | https://github.com/gilsoneng/radix-treinamento-cognite-flow-grupo-1/issues/27 |
