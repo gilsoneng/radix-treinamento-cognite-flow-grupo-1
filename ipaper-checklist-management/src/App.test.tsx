@@ -150,7 +150,9 @@ describe('App', () => {
 
   it('renders the InField shell with overview KPI cards by default', async () => {
     renderConnected();
-    await waitFor(() => expect(screen.getByText('InField')).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByRole('img', { name: 'International Paper' })).toBeInTheDocument(),
+    );
     expect(screen.getByRole('heading', { name: 'Overview' })).toBeInTheDocument();
     expect(screen.getByText('To Do')).toBeInTheDocument();
     expect(screen.getByText('Not OK')).toBeInTheDocument();
