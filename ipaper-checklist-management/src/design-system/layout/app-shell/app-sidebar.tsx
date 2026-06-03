@@ -5,10 +5,10 @@ import {
   IconLayoutDashboard,
   IconListCheck,
   IconSettings,
-  IconBuildingFactory2,
 } from '@tabler/icons-react';
 import type { ComponentType } from 'react';
 
+import { IP_LOGO_WHITE_SRC } from '../../assets/ip-brand';
 import { useAppNavigation } from '../../../app/host/use-app-navigation';
 import { APP_NAV_ITEMS, type AppPage } from '../../../app/routing/app-view.types';
 import { useOperationalAlertsQuery } from '../../../modules/checklists/infrastructure/queries/use-checklist-data-queries';
@@ -28,16 +28,12 @@ export function AppSidebar() {
 
   return (
     <aside className="ip-app-sidebar hidden md:flex w-60 shrink-0 flex-col">
-      <div className="ip-app-sidebar__brand flex items-center gap-2.5 px-5 py-5">
-        <div className="ip-app-sidebar__logo grid h-9 w-9 place-items-center">
-          <IconBuildingFactory2 className="h-5 w-5" aria-hidden />
-        </div>
-        <div className="leading-tight">
-          <div className="ip-app-sidebar__title text-sm font-semibold tracking-tight">InField</div>
-          <div className="ip-app-sidebar__subtitle text-[10px] uppercase tracking-wider">
-            Checklist Intelligence
-          </div>
-        </div>
+      <div className="ip-app-sidebar__brand flex items-center justify-center px-5 py-5">
+        <img
+          src={IP_LOGO_WHITE_SRC}
+          alt="International Paper"
+          className="ip-app-sidebar__logo-img"
+        />
       </div>
 
       <nav className="flex-1 overflow-y-auto px-3 py-4" aria-label="Main navigation">

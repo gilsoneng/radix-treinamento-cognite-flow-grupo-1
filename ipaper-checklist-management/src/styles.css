@@ -130,10 +130,12 @@
   border-bottom: 1px solid var(--sidebar-border);
 }
 
-.ip-app-sidebar__logo {
-  border-radius: 0.375rem;
-  background: var(--primary-background);
-  color: var(--foreground-on-primary);
+.ip-app-sidebar__logo-img {
+  display: block;
+  height: 1.875rem;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
 }
 
 .ip-app-sidebar__subtitle,

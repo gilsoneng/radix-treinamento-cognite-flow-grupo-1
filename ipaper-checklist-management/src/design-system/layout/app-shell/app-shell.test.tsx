@@ -111,11 +111,11 @@ describe('AppShell', () => {
     expect(screen.getByRole('button', { name: 'Overview' })).toHaveAttribute('aria-current', 'page');
   });
 
-  it('shows InField branding in the sidebar', () => {
+  it('shows IP logo branding in the sidebar', () => {
     renderShell();
-    expect(screen.getByText('InField')).toBeInTheDocument();
-    expect(screen.getByText('Checklist Intelligence')).toBeInTheDocument();
-    expect(screen.getByText('International Paper')).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'International Paper' })).toBeInTheDocument();
+    expect(screen.queryByText('InField')).not.toBeInTheDocument();
+    expect(screen.queryByText('Checklist Intelligence')).not.toBeInTheDocument();
   });
 
   it('switches to checklists view when Checklists nav is clicked', async () => {
