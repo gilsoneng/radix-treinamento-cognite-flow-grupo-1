@@ -62,7 +62,7 @@ export function TaskResultsCharts({ data }: TaskResultsChartsProps) {
               <Bar
                 dataKey="notok"
                 name="Not OK"
-                fill="var(--destructive-background, #c53030)"
+                fill="var(--ip-error)"
                 stackId="a"
                 radius={[3, 3, 0, 0]}
               />
@@ -113,7 +113,7 @@ export function TaskResultsCharts({ data }: TaskResultsChartsProps) {
               <Line
                 type="monotone"
                 dataKey="pctNotOk"
-                stroke="var(--destructive-background, #c53030)"
+                stroke="var(--ip-error)"
                 strokeWidth={2}
                 dot={{ r: 3 }}
               />

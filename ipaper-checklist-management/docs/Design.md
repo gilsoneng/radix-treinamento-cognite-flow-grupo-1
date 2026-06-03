@@ -21,6 +21,9 @@ Valores canônicos do IP Design System (§3.1) aplicados neste app em `src/style
 | `--color-dark-gray` | `--ip-charcoal` | `#15191e` — texto principal |
 | `--color-surface-alt` | `--ip-muted-bg` | `#f1f3f5` — fundos suaves |
 | `--color-border` | `--ip-border` | `#d6dde6` |
+| `--color-error` | `--ip-error` | `#c62828` — crítico / Urgent / Not OK |
+| Error banner bg | `--ip-error-muted-background` | `#ffeeee` |
+| Error banner border | `--ip-error-border` | `#ffcccc` |
 | Fusion host link | `--link-fusion` | `#486aed` — navegação Fusion |
 
 **Não** hardcode hex em componentes; use variáveis `--ip-*` ou tokens semânticos Aura (`--primary-background`, etc.).

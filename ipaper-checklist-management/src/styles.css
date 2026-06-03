@@ -69,6 +69,16 @@
   --info-foreground-on-info: var(--ip-charcoal);
   --info-muted-background: #eef9fc;
 
+  /* Critical / error — IP Design System §3.1 (--color-error) + error-banner pattern */
+  --ip-error: #c62828;
+  --ip-error-muted-background: #ffeeee;
+  --ip-error-border: #ffcccc;
+  --ip-error-foreground: #c62828;
+  --destructive-background: var(--ip-error);
+  --destructive-foreground: var(--ip-error-foreground);
+  --destructive-muted-background: var(--ip-error-muted-background);
+  --destructive-muted-foreground: var(--ip-error-foreground);
+
   --link-foreground: var(--ip-teal);
 
   --sidebar-background: var(--ip-teal-sidebar);
@@ -252,6 +262,11 @@
 .ip-status-pill--compact {
   padding: 0.0625rem 0.5rem;
   font-size: 0.6875rem;
+}
+
+.ip-status-pill--urgent {
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }
 
 .ip-status-pill__dot {
