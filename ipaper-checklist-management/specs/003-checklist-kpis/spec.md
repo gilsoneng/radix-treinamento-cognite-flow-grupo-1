@@ -1,6 +1,6 @@
 # Feature Spec — Checklist KPIs
 
-> **ID:** 002-checklist-kpis
+> **ID:** 003-checklist-kpis
 > **Rigor:** completo
 > **Owner:** time-grupo-1
 > **Criado em:** 2026-06-02
@@ -26,7 +26,7 @@
 ## Functional Requirements
 
 - FR-001: O sistema DEVE buscar instâncias de `cdf_apm.Checklist:v7` e calcular contagens por status.
-- FR-002: O sistema DEVE exibir ao menos 4 KPI cards: Total, Concluídos, Pendentes, Em Atraso.
+- FR-002: O sistema DEVE exibir 5 KPI cards: To Do, Ongoing, Done, Overdue, Not OK (alinhado ao protótipo e FR-P01).
 - FR-003: O sistema DEVE permitir filtrar KPIs por `templateId` (relacionamento `Checklist → Template`).
 - FR-004: O sistema DEVE usar react-query com staleTime adequado para não exceder limites de API CDF.
 - FR-005: O sistema DEVE exibir estado de loading enquanto busca dados e estado de erro em caso de falha.

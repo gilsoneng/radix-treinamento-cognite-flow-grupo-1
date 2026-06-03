@@ -10,13 +10,10 @@ updated: 2026-06-03
 
 ## Pendentes
 
-<!-- Adicionar novas tasks aqui -->
-<!-- Formato: - [ ] BUG-NNN: descrição breve (data) -->
-
 *(nenhuma task pendente)*
 
 ---
 
 ## Concluídas
 
-*(nenhuma task concluída ainda)*
+- [x] BUG-001: Remover cast `as unknown` em `useCdfClient` — adapter tipado `toCdfReadClient` (2026-06-03)

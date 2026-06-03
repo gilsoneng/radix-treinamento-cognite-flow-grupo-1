@@ -1,6 +1,6 @@
 # Research — Checklist KPIs
 
-> **ID:** 002-checklist-kpis
+> **ID:** 003-checklist-kpis
 > Registra: decisões arquiteturais (ADRs) e clarificações resolvidas.
 > Formato ADR: Contexto → Decisão → Consequência.
 
@@ -20,7 +20,8 @@
 
 <!-- Preencher ao resolver as perguntas abertas de spec.md -->
 
-## Clarificações em aberto
+## Clarificações resolvidas
 
-- [ ] Quais valores de `Checklist.status` existem no ambiente `cdf_apm`? (verificar via MCP `cdf_list_instances` ou com o time de dados)
-- [ ] O filtro por rota deve usar `Schedule.externalId` ou `Template.externalId`?
+- [x] `Checklist.status` no seed: `created` \| `started` \| `completed` — 2026-06-03
+- [x] Not OK derivado de `ChecklistItem.note` (itens NotOk no seed) — 2026-06-03
+- [ ] Filtro por rota: `Template.externalId` via `Checklist.sourceId` quando UI de filtro for adicionada

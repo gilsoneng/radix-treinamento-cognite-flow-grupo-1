@@ -1,0 +1,43 @@
+[2026-06-03T18:43:30.789Z] [INFO] === IP Checklist Seed Generator === {"runId":"C68C55AB7853","from":"2025-01-01","to":"2026-06-03","routes":"all","dryRun":true}
+[2026-06-03T18:43:30.793Z] [INFO] [Phase 1] Generating SST classification lookups...
+[2026-06-03T18:43:30.795Z] [INFO]   → 42 nodes
+[2026-06-03T18:43:30.795Z] [INFO] [Phase 2] Generating CogniteAsset hierarchy + CogniteTimeSeries...
+[2026-06-03T18:43:30.800Z] [INFO]   → 84 assets, 223 time series
+[2026-06-03T18:43:30.801Z] [INFO] [Phase 3] Generating Template (v8) + TemplateItem (v7) + edges...
+[2026-06-03T18:43:30.806Z] [INFO]   → 8 templates, 92 items, 92 specs, 92 edges
+[2026-06-03T18:43:30.806Z] [INFO] [Phase 4] Generating Checklist (v7) + ChecklistItem (v7) + MeasurementReading (v4) + edges...
+[2026-06-03T18:43:37.002Z] [INFO]   → 12456 checklists, 143216 items, 138124 readings
+[2026-06-03T18:43:37.004Z] [INFO]      143216 checklist-edges, 138124 meas-edges
+[2026-06-03T18:43:37.004Z] [INFO] [Phase 5a] Generating Observation (v5) + edges...
+[2026-06-03T18:43:37.101Z] [INFO]   → 3291 observations, 3291 edges
+[2026-06-03T18:43:37.101Z] [INFO] [Phase 5b] Generating KPIs...
+[2026-06-03T18:43:42.586Z] [INFO]   → 6796 kpis, 71 health, 144 route snapshots, 47 trends
+[2026-06-03T18:43:42.586Z] [INFO] [Phase 6] Writing seed manifest...
+[2026-06-03T18:43:42.586Z] [INFO] 
+[2026-06-03T18:43:42.587Z] [INFO] === Seed generation complete ===
+[2026-06-03T18:43:42.587Z] [INFO]   Run ID : C68C55AB7853
+[2026-06-03T18:43:42.587Z] [INFO]   Output : C:\Radix\TreinamentoFlow\radix-treinamento-cognite-flow-grupo-1\ipaper-checklist-management\docs\Seed\generated\run-2025-01-01-C68C55AB
+[2026-06-03T18:43:42.616Z] [INFO]   Total  : 589.409 instances (nodes + edges)
+[2026-06-03T18:43:42.616Z] [INFO] 
+[2026-06-03T18:43:42.617Z] [INFO]   Breakdown:
+[2026-06-03T18:43:42.617Z] [INFO]     classification               42
+[2026-06-03T18:43:42.617Z] [INFO]     assets                       84
+[2026-06-03T18:43:42.617Z] [INFO]     timeseries                  223
+[2026-06-03T18:43:42.617Z] [INFO]     templates                     8
+[2026-06-03T18:43:42.618Z] [INFO]     templateItems                92
+[2026-06-03T18:43:42.618Z] [INFO]     measSpecs                    92
+[2026-06-03T18:43:42.618Z] [INFO]     templateEdges                92
+[2026-06-03T18:43:42.618Z] [INFO]     checklists                12456
+[2026-06-03T18:43:42.618Z] [INFO]     checklistItems           143216
+[2026-06-03T18:43:42.618Z] [INFO]     checklistEdges           143216
+[2026-06-03T18:43:42.618Z] [INFO]     measurements             138124
+[2026-06-03T18:43:42.618Z] [INFO]     measEdges                138124
+[2026-06-03T18:43:42.619Z] [INFO]     observations               3291
+[2026-06-03T18:43:42.619Z] [INFO]     obsEdges                   3291
+[2026-06-03T18:43:42.619Z] [INFO]     checklistKpis              6796
+[2026-06-03T18:43:42.619Z] [INFO]     healthIndexes                71
+[2026-06-03T18:43:42.619Z] [INFO]     routeKpis                   144
+[2026-06-03T18:43:42.619Z] [INFO]     measurementTrends            47
+[2026-06-03T18:43:42.619Z] [INFO] 
+[2026-06-03T18:43:42.619Z] [INFO] [DRY-RUN] JSON files written. CDF NOT modified.
+[2026-06-03T18:43:42.620Z] [INFO] To ingest: node scripts/seed/index.mjs --from 2025-01-01 --to 2025-12-31

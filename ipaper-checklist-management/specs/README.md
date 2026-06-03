@@ -24,14 +24,16 @@
 | ID | Slug | Epic owner | Status | Owner | Rigor | PR |
 | --- | --- | --- | --- | --- | --- | --- |
 | 000 | technical-foundation | — | in-progress | time-grupo-1 | leve | — |
-| 001 | checklist-management | Guilherme | in-progress | time-grupo-1 | completo | — |
-| 002 | dataseed | — | in-progress | time-grupo-1 | leve | — |
-| 003 | checklist-kpis | João | not-started | time-grupo-1 | completo | — |
-| 004 | task-result-dashboards | Caio | not-started | time-grupo-1 | completo | — |
-| 005 | alerts-notifications | Caio | not-started | time-grupo-1 | completo | — |
+| 001 | checklist-management | Guilherme | done | time-grupo-1 | completo | — |
+| 002 | dataseed | — | done | time-grupo-1 | leve | — |
+| 003 | checklist-kpis | João | done | time-grupo-1 | completo | — |
+| 004 | task-result-dashboards | Caio | done | time-grupo-1 | completo | — |
+| 005 | alerts-notifications | Caio | done | time-grupo-1 | completo | — |
 | 006 | bugs-and-minor-actions | — | in-progress | time-grupo-1 | leve | — |
 
 Cada feature **completo** inclui: `spec.md`, `research.md`, `plan.md`, `tasks.md`, `progress.md`.
+
+**Numeração canônica (2026-06-03):** use apenas as pastas do índice abaixo. Pastas legadas com `DEPRECATED.md` (`002-checklist-kpis`, `003-task-result-trends`, `004-alerts-notifications`) não devem receber implementação.
 
 ---
 

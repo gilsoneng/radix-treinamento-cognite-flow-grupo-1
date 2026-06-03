@@ -1,4 +1,5 @@
 import { useCogniteSdk } from '@cognite/app-sdk/react';
+import type { CogniteClient } from '@cognite/sdk';
 
 export type ViewReference = {
   type: 'view';
@@ -14,7 +15,6 @@ export type InstancesListRequest = {
   cursor?: string;
 };
 
-
 export type InstanceNodeDto = {
   space: string;
   externalId: string;
@@ -27,7 +27,6 @@ export type InstancesListResponse = {
   nextCursor?: string;
 };
 
-
 export interface CdfReadClient {
   readonly project: string;
   readonly instances: {
@@ -35,7 +34,35 @@ export interface CdfReadClient {
   };
 }
 
+function toCdfReadClient(sdk: CogniteClient): CdfReadClient {
+  return {
+    get project() {
+      return sdk.project;
+    },
+    instances: {
+      list: async (request) => {
+        const response = await sdk.instances.list({
+          instanceType: request.instanceType,
+          sources: request.sources.map((entry) => ({
+            source: {
+              type: 'view' as const,
+              space: entry.source.space,
+              externalId: entry.source.externalId,
+              version: entry.source.version,
+            },
+          })),
+          limit: request.limit,
+          cursor: request.cursor,
+        });
+        return {
+          items: response.items as InstanceNodeDto[],
+          nextCursor: response.nextCursor,
+        };
+      },
+    },
+  };
+}
 
 export function useCdfClient(): CdfReadClient {
-  return useCogniteSdk() as unknown as CdfReadClient;
+  return toCdfReadClient(useCogniteSdk() as CogniteClient);
 }

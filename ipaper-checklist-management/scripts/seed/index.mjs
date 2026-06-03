@@ -9,7 +9,7 @@
  * Options:
  *   --dry-run            Generate JSON files, do NOT push to CDF
  *   --from YYYY-MM-DD    Start date (default: 2025-01-01)
- *   --to   YYYY-MM-DD    End date   (default: 2025-12-31)
+ *   --to   YYYY-MM-DD    End date   (default: today)
  *   --routes r1,r2,...   Comma-separated route slugs (default: all)
  *   --help               Print this help
  * ─────────────────────────────────────────────────────────────────────────────
@@ -36,7 +36,8 @@ import { generateSeedManifest }                      from './generators/manifest
 // ─── CLI arg parsing ──────────────────────────────────────────────────────────
 
 function parseArgs(argv) {
-  const args = { dryRun: false, from: '2025-01-01', to: '2025-12-31', routes: null };
+  const today = new Date().toISOString().slice(0, 10);
+  const args = { dryRun: false, from: '2025-01-01', to: today, routes: null };
   for (let i = 2; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--dry-run') { args.dryRun = true; continue; }
@@ -55,7 +56,7 @@ Usage: node scripts/seed/index.mjs [options]
 
   --dry-run            Write JSON files only, do NOT push to CDF
   --from YYYY-MM-DD    Start date (default: 2025-01-01)
-  --to   YYYY-MM-DD    End date   (default: 2025-12-31)
+  --to   YYYY-MM-DD    End date   (default: today)
   --routes r1,r2,...   Comma-separated route slugs
   --help               Print this help
 `);
@@ -114,7 +115,7 @@ async function main() {
   const {
     checklists, checklistItems, checklistEdges,
     measurements, measEdges, measContextMap, ciContextMap,
-  } = generateChecklists({ fromDate, toDate, routes: args.routes, assetIndex, itemsByRoute });
+  } = generateChecklists({ fromDate, toDate, routes: args.routes, assetIndex, itemsByRoute, now: new Date() });
 
   writeJson('06-seed-checklists',       checklists);
   writeJson('07-seed-checklist-items',  checklistItems);
@@ -209,7 +210,7 @@ async function main() {
   if (args.dryRun) {
     log.info('');
     log.info('[DRY-RUN] JSON files written. CDF NOT modified.');
-    log.info('To ingest: node scripts/seed/index.mjs --from 2025-01-01 --to 2025-12-31');
+    log.info(`To ingest: npm run seed:ingest  (run dir: ${runDir.split(/[/\\]/).pop()})`);
   }
 }
 

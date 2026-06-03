@@ -24,7 +24,13 @@ import {
   measurementReadingNode, measurementEdge, SPACES,
 } from '../lib/dms-payload.mjs';
 import { ALL_ROUTES, SHIFTS, SUPERVISORS, getPersona, MEASUREMENT_DEFAULTS } from '../config.mjs';
-import { itemResult, measurementValue, inspectionDuration } from '../rules.mjs';
+import {
+  itemResult,
+  measurementValue,
+  inspectionDuration,
+  pickChecklistKpiScenario,
+  resolveChecklistState,
+} from '../rules.mjs';
 
 function* eachDay(fromDate, toDate) {
   const cur = new Date(fromDate); cur.setUTCHours(0, 0, 0, 0);
@@ -33,7 +39,17 @@ function* eachDay(fromDate, toDate) {
 }
 
 function fmtDate(d)  { return d.toISOString().slice(0, 10); }
-function fmtTs(d, h) { const c = new Date(d); c.setUTCHours(h); return c.toISOString(); }
+function fmtTs(d, h) { const c = new Date(d); c.setUTCHours(h, 0, 0, 0); return c.toISOString(); }
+
+/** Shift deadline — when the checklist is due (used for overdue / todo / ongoing KPI buckets). */
+function shiftDeadlineTs(date, shift) {
+  if (shift.endHour > shift.startHour) {
+    return fmtTs(date, shift.endHour);
+  }
+  const next = new Date(date);
+  next.setUTCDate(next.getUTCDate() + 1);
+  return fmtTs(next, shift.endHour);
+}
 
 const ITEM_STATUS_MAP = {
   'OK':              'completed',
@@ -45,7 +61,7 @@ const ITEM_STATUS_MAP = {
  * @returns {{ checklists, checklistItems, checklistEdges,
  *             measurements, measEdges, measContextMap }}
  */
-export function generateChecklists({ fromDate, toDate, routes, assetIndex, itemsByRoute }) {
+export function generateChecklists({ fromDate, toDate, routes, assetIndex, itemsByRoute, now = new Date() }) {
   const checklists      = [];
   const checklistItems  = [];
   const checklistEdges  = [];
@@ -70,15 +86,17 @@ export function generateChecklists({ fromDate, toDate, routes, assetIndex, items
 
         const routeItems  = itemsByRoute.get(route.slug) ?? [];
         const durationMin = inspectionDuration(persona, route.slug, date, routeItems.length);
-        const endHour     = startHour + Math.round(durationMin / 60);
-        const endTs       = fmtTs(date, endHour > 23 ? 23 : endHour);
+        const endHour     = startHour + Math.max(1, Math.round(durationMin / 60));
+        const shiftDeadline = shiftDeadlineTs(date, shift);
+        const actualEndTs   = fmtTs(date, endHour > 23 ? 23 : endHour);
 
         const chkId = id.checklist(route.slug, dateStr, shift.code);
 
-        const statusRnd = Math.random();
-        const status = statusRnd < 0.88 ? 'completed'
-                     : statusRnd < 0.95 ? 'started'
-                     : 'created';
+        const scenario = pickChecklistKpiScenario();
+        const { status, endTime, forceNotOk, includeItems } = resolveChecklistState(
+          scenario, date, shiftDeadline, now,
+        );
+        const resolvedEndTime = status === 'completed' ? actualEndTs : endTime;
 
         checklists.push(checklistNode(chkId, {
           title:          `${route.title} — ${shift.name} — ${dateStr}`,
@@ -87,16 +105,26 @@ export function generateChecklists({ fromDate, toDate, routes, assetIndex, items
           type:           'Inspection',
           assignedTo:     persona.externalId,
           startTime:      startTs,
-          endTime:        status === 'completed' ? endTs : null,
+          endTime:        resolvedEndTime,
           rootLocationId: rootAssetId,
         }));
 
-        if (status === 'created') continue;
+        if (!includeItems) continue;
+
+        let forcedNotOk = false;
 
         for (const titem of routeItems) {
-          const resultCode = itemResult(
+          let resultCode = itemResult(
             persona, route.slug, date, titem.equipSlug, titem.isMeasurement, titem.title,
           );
+
+          if (forceNotOk && !forcedNotOk && resultCode !== 'NotApplicable') {
+            resultCode = 'NotOk';
+            forcedNotOk = true;
+          } else if (!forceNotOk && resultCode === 'NotOk') {
+            // Keep KPI buckets distinct — only explicit notok scenarios produce Not OK notes.
+            resultCode = 'OK';
+          }
           const citemId = id.citem(route.slug, dateStr, shift.code, titem.equipSlug, titem.title);
 
           const note = resultCode === 'NotOk'
