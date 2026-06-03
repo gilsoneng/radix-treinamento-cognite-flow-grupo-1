@@ -7,10 +7,19 @@ export default defineConfig({
     globals: true,
     environment: 'happy-dom',
     setupFiles: ['vitest.setup.ts'],
+    include: ['src/**/*.{test,spec}.{ts,tsx}'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html', 'lcov'],
-      exclude: ['node_modules/', 'dist/', 'vitest.setup.ts', '**/*.config.ts', '**/*.d.ts'],
+      include: ['src/**/*.{ts,tsx}'],
+      exclude: [
+        'node_modules/',
+        'dist/',
+        'vitest.setup.ts',
+        '**/*.d.ts',
+        'src/main.tsx',
+        '**/*.test.{ts,tsx}',
+      ],
     },
   },
 });
