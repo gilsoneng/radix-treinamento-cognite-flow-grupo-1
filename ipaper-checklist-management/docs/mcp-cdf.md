@@ -8,6 +8,13 @@ Servidor MCP **local (stdio)** para o agente no Cursor explorar **data models, v
 
 **Não usa Python** (`cog-mcp-experimental`, `uvx`, `pipx`).
 
+O data model explorado via este MCP está documentado em
+**[`datamodel.md`](datamodel.md)** — contém dois data models:
+- **`ApmAppData` v13** (space `cdf_apm`) — Checklists, Templates, Observations, Measurements
+- **`CogniteCore` v1** (space `cdf_cdm`) — Assets, Equipment, Activities, Files, TimeSeries, Units
+
+Consulte esse arquivo antes de criar DTOs, mappers ou queries.
+
 ---
 
 ## Pré-requisitos

@@ -17,6 +17,12 @@
 7. **Estado host-synced via `syncInternalState`.** Nunca `window.location` ou estado URL manual. (AGENTS.md §2)
 8. **Rastreabilidade bidirecional.** `FR-###` aparece em `spec.md`, em `tasks.md`, no nome/descrição do teste e na matriz de `progress.md`.
 9. **Conventional Commits.** Commits pequenos e buildáveis; subject em imperativo. (AGENTS.md §9)
+10. **CDF-first para features com dados.** Qualquer feature que leia ou escreva dados
+    do CDF DEVE ter a seção "Data Models & CDF Integration" em `spec.md` preenchida com
+    as views reais de [`docs/datamodel.md`](../docs/datamodel.md) antes de avançar para
+    o DoR. Nunca assumir nomes de propriedades ou versões de view sem consultar esse
+    arquivo. O arquivo documenta **dois data models**: `ApmAppData v13` (space `cdf_apm`)
+    e `CogniteCore v1` (space `cdf_cdm`).
 
 ---
 

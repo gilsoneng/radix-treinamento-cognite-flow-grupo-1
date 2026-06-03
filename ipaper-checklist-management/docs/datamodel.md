@@ -327,3 +327,339 @@ As views abaixo fazem parte do modelo mas ainda não tiveram seus schemas detalh
 | `CogniteSolutionTag` | `cdf_apps_shared` | v1 |
 
 Para detalhá-las: usar `cdf_get_view` via MCP ou consultar o Cognite Data Explorer.
+
+---
+
+---
+
+# Data Model — CogniteCore (`cdf_cdm` v1)
+
+> Documentação gerada via MCP `cognite-cdf` em 2026-06-02.  
+> Fonte: `cdf_get_data_model` + `cdf_get_view` para cada view.
+
+---
+
+## Identificação
+
+| Campo | Valor |
+|---|---|
+| **Space** | `cdf_cdm` |
+| **ExternalId** | `CogniteCore` |
+| **Versão** | `v1` |
+| **Nome** | Cognite core data model |
+| **Descrição** | Cognite core data model |
+| **Global** | `true` |
+
+---
+
+## Visão geral — 33 views no space `cdf_cdm`
+
+### Views relevantes para este app (detalhadas abaixo)
+
+| View | Versão | Tipo | Uso no app |
+|---|---|---|---|
+| `CogniteAsset` | v1 | node | Equipamento / localização funcional inspecionada |
+| `CogniteEquipment` | v1 | node | Equipamento físico vinculado a asset |
+| `CogniteActivity` | v1 | node | Atividade/inspeção com período de tempo |
+| `CogniteFile` | v1 | node | Arquivos/fotos anexados a observações |
+| `CogniteTimeSeries` | v1 | node | Séries temporais de medições |
+| `CogniteUnit` | v1 | node | Unidades de medida para leituras |
+| `CogniteSourceSystem` | v1 | node | Sistema de origem dos dados |
+
+### Mixins base (herdados por todas as views acima)
+
+| Mixin | Propriedades-chave |
+|---|---|
+| `CogniteDescribable` v1 | `name`, `description`, `tags[]`, `aliases[]` |
+| `CogniteSourceable` v1 | `sourceId`, `sourceContext`, `source` → SourceSystem, `sourceCreatedTime`, `sourceUpdatedTime`, `sourceCreatedUser`, `sourceUpdatedUser` |
+| `CogniteSchedulable` v1 | `startTime`, `endTime`, `scheduledStartTime`, `scheduledEndTime` |
+| `CogniteVisualizable` v1 | `object3D` → Cognite3DObject |
+
+### Demais views (não usadas diretamente no app — somente referência)
+
+| View | Propósito |
+|---|---|
+| `CogniteAssetClass` v1 | Classe do asset (ex.: Bomba, Compressor) |
+| `CogniteAssetType` v1 | Tipo do asset |
+| `CogniteEquipmentType` v1 | Tipo do equipamento |
+| `CogniteFileCategory` v1 | Categoria de arquivo |
+| `CogniteAnnotation` v1 | Anotações genéricas |
+| `CogniteDiagramAnnotation` v1 | Anotações em P&IDs |
+| `Cognite3DObject` v1 | Objeto 3D associado a um asset |
+| `Cognite3DModel` v1, `CogniteCADModel` v1, `CognitePointCloudModel` v1, `Cognite360ImageModel` v1 | Modelos 3D (CAD, Point Cloud, 360°) |
+| `Cognite3DRevision` v1, `CogniteCADRevision` v1, `CognitePointCloudRevision` v1 | Revisões de modelos 3D |
+| `Cognite360ImageCollection` v1, `Cognite360Image` v1, `Cognite360ImageStation` v1, `Cognite360ImageAnnotation` v1 | Imagens 360° |
+| `CogniteCADNode` v1 | Nó em modelo CAD |
+| `CognitePointCloudVolume` v1 | Volume em nuvem de pontos |
+| `Cognite3DTransformation` v1, `CogniteCubeMap` v1 | Utilitários 3D |
+| `CogniteDescribable` v1, `CogniteSourceable` v1, `CogniteSchedulable` v1, `CogniteVisualizable` v1, `Cognite3DTransformation` v1 | Mixins base |
+
+---
+
+## Grafo de relacionamentos (views relevantes)
+
+```
+CogniteAsset (cdf_cdm v1)
+  ├─ parent ────────────────────────────────► CogniteAsset (self — hierarquia)
+  ├─ root ──────────────────────────────────► CogniteAsset (raiz da hierarquia)
+  ├─ path[] ────────────────────────────────► CogniteAsset[] (caminho completo)
+  ├─ assetClass ────────────────────────────► CogniteAssetClass v1
+  ├─ type ──────────────────────────────────► CogniteAssetType v1
+  ├─[reverse] files[] ─────────────────────► CogniteFile.assets
+  ├─[reverse] equipment[] ─────────────────► CogniteEquipment.asset
+  ├─[reverse] activities[] ────────────────► CogniteActivity.assets
+  └─[reverse] timeSeries[] ────────────────► CogniteTimeSeries.assets
+
+CogniteEquipment (cdf_cdm v1)
+  ├─ asset ─────────────────────────────────► CogniteAsset v1
+  ├─ equipmentType ─────────────────────────► CogniteEquipmentType v1
+  ├─ files[] ───────────────────────────────► CogniteFile v1
+  ├─[reverse] activities[] ────────────────► CogniteActivity.equipment
+  └─[reverse] timeSeries[] ────────────────► CogniteTimeSeries.equipment
+
+CogniteActivity (cdf_cdm v1)  [extends CogniteSchedulable]
+  ├─ assets[] ──────────────────────────────► CogniteAsset v1
+  ├─ equipment[] ───────────────────────────► CogniteEquipment v1
+  └─ timeSeries[] ──────────────────────────► CogniteTimeSeries v1
+
+CogniteFile (cdf_cdm v1)
+  ├─ assets[] ──────────────────────────────► CogniteAsset v1
+  ├─ category ──────────────────────────────► CogniteFileCategory v1
+  └─[reverse] equipment[] ─────────────────► CogniteEquipment.files
+
+CogniteTimeSeries (cdf_cdm v1)
+  ├─ assets[] ──────────────────────────────► CogniteAsset v1
+  ├─ equipment[] ───────────────────────────► CogniteEquipment v1
+  └─ unit ──────────────────────────────────► CogniteUnit v1
+```
+
+> **Padrão de uso no app:** `CogniteAsset` representa a localização funcional (linha, seção, equipamento); `CogniteEquipment` detalha o equipamento físico. `ApmAppData.Checklist` e `ApmAppData.Template` referenciam `cdf_core.Asset:v2` (space diferente — compatível mas versão anterior).
+
+---
+
+## Schemas detalhados
+
+---
+
+### `CogniteAsset` v1 — `cdf_cdm`
+
+> Assets represent systems that support industrial functions or processes. Often called 'functional location'.
+
+| Propriedade | Tipo | Nullable | Descrição |
+|---|---|---|---|
+| `name` | text | sim | Nome da instância (de CogniteDescribable) |
+| `description` | text | sim | Descrição |
+| `tags` | text[] | sim | Labels de uso genérico |
+| `aliases` | text[] | sim | Nomes alternativos |
+| `sourceId` | text | sim | Identificador no sistema de origem |
+| `sourceContext` | text | sim | Contexto do sourceId |
+| `source` | direct → CogniteSourceSystem | sim | Sistema de origem |
+| `sourceCreatedTime` | timestamp | sim | Criação no sistema de origem |
+| `sourceUpdatedTime` | timestamp | sim | Atualização no sistema de origem |
+| `sourceCreatedUser` | text | sim | Usuário criador na origem |
+| `sourceUpdatedUser` | text | sim | Usuário atualizador na origem |
+| `parent` | direct → CogniteAsset | sim | Asset pai na hierarquia |
+| `root` | direct → CogniteAsset | sim | Asset raiz (atualizado automaticamente) |
+| `path` | direct[] → CogniteAsset | sim | Lista ordenada de ancestrais (atualizada automaticamente) |
+| `pathLastUpdatedTime` | timestamp | sim | Última atualização do path |
+| `assetClass` | direct → CogniteAssetClass | sim | Classe do asset |
+| `type` | direct → CogniteAssetType | sim | Tipo do asset |
+| `object3D` | direct → Cognite3DObject | sim | Representação 3D |
+| `files` | reverse (CogniteFile.assets) | — | Arquivos relacionados (automático) |
+| `children` | reverse (CogniteAsset.parent) | — | Filhos na hierarquia (automático) |
+| `equipment` | reverse (CogniteEquipment.asset) | — | Equipamentos relacionados (automático) |
+| `activities` | reverse (CogniteActivity.assets) | — | Atividades relacionadas (automático) |
+| `timeSeries` | reverse (CogniteTimeSeries.assets) | — | Séries temporais (automático) |
+
+**Mixins:** `CogniteDescribable`, `CogniteSourceable`, `CogniteVisualizable`
+
+---
+
+### `CogniteEquipment` v1 — `cdf_cdm`
+
+> Equipment represents physical supplies or devices.
+
+| Propriedade | Tipo | Nullable | Descrição |
+|---|---|---|---|
+| `name` | text | sim | Nome |
+| `description` | text | sim | Descrição |
+| `tags` | text[] | sim | Labels |
+| `aliases` | text[] | sim | Nomes alternativos |
+| `sourceId` | text | sim | ID na origem |
+| `source` | direct → CogniteSourceSystem | sim | Sistema de origem |
+| `sourceCreatedTime` | timestamp | sim | — |
+| `sourceUpdatedTime` | timestamp | sim | — |
+| `sourceCreatedUser` | text | sim | — |
+| `sourceUpdatedUser` | text | sim | — |
+| `asset` | direct → CogniteAsset | sim | Asset funcional ao qual pertence |
+| `serialNumber` | text | sim | Número de série |
+| `manufacturer` | text | sim | Fabricante |
+| `equipmentType` | direct → CogniteEquipmentType | sim | Tipo do equipamento |
+| `files` | direct[] → CogniteFile | sim | Arquivos relacionados |
+| `activities` | reverse (CogniteActivity.equipment) | — | Atividades (automático) |
+| `timeSeries` | reverse (CogniteTimeSeries.equipment) | — | Séries temporais (automático) |
+
+**Mixins:** `CogniteDescribable`, `CogniteSourceable`
+
+---
+
+### `CogniteActivity` v1 — `cdf_cdm`
+
+> Represents activities — typically happen over a period with start and end time.
+
+| Propriedade | Tipo | Nullable | Descrição |
+|---|---|---|---|
+| `name` | text | sim | Nome da atividade |
+| `description` | text | sim | Descrição |
+| `tags` | text[] | sim | Labels |
+| `aliases` | text[] | sim | Nomes alternativos |
+| `sourceId` | text | sim | ID na origem |
+| `source` | direct → CogniteSourceSystem | sim | Sistema de origem |
+| `sourceCreatedTime` | timestamp | sim | — |
+| `sourceUpdatedTime` | timestamp | sim | — |
+| `startTime` | timestamp | sim | Início real da atividade |
+| `endTime` | timestamp | sim | Fim real da atividade |
+| `scheduledStartTime` | timestamp | sim | Início planejado |
+| `scheduledEndTime` | timestamp | sim | Fim planejado |
+| `assets` | direct[] → CogniteAsset | sim | Assets relacionados (máx 1200) |
+| `equipment` | direct[] → CogniteEquipment | sim | Equipamentos relacionados |
+| `timeSeries` | direct[] → CogniteTimeSeries | sim | Séries temporais relacionadas |
+
+**Mixins:** `CogniteDescribable`, `CogniteSourceable`, `CogniteSchedulable`
+
+---
+
+### `CogniteFile` v1 — `cdf_cdm`
+
+> Represents files.
+
+| Propriedade | Tipo | Nullable | Descrição |
+|---|---|---|---|
+| `name` | text | sim | Nome do arquivo |
+| `description` | text | sim | Descrição |
+| `tags` | text[] | sim | Labels |
+| `aliases` | text[] | sim | Nomes alternativos |
+| `sourceId` | text | sim | ID na origem |
+| `source` | direct → CogniteSourceSystem | sim | Sistema de origem |
+| `sourceCreatedTime` | timestamp | sim | — |
+| `sourceUpdatedTime` | timestamp | sim | — |
+| `assets` | direct[] → CogniteAsset | sim | Assets relacionados (máx 1200) |
+| `mimeType` | text | sim | MIME type do arquivo |
+| `directory` | text | sim | Caminho/diretório na origem |
+| `isUploaded` | boolean | sim | Se o conteúdo foi feito upload no CDF (default: false) |
+| `uploadedTime` | timestamp | sim | Momento em que o upload foi concluído |
+| `category` | direct → CogniteFileCategory | sim | Categoria detectada |
+| `equipment` | reverse (CogniteEquipment.files) | — | Equipamentos relacionados (automático) |
+
+**Mixins:** `CogniteDescribable`, `CogniteSourceable`
+
+---
+
+### `CogniteTimeSeries` v1 — `cdf_cdm`
+
+> Represents a series of data points in time order.
+
+| Propriedade | Tipo | Nullable | Descrição |
+|---|---|---|---|
+| `name` | text | sim | Nome |
+| `description` | text | sim | Descrição |
+| `tags` | text[] | sim | Labels |
+| `aliases` | text[] | sim | Nomes alternativos |
+| `sourceId` | text | sim | ID na origem |
+| `source` | direct → CogniteSourceSystem | sim | Sistema de origem |
+| `isStep` | boolean | **não** | Se é série step (default: false) |
+| `type` | enum: `numeric` / `string` / `state` | **não** | Tipo de dado — imutável após criação |
+| `sourceUnit` | text | sim | Unidade conforme sistema de origem |
+| `unit` | direct → CogniteUnit | sim | Unidade de medida padronizada |
+| `assets` | direct[] → CogniteAsset | sim | Assets relacionados (máx 1200) |
+| `equipment` | direct[] → CogniteEquipment | sim | Equipamentos relacionados |
+| `stateSet` | direct | sim | Conjunto de estados (só quando `type = state`) |
+| `activities` | reverse (CogniteActivity.timeSeries) | — | Atividades relacionadas (automático) |
+
+**Mixins:** `CogniteDescribable`, `CogniteSourceable`
+
+---
+
+### `CogniteUnit` v1 — `cdf_cdm`
+
+> Represents a single unit of measurement.
+
+| Propriedade | Tipo | Nullable | Descrição |
+|---|---|---|---|
+| `name` | text | sim | Nome da unidade |
+| `description` | text | sim | Descrição |
+| `tags` | text[] | sim | Labels |
+| `aliases` | text[] | sim | Nomes alternativos |
+| `symbol` | text | sim | Símbolo (ex.: `°C`, `bar`, `rpm`) |
+| `quantity` | text | sim | Grandeza física medida (ex.: `Temperature`) |
+| `source` | text | sim | Fonte da definição da unidade |
+| `sourceReference` | text | sim | Referência à fonte |
+
+**Mixins:** `CogniteDescribable`
+
+---
+
+### `CogniteSourceSystem` v1 — `cdf_cdm`
+
+> Standardizes how source systems are stored in CDF.
+
+| Propriedade | Tipo | Nullable | Descrição |
+|---|---|---|---|
+| `name` | text | sim | Nome do sistema de origem |
+| `description` | text | sim | Descrição |
+| `tags` | text[] | sim | Labels |
+| `aliases` | text[] | sim | Nomes alternativos |
+| `version` | text | sim | Versão do sistema de origem |
+| `manufacturer` | text | sim | Fabricante |
+
+**Mixins:** `CogniteDescribable`
+
+---
+
+## Relação entre cdf_core (ApmAppData) e cdf_cdm (CogniteCore)
+
+> Nota importante para o desenvolvimento do app.
+
+| Conceito | ApmAppData referencia | CogniteCore atual |
+|---|---|---|
+| Asset / localização funcional | `cdf_core.Asset:v2` | `cdf_cdm.CogniteAsset:v1` |
+| Sourceable (mixin) | `cdf_core.Sourceable:v1` | `cdf_cdm.CogniteSourceable:v1` |
+| Describable (mixin) | `cdf_core.Describable:v1` | `cdf_cdm.CogniteDescribable:v1` |
+| Schedulable (mixin) | `cdf_core.Schedulable:v1` | `cdf_cdm.CogniteSchedulable:v1` |
+
+O `cdf_core` é um space mais antigo que o `cdf_cdm`. O `ApmAppData v13` referencia `cdf_core`, enquanto o modelo canônico atual da Cognite é o `cdf_cdm`. Para **seed data**, os assets devem ser criados no space `cdf_cdm` como `CogniteAsset:v1`, e o campo `rootLocation` do Template/Checklist deve apontar para instâncias de `cdf_core.Asset:v2` (ou verificar via MCP se o ambiente aceita `cdf_cdm.CogniteAsset:v1` diretamente).
+
+---
+
+## Views não detalhadas (fora do escopo do app)
+
+| View | Space | Versão |
+|---|---|---|
+| `CogniteAssetClass` | `cdf_cdm` | v1 |
+| `CogniteAssetType` | `cdf_cdm` | v1 |
+| `CogniteEquipmentType` | `cdf_cdm` | v1 |
+| `CogniteFileCategory` | `cdf_cdm` | v1 |
+| `CogniteAnnotation` | `cdf_cdm` | v1 |
+| `CogniteDiagramAnnotation` | `cdf_cdm` | v1 |
+| `Cognite3DObject` | `cdf_cdm` | v1 |
+| `Cognite3DModel` | `cdf_cdm` | v1 |
+| `CogniteCADModel` | `cdf_cdm` | v1 |
+| `Cognite3DRevision` | `cdf_cdm` | v1 |
+| `CogniteCADRevision` | `cdf_cdm` | v1 |
+| `CognitePointCloudModel` | `cdf_cdm` | v1 |
+| `CognitePointCloudRevision` | `cdf_cdm` | v1 |
+| `CognitePointCloudVolume` | `cdf_cdm` | v1 |
+| `Cognite360ImageModel` | `cdf_cdm` | v1 |
+| `Cognite360ImageCollection` | `cdf_cdm` | v1 |
+| `Cognite360Image` | `cdf_cdm` | v1 |
+| `Cognite360ImageStation` | `cdf_cdm` | v1 |
+| `Cognite360ImageAnnotation` | `cdf_cdm` | v1 |
+| `CogniteCADNode` | `cdf_cdm` | v1 |
+| `Cognite3DTransformation` | `cdf_cdm` | v1 |
+| `CogniteCubeMap` | `cdf_cdm` | v1 |
+| `CogniteDescribable` | `cdf_cdm` | v1 |
+| `CogniteSourceable` | `cdf_cdm` | v1 |
+| `CogniteSchedulable` | `cdf_cdm` | v1 |
+| `CogniteVisualizable` | `cdf_cdm` | v1 |
+
+Para detalhá-las: usar `cdf_get_view` via MCP ou consultar o Cognite Data Explorer.

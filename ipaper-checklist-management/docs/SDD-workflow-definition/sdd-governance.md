@@ -79,3 +79,4 @@ npm run spec:new            # scaffold nova feature a partir de _templates/
 | O que esta feature entrega? | `specs/<NNN>/spec.md` |
 | Onde estamos nesta feature? | `specs/<NNN>/progress.md` |
 | Quais features existem? | `specs/README.md` |
+| Quais views CDF o app usa? | [`docs/datamodel.md`](../../docs/datamodel.md) — `ApmAppData v13` + `CogniteCore v1` |

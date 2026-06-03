@@ -1,0 +1,97 @@
+---
+description: Mapa de orientação do projeto — lido em toda sessão Cursor
+alwaysApply: true
+---
+
+# ipaper-checklist-management — orientação rápida
+
+**App:** Gerenciamento digital de checklists de inspeção OEC (Operator Equipment Checklist) para linhas de produção da **International Paper (IP)**.
+**Stack:** React 18 + TypeScript + Vite · `@cognite/aura` · `@cognite/app-sdk` · `@cognite/sdk` · react-query.
+**Ambiente CDF:** projeto `radix-dev` · cluster `az-eastus-1` · space principal `cdf_apm`.
+**Estilo arquitetural:** DDD + Clean Architecture + SOLID, adaptado ao Cognite Flows.
+
+---
+
+## Onde ler o quê
+
+| Preciso entender... | Leia |
+|---|---|
+| O que o app faz (produto, personas, requisitos) | `SPEC.md` |
+| Padrões de código / como escrever cada peça | `AGENTS.md` |
+| Onde o código mora e como as dependências fluem | `docs/architecture/README.md` |
+| Estrutura de pastas `src/` anotada | `docs/architecture/folder-structure.md` |
+| Responsabilidades por camada + regras de import | `docs/architecture/layers.md` |
+| Schema completo do data model ApmAppData v13 | `docs/datamodel.md` (seção ApmAppData) |
+| Schema do CogniteCore (cdf_cdm / v1) | `docs/datamodel.md` (seção CogniteCore) |
+| Quais features existem e seu status atual | `specs/README.md` |
+| Regras de negócio de uma feature específica | `specs/<NNN>-<slug>/spec.md` |
+| Progresso de desenvolvimento de uma feature | `specs/<NNN>-<slug>/progress.md` |
+| Princípios SDD (DoR, DoD, hierarquia) | `specs/CONSTITUTION.md` |
+| Playbook SDD completo (operacional, 4 fases) | `docs/SDD-workflow-definition/avaliacao_sdd.md` |
+| Governança SDD — resumo 1 página | `docs/SDD-workflow-definition/sdd-governance.md` |
+| Como usar o MCP CDF no agente Cursor | `docs/mcp-cdf.md` |
+| Seed data fonte (Excel OEC) | `docs/Seed/A Line OEC Routes 2 (1).xlsx` |
+| IP Design System → Aura mapping | `docs/Design.md` |
+| Decisões arquiteturais (ADRs) | `docs/architecture/adr/` |
+| Rastreamento da fundação técnica (000) | `specs/000-technical-foundation/progress.md` |
+
+---
+
+## Status de desenvolvimento (Jun 2026)
+
+| Feature | Status |
+|---|---|
+| `001-checklist-management` | In progress — arquitetura definida, módulo `health` como exemplo; implementação real pendente |
+| `002-dataseed` | **A criar** — renumerar 002→003, 003→004, 004→005 antes |
+| `002-checklist-kpis` → vira `003` | Not started |
+| `003-task-result-dashboards` → vira `004` | Not started |
+| `004-alerts-notifications` → vira `005` | Not started |
+
+### Pendências do roadmap (executar nesta ordem)
+
+1. **Atividade 0 (infra de orientação)** — este arquivo + `architecture.mdc` alwaysApply + `SPEC.md` preenchido ✅ *concluído*
+2. **Atividade 1** — ~~criar `docs/cognitecoremodel.md`~~ → CogniteCore documentado em `docs/datamodel.md` ✅ *concluído*
+3. **Atividade 2** — criar `specs/002-dataseed/` + renumerar specs 002→003, 003→004, 004→005
+4. **Atividade 3** — analisar Excel OEC, decidir arquitetura DM, gerar arquivos CSV/Parquet de seed
+5. **Atividade 4** — instalar e documentar Cognite Toolkit
+6. **Atividade 5** — ingerir seed no ambiente `radix-dev` via Toolkit, validar via MCP
+
+---
+
+## Regras inegociáveis (resumo rápido)
+
+- Só `modules/<bc>/infrastructure` toca `@cognite/sdk` / DMS. Domain é TS puro.
+- Presentation consome contratos de domain via DI — nunca vê DTO/instância DMS crua.
+- `@cognite/aura` é a fundação de UI; `design-system/` implementa IP **sobre** o Aura.
+- Cobertura de testes ≥ 80% (gate de certificação Flows).
+- Estado navegável → host-synced (`app-sdk`); estado de servidor → react-query.
+
+---
+
+## Gatilhos de manutenção de documentação (OBRIGATÓRIO)
+
+> **Regra:** ao CONCLUIR qualquer tarefa que se enquadre nos gatilhos abaixo, atualizar os
+> documentos listados ANTES de encerrar a sessão. Não perguntar ao usuário — simplesmente fazer.
+
+| Quando o agente faz isto... | Deve atualizar estes documentos |
+|---|---|
+| Adiciona / modifica view ou data model no CDF | `docs/datamodel.md` (fonte de verdade — os 7 ponteiros já referenciam este arquivo) |
+| Muda estrutura de pastas em `src/` | `docs/architecture/folder-structure.md` |
+| Muda regras de import entre camadas | `docs/architecture/layers.md` + seção relevante de `architecture.mdc` |
+| Cria nova decisão arquitetural | `docs/architecture/adr/<NNNN>-<slug>.md` + linha na tabela de `docs/architecture/README.md` |
+| Adiciona ou remove dependência crítica do stack | tabela §2 de `docs/architecture/README.md` + seção relevante de `AGENTS.md` |
+| Cria nova feature / spec | `specs/README.md` (linha nova) + 5 arquivos em `specs/<NNN>-<slug>/` |
+| Muda comportamento visível ao usuário | `SPEC.md` (seção relevante) |
+| Conclui ou avança uma tarefa de uma feature | `specs/<NNN>-<slug>/progress.md` + `tasks.md` |
+| Conclui ou avança qualquer entrega de fundação técnica | `specs/000-technical-foundation/progress.md` |
+| Instala / configura nova ferramenta de infra (Toolkit, MCP, etc.) | `docs/<ferramenta>.md` (criar se não existir) + `specs/000-technical-foundation/progress.md` |
+| Altera a hierarquia ou os princípios SDD | `specs/CONSTITUTION.md` + `docs/SDD-workflow-definition/sdd-governance.md` |
+
+### Sequência de contexto para sessão nova
+
+1. Este arquivo já foi injetado automaticamente (alwaysApply).
+2. Ler `AGENTS.md` — padrões de código (como escrever).
+3. Ler `specs/README.md` — quais features existem e em que estado.
+4. Se a tarefa envolve CDF: ler `docs/datamodel.md`.
+5. Se a tarefa envolve nova feature: ler `specs/CONSTITUTION.md` (DoR/DoD).
+6. Se a tarefa é de infra/fundação: ler `specs/000-technical-foundation/progress.md`.

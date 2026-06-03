@@ -17,6 +17,47 @@ The durable software architecture (DDD + Clean Architecture + SOLID adapted to C
 
 Key rule: only `modules/<bc>/infrastructure` may touch `@cognite/sdk`; `domain` is pure TS; `presentation` consumes domain contracts via DI and never sees raw DMS instances.
 
+### CDF Data Models (source of truth)
+
+Both data models used by the app are fully documented in
+**[`docs/datamodel.md`](docs/datamodel.md)**.
+
+| Data Model | Space | Version | What it contains |
+|---|---|---|---|
+| `ApmAppData` | `cdf_apm` | v13 | Checklists, Templates, Observations, Measurements, Schedules |
+| `CogniteCore` | `cdf_cdm` | v1 | Assets, Equipment, Activities, Files, TimeSeries, Units |
+
+Before creating any DTO, mapper, CDF repository, or query, read `docs/datamodel.md`.
+Never assume property names, view versions, or relationships without consulting the documentation.
+
+Key views (ApmAppData): `Checklist v7`, `ChecklistItem v7`, `Template v8`, `TemplateItem v7`,
+`Observation v5`, `MeasurementReading v4`, `Schedule v4`.
+
+Key views (CogniteCore): `CogniteAsset v1`, `CogniteEquipment v1`, `CogniteActivity v1`,
+`CogniteFile v1`, `CogniteTimeSeries v1`, `CogniteUnit v1`.
+
+> **Important:** `ApmAppData` references `cdf_core.Asset:v2` (older space). New seed data
+> should use `cdf_cdm.CogniteAsset:v1`. See the compatibility table at the end of `docs/datamodel.md`.
+
+### Documentation maintenance triggers (MANDATORY)
+
+After completing any task, before ending the session, apply the applicable triggers below.
+Do NOT ask the user — just do it.
+
+| When the agent does this... | Must update these docs |
+|---|---|
+| Adds / modifies a CDF view or data model | `docs/datamodel.md` (source of truth — the 7 pointer files already reference it) |
+| Changes folder structure in `src/` | `docs/architecture/folder-structure.md` |
+| Changes import rules between layers | `docs/architecture/layers.md` + `architecture.mdc` |
+| Creates a new architectural decision | `docs/architecture/adr/<NNNN>-<slug>.md` + row in `docs/architecture/README.md` |
+| Adds or removes a critical stack dependency | table §2 of `docs/architecture/README.md` + relevant section of `AGENTS.md` |
+| Creates a new feature / spec | `specs/README.md` (new row) + 5 files in `specs/<NNN>-<slug>/` |
+| Changes user-visible product behaviour | `SPEC.md` (relevant section) |
+| Completes or advances a feature task | `specs/<NNN>-<slug>/progress.md` + `tasks.md` |
+| Completes or advances a technical-foundation delivery | `specs/000-technical-foundation/progress.md` |
+| Installs / configures a new infra tool (Toolkit, MCP, etc.) | `docs/<tool>.md` (create if missing) + `specs/000-technical-foundation/progress.md` |
+| Changes SDD hierarchy or principles | `specs/CONSTITUTION.md` + `docs/SDD-workflow-definition/sdd-governance.md` |
+
 ---
 
 ## 1. UI Components

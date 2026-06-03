@@ -13,8 +13,13 @@
 
 | ID | Slug | Status | Owner | Rigor | PR |
 | --- | --- | --- | --- | --- | --- |
-| 002 | example-test | not-started | João Hermida | completo | — |
-| 001 | checklist-management | in-progress | time-grupo-1 | completo | — |
+| 000 | technical-foundation    | in-progress | time-grupo-1 | leve    | — |
+| 001 | checklist-management    | in-progress | time-grupo-1 | completo | — |
+| 002 | checklist-kpis          | not-started | time-grupo-1 | completo | — |
+| 003 | task-result-dashboards  | not-started | time-grupo-1 | completo | — |
+| 004 | alerts-notifications    | not-started | time-grupo-1 | completo | — |
+
+> **Nota:** A spec `002-dataseed` será criada na próxima atividade (as specs acima serão renumeradas: 002→003, 003→004, 004→005).
 
 ---
 
