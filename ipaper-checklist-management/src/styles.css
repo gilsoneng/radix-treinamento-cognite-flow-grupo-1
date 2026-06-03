@@ -174,7 +174,7 @@
 .ip-app-shell__radix-wedge {
   position: absolute;
   top: 0;
-  right: 0;
+  right: -8px;
   z-index: 1;
   height: 62px;
   width: auto;

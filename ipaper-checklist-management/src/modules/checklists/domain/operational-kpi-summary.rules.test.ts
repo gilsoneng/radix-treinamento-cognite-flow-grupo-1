@@ -38,5 +38,9 @@ describe(buildOperationalKpiSummary.name, () => {
     expect(result.counts.todo).toBe(1);
     expect(result.insights.todo.delta).toBe(-2);
     expect(result.catalog.days[0]).toBe('2025-06-02');
+    expect(result.scopedSummaries).toHaveLength(2);
+    expect(result.scopedSummaries.every((row) => row.externalId.includes('2025-06-02-D'))).toBe(
+      true,
+    );
   });
 });

@@ -33,6 +33,7 @@ export function buildOperationalKpiSummary(
       shiftContext: null,
       catalog,
       selection: null,
+      scopedSummaries: filtered,
     };
   }
 
@@ -56,6 +57,7 @@ export function buildOperationalKpiSummary(
     shiftContext,
     catalog,
     selection: resolved,
+    scopedSummaries: currentScope,
   };
 }
 

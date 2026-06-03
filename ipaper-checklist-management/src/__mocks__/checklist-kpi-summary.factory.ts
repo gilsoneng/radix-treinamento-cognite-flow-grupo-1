@@ -24,6 +24,7 @@ export function makeChecklistKpiSummary(
     shiftContext: overrides?.shiftContext ?? null,
     catalog: overrides?.catalog ?? EMPTY_CATALOG,
     selection: overrides?.selection ?? null,
+    scopedSummaries: overrides?.scopedSummaries ?? [],
     ...overrides,
   };
 }

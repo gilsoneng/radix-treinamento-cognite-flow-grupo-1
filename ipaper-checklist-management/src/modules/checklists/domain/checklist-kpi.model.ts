@@ -23,6 +23,8 @@ export type ChecklistKpiSummary = {
   readonly shiftContext: OperationalShiftContext | null;
   readonly catalog: OperationalKpiCatalog;
   readonly selection: OperationalKpiSelection | null;
+  /** Checklists in the current operational day/shift scope (for list views). */
+  readonly scopedSummaries: readonly ChecklistSummary[];
 };
 
 export const EMPTY_KPI_COUNTS: ChecklistKpiCounts = {

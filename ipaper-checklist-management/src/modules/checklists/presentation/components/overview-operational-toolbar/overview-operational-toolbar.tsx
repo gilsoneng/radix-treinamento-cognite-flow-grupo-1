@@ -12,6 +12,9 @@ import type { OperationalKpiCatalog, OperationalKpiSelection } from '../../../do
 import { shiftLabel } from '../../../domain/inspection-shift.rules';
 import type { OverviewShiftCode } from '../../../../../app/routing/app-view.types';
 
+const DEFAULT_DESCRIPTION =
+  'Choose date and shift to update KPIs and alerts on this page.';
+
 export type OverviewOperationalToolbarProps = {
   catalog: OperationalKpiCatalog;
   selection: OperationalKpiSelection;
@@ -20,6 +23,7 @@ export type OverviewOperationalToolbarProps = {
   onStepShift: (direction: 'previous' | 'next') => void;
   canStepDayOlder: boolean;
   canStepDayNewer: boolean;
+  description?: string;
 };
 
 export function OverviewOperationalToolbar({
@@ -30,6 +34,7 @@ export function OverviewOperationalToolbar({
   onStepShift,
   canStepDayOlder,
   canStepDayNewer,
+  description = DEFAULT_DESCRIPTION,
 }: OverviewOperationalToolbarProps) {
   const shiftsForDay = catalog.shiftsByDay[selection.operationalDay] ?? [];
 
@@ -45,9 +50,7 @@ export function OverviewOperationalToolbar({
         >
           PERIOD & SHIFT
         </h2>
-        <p className="m-0 mt-1 text-sm text-[var(--ip-teal-dark)]">
-          Choose date and shift to update KPIs and alerts on this page.
-        </p>
+        <p className="m-0 mt-1 text-sm text-[var(--ip-teal-dark)]">{description}</p>
       </div>
 
       <div className="flex flex-wrap items-end justify-center gap-6">
