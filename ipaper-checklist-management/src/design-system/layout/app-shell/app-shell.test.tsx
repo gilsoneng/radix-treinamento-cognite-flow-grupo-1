@@ -11,6 +11,7 @@ import { AppNavigationProvider } from '../../../app/host/app-navigation.provider
 import { HostAppContext } from '../../../app/host/host-app.context';
 import { AppView } from '../../../app/routing/app-view';
 import { DEFAULT_APP_STATE } from '../../../app/routing/app-view.types';
+import { makeChecklistKpiSummary } from '../../../__mocks__/checklist-kpi-summary.factory';
 import type { ChecklistKpiSummary } from '../../../modules/checklists/domain/checklist-kpi.model';
 import type { ChecklistSummary } from '../../../modules/checklists/domain/checklist-kpi.model';
 import type { OperationalAlert } from '../../../modules/checklists/domain/alert.model';
@@ -40,10 +41,10 @@ function fakeKpiQuery(): UseQueryResult<ChecklistKpiSummary> {
   return {
     isPending: false,
     isError: false,
-    data: {
+    data: makeChecklistKpiSummary({
       total: 4,
       counts: { todo: 1, ongoing: 1, done: 1, overdue: 0, notok: 1 },
-    },
+    }),
     refetch: vi.fn(),
   } as Partial<UseQueryResult<ChecklistKpiSummary>> as UseQueryResult<ChecklistKpiSummary>;
 }
@@ -73,13 +74,19 @@ function renderShell() {
   const api = makeApi();
   const queryClient = createQueryClient();
   const useChecklistRepository = () => makeStubRepository();
+  const setPage = vi.fn();
+  const setOverviewOperationalFilter = vi.fn();
   return render(
     <QueryClientProvider client={queryClient}>
       <UseChecklistDataQueriesContext.Provider value={{ useChecklistRepository }}>
         <UseOverviewKpisViewModelContext.Provider
           value={{
             useChecklistKpiQuery: () => fakeKpiQuery(),
-            useAppNavigation: () => ({ setPage: vi.fn() }),
+            useAppNavigation: () => ({
+              state: DEFAULT_APP_STATE,
+              setPage,
+              setOverviewOperationalFilter,
+            }),
           }}
         >
           <HostAppContext.Provider value={{ api, initialState: undefined, isReady: true }}>
@@ -116,6 +123,11 @@ describe('AppShell', () => {
     expect(screen.getByRole('img', { name: 'International Paper' })).toBeInTheDocument();
     expect(screen.queryByText('InField')).not.toBeInTheDocument();
     expect(screen.queryByText('Checklist Intelligence')).not.toBeInTheDocument();
+  });
+
+  it('shows Radix wedge in the page header', () => {
+    renderShell();
+    expect(screen.getByRole('img', { name: 'Powered by Radix' })).toBeInTheDocument();
   });
 
   it('switches to checklists view when Checklists nav is clicked', async () => {

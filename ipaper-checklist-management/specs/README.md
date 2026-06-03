@@ -30,6 +30,7 @@
 | 004 | task-result-dashboards | Caio | done | time-grupo-1 | completo | — |
 | 005 | alerts-notifications | Caio | done | time-grupo-1 | completo | — |
 | 006 | bugs-and-minor-actions | — | in-progress | time-grupo-1 | leve | — |
+| 007 | operational-dashboard | — | in-progress | time-grupo-1 | completo | — |
 
 Cada feature **completo** inclui: `spec.md`, `research.md`, `plan.md`, `tasks.md`, `progress.md`.
 

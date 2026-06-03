@@ -5,6 +5,7 @@ import { ErrorState } from '../../../../../design-system/layout/states/error-sta
 import { LoadingState } from '../../../../../design-system/layout/states/loading-state';
 import type { ChecklistKpiBucket } from '../../../domain/checklist-kpi.model';
 import { KpiCard } from '../../components/kpi-card/kpi-card';
+import { OverviewOperationalToolbar } from '../../components/overview-operational-toolbar/overview-operational-toolbar';
 import { OverviewAlertsPanel } from '../../components/overview-alerts-panel/overview-alerts-panel';
 import { useOverviewKpisViewModel } from '../../view-models/use-overview-kpis.view-model';
 
@@ -39,11 +40,21 @@ export function OverviewPage() {
     <div className="flex flex-col gap-6">
       <Card>
         <CardContent>
-          <p className="m-0 text-sm text-muted-foreground">
-            Live checklist execution status from{' '}
-            <span className="font-medium text-foreground">cdf_apm.Checklist:v7</span>
-            {' '}· International Paper · Riegelwood Mill
-          </p>
+          {vm.selection ? (
+            <OverviewOperationalToolbar
+              catalog={vm.catalog}
+              selection={vm.selection}
+              onSelect={vm.setOperationalFilter}
+              onStepDay={vm.stepDay}
+              onStepShift={vm.stepShift}
+              canStepDayOlder={vm.canStepDayOlder}
+              canStepDayNewer={vm.canStepDayNewer}
+            />
+          ) : (
+            <p className="m-0 text-center text-sm text-muted-foreground">
+              Date and shift filters will appear when checklist data includes operational periods.
+            </p>
+          )}
         </CardContent>
       </Card>
 
@@ -53,13 +64,13 @@ export function OverviewPage() {
             key={bucket}
             bucket={bucket}
             value={vm.counts[bucket]}
-            percentage={vm.percentages[bucket]}
+            insight={vm.insights[bucket]}
             onSelect={vm.navigateToChecklists}
           />
         ))}
       </div>
 
-      <OverviewAlertsPanel />
+      <OverviewAlertsPanel selection={vm.selection} />
     </div>
   );
 }

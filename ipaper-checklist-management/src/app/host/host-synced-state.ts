@@ -2,8 +2,10 @@ import {
   DEFAULT_APP_STATE,
   isAnalyticsTab,
   isAppPage,
+  isOverviewShiftCode,
   type AnalyticsTab,
   type AppState,
+  type OverviewShiftCode,
 } from '../routing/app-view.types';
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -51,10 +53,18 @@ export function parseAppState(raw: string | undefined): AppState {
     const analyticsTab =
       analyticsTabRaw && isAnalyticsTab(analyticsTabRaw) ? analyticsTabRaw : migrated.analyticsTab;
 
+    const overviewShiftRaw = readOptionalString(parsed, 'overviewShiftCode');
+    const overviewShiftCode: OverviewShiftCode | undefined =
+      overviewShiftRaw && isOverviewShiftCode(overviewShiftRaw)
+        ? overviewShiftRaw
+        : undefined;
+
     return {
       page: migrated.page,
       checklistId: readOptionalString(parsed, 'checklistId'),
       analyticsTab: migrated.page === 'analytics' ? analyticsTab ?? 'results' : undefined,
+      overviewOperationalDay: readOptionalString(parsed, 'overviewOperationalDay'),
+      overviewShiftCode,
     };
   } catch {
     return DEFAULT_APP_STATE;

@@ -121,7 +121,7 @@ export function IpDataTable<T>({
     <Card className="overflow-hidden">
       {(title || searchFilter || toolbar) && (
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-4 py-3">
-          {title ? <h3 className="m-0 text-sm font-semibold">{title}</h3> : <span />}
+          {title ? <h3 className="ip-data-table__title m-0 text-sm font-semibold">{title}</h3> : <span />}
           <div className="flex flex-wrap items-center gap-2">
             {toolbar}
             {searchFilter ? (
