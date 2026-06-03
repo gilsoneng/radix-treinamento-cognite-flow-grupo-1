@@ -9,17 +9,29 @@
 
 ---
 
+## Requisitos e protótipo
+
+| Documento | Conteúdo |
+| --- | --- |
+| [`../docs/requirements/APPLICATION-REQUIREMENTS.md`](../docs/requirements/APPLICATION-REQUIREMENTS.md) | Requisitos de aplicação (AR-001…AR-310) |
+| [`../docs/requirements/TASKS-DIVISION.md`](../docs/requirements/TASKS-DIVISION.md) | Épicos e Issues GitHub sugeridas |
+| [`../docs/prototype/LOVABLE-PROTOTYPE.md`](../docs/prototype/LOVABLE-PROTOTYPE.md) | Protótipo Lovable — referência UX por rota |
+
+---
+
 ## Índice de features
 
-| ID | Slug | Status | Owner | Rigor | PR |
-| --- | --- | --- | --- | --- | --- |
-| 000 | technical-foundation    | in-progress | time-grupo-1 | leve     | — |
-| 001 | checklist-management    | in-progress | time-grupo-1 | completo | — |
-| 002 | dataseed                | in-progress | time-grupo-1 | leve     | — |
-| 003 | checklist-kpis          | not-started | time-grupo-1 | completo | — |
-| 004 | task-result-dashboards  | not-started | time-grupo-1 | completo | — |
-| 005 | alerts-notifications    | not-started | time-grupo-1 | completo | — |
-| 006 | bugs-and-minor-actions  | in-progress | time-grupo-1 | leve     | — |
+| ID | Slug | Epic owner | Status | Owner | Rigor | PR |
+| --- | --- | --- | --- | --- | --- | --- |
+| 000 | technical-foundation | — | in-progress | time-grupo-1 | leve | — |
+| 001 | checklist-management | Guilherme | in-progress | time-grupo-1 | completo | — |
+| 002 | dataseed | — | in-progress | time-grupo-1 | leve | — |
+| 003 | checklist-kpis | João | not-started | time-grupo-1 | completo | — |
+| 004 | task-result-dashboards | Caio | not-started | time-grupo-1 | completo | — |
+| 005 | alerts-notifications | Caio | not-started | time-grupo-1 | completo | — |
+| 006 | bugs-and-minor-actions | — | in-progress | time-grupo-1 | leve | — |
+
+Cada feature **completo** inclui: `spec.md`, `research.md`, `plan.md`, `tasks.md`, `progress.md`.
 
 ---
 

@@ -66,6 +66,10 @@ Always check `@cognite/aura/components` before reaching for a raw HTML element o
 
 Before implementing layouts, colors, typography, or IP-specific patterns (KPIs, tables, shell), read **`docs/Design.md`** — it maps International Paper brand and reference UI to Aura primitives (no custom design-system widgets).
 
+For **business UI** (overview, checklists, analytics, alerts), read the Lovable prototype reference **`docs/prototype/LOVABLE-PROTOTYPE.md`** and the matching feature spec in **`specs/<NNN>-<slug>/spec.md`**. The prototype lives in `prototype/fieldops-insights/` (mock data only — not production code).
+
+Product requirements and GitHub issue breakdown: **`docs/requirements/APPLICATION-REQUIREMENTS.md`**, **`docs/requirements/TASKS-DIVISION.md`**.
+
 ---
 
 ## 2. Host integration (`@cognite/app-sdk`)
@@ -342,8 +346,11 @@ Toda mudança de **comportamento visível** em `src/` começa por uma feature sp
 
 1. `docs/SDD-workflow-definition/avaliacao_sdd.md` — regras e ações de agente (playbook canônico)
 2. `docs/SDD-workflow-definition/sdd-governance.md` — resumo humano e decisões adotadas
-3. `SPEC.md` + `specs/<NNN>-<slug>/spec.md` — o quê construir
-4. `specs/<NNN>-<slug>/tasks.md` — ordem de implementação (Test-First)
+3. `docs/requirements/APPLICATION-REQUIREMENTS.md` — contexto de negócio IP / InField
+4. `docs/prototype/LOVABLE-PROTOTYPE.md` — referência UX (rotas e comportamento esperado)
+5. `SPEC.md` + `specs/<NNN>-<slug>/spec.md` — o quê construir (FRs testáveis)
+6. `specs/<NNN>-<slug>/tasks.md` — ordem de implementação (Test-First)
+7. `docs/requirements/TASKS-DIVISION.md` — mapeamento para Issues GitHub
 
 **Regras mínimas:**
 

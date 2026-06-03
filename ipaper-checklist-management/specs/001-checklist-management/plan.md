@@ -1,72 +1,79 @@
-# Plan — Checklist Management (scaffold Flows)
+# Plan — App Foundation & Fusion Shell
 
-> **ID:** 001-checklist-management
-> Arquitetura atual do scaffold — base para features futuras.
+> **ID:** 001-checklist-management  
+> **Protótipo:** `prototype/fieldops-insights/src/components/app-sidebar.tsx`, `__root.tsx`
 
 ---
 
-## Visão técnica
+## Visão técnica (alvo)
 
 ```
 App (root)
-  └── CogniteSdkProvider (auth, loading/error fallback)
-        └── AppContent
-              ├── Card (Aura)
-              │     ├── CardHeader — título + descrição
-              │     └── CardContent
-              │           ├── CHECKLIST_STEPS.map → Collapsible (Plan/Explore/Deploy)
-              │           ├── Alert — deployment targets (org + project)
-              │           └── Collapsible — Support
-              └── (estado host-synced: nenhum no scaffold)
+  └── CogniteSdkProvider (FR-001…FR-004)
+        └── HostAppProvider (FR-011 — api + initialState)
+              └── AppShell (FR-005…FR-009)
+                    ├── AppSidebar — nav Overview | Checklists | Task Results | KPIs | Alerts | Settings
+                    └── AppOutlet — view por page (host-synced FR-010)
+                          ├── overview → (002) OverviewView
+                          ├── checklists → (002) ChecklistListView
+                          ├── task-results → (003) TaskResultsView
+                          ├── kpis → (003) TimeSeriesKpisView
+                          ├── alerts → (004) AlertsView
+                          └── settings → PlaceholderView
 ```
+
+**Estado v1 (host-synced):**
+
+```typescript
+type AppPage =
+  | 'overview'
+  | 'checklists'
+  | 'checklist-detail' // id em sub-campo opcional
+  | 'task-results'
+  | 'kpis'
+  | 'alerts'
+  | 'settings';
+
+type AppState = {
+  page: AppPage;
+  checklistId?: string;
+};
+```
+
+Filtros de lista (002) estendem `AppState` ou storage separado — ver spec 002.
 
 ---
 
 ## Mapeamento FR → módulo
 
-| FR | Módulo `src/` | Padrão AGENTS.md |
+| FR | Módulo `src/` | Padrão |
 | --- | --- | --- |
-| FR-001 | `src/App.tsx → AppContent` | §1 (Aura components) |
-| FR-002 | `src/App.tsx → CHECKLIST_STEPS` | §1 (Collapsible, Badge) |
-| FR-003 | `src/App.tsx → AppContent` | §2 (app.json + useCogniteSdk) |
-| FR-004 | `src/App.tsx → loadingFallback` | §2 (CogniteSdkProvider loading) |
-| FR-005 | `src/App.tsx → errorFallback` | §2 (CogniteSdkProvider error) |
-| FR-006 | `src/App.tsx → CogniteSdkProvider` | §8 (auth via SDK) |
+| FR-001…FR-004 | `App.tsx` / `src/lib/App.tsx` | AGENTS.md §8, §6 (deps) |
+| FR-005…FR-009 | `src/shell/AppShell.tsx`, `AppSidebar.tsx` | §1 Aura, `docs/Design.md` |
+| FR-010 | `src/shell/useAppNavigation.ts` + storage | AGENTS.md §2, §5 |
+| FR-011 | `src/context/HostAppContext.tsx` | AGENTS.md §3 |
+| FR-012 | `src/views/placeholders/*.tsx` | — |
+| FR-013 | Remover welcome de `AppContent` | — |
 
 ---
 
-## Estado e host-sync
+## Transição scaffold → shell
 
-| Estado | Tipo | Justificativa |
+| Fase | UI home | Testes |
 | --- | --- | --- |
-| `client.project` | local | lido do CogniteClient; não precisa de URL sync no scaffold |
-| `CHECKLIST_STEPS` | constante | conteúdo fixo, sem estado |
-
-Não há estado host-synced no scaffold. Quando features reais adicionarem estado navegável (filtros, tab ativa, recurso selecionado), deve seguir AGENTS.md §2.
+| Atual | Welcome Flows checklist | `App.test.tsx` splash tests |
+| Pós T11 | AppShell + Overview placeholder | Atualizar/remover splash tests |
 
 ---
 
-## Interfaces
+## Trade-offs
 
-Scaffold não define serviços customizados. Dependências injetáveis via `deps` prop (padrão `CogniteSdkProvider`):
-
-```typescript
-type AppDeps = {
-  connectToHostApp: typeof connectToHostApp;
-  createClient: (config: CogniteClientOptions) => CogniteClient;
-};
-```
-
----
-
-## Trade-offs e alternativas
-
-- Conteúdo do checklist como array de constantes (`CHECKLIST_STEPS`) em vez de CDF: adequado para scaffold estático; migrar para CDF quando o conteúdo for dinâmico.
-- `CogniteSdkProvider` gerencia toda a lógica de auth/error: evita boilerplate por feature; limitação se precisar de auth customizado.
+- **Enum `page` vs react-router:** host-sync mais simples com JSON flat; router interno pode vir em v2 se deep links complexos forem necessários.
+- **Sidebar só desktop (md+):** alinhado protótipo; topbar mobile em feature futura.
 
 ---
 
 ## Riscos
 
-- Sem ViewModel separado no scaffold: aceitável enquanto `AppContent` só renderiza; criar `useAppViewModel` quando estado ou lógica crescerem.
-- `app.json` importado diretamente em `App.tsx`: cria acoplamento de build; aceitável para config estática.
+- Duplicata `App.tsx` (raiz vs `src/lib/`) — consolidar em um caminho durante T8.
+- Placeholders devem ser substituíveis sem alterar shell quando 002–004 entrarem.

@@ -16,6 +16,13 @@ docs/
     layers.md
     adr/
       0001-angular-base-to-react-flows.md
+  prototype/                   ← protótipo Lovable (referência UX)
+    README.md
+    LOVABLE-PROTOTYPE.md
+  requirements/                ← requisitos de negócio + divisão Issues
+    README.md
+    APPLICATION-REQUIREMENTS.md
+    TASKS-DIVISION.md
   design/                      ← contrato IP Design System
     README.md
     IP-DESIGN-SYSTEM.md
@@ -39,6 +46,31 @@ docs/
 | MCP **`cognite-docs`** | HTTP público | Documentação Cognite |
 
 Schema do data model explorado: **[`datamodel.md`](datamodel.md)** — dois modelos: `ApmAppData` v13 (space `cdf_apm`) + `CogniteCore` v1 (space `cdf_cdm`). Guia do MCP CDF: [`mcp-cdf.md`](mcp-cdf.md). Credenciais: [`.env_example`](../.env_example). **Sem Python** no MCP.
+
+---
+
+## prototype/ — Protótipo Lovable
+
+Referência UX do use case **International Paper — InField Challenge** (gerado no Lovable, código em `prototype/fieldops-insights/`).
+
+| Documento | Para quem | O que é |
+| --- | --- | --- |
+| [`prototype/README.md`](prototype/README.md) | Índice | Acesso rápido e regra para agentes |
+| [`prototype/LOVABLE-PROTOTYPE.md`](prototype/LOVABLE-PROTOTYPE.md) | Agentes, devs, design | Rotas, telas, mock data, mapeamento requisito → tela, como rodar local |
+
+**Regra:** consultar antes de implementar UI de negócio; traduzir layout para Aura (`Design.md`), não copiar shadcn do protótipo.
+
+---
+
+## requirements/ — Requisitos e Issues
+
+| Documento | Para quem | O que é |
+| --- | --- | --- |
+| [`requirements/README.md`](requirements/README.md) | Índice | Estrutura e links |
+| [`requirements/APPLICATION-REQUIREMENTS.md`](requirements/APPLICATION-REQUIREMENTS.md) | PO, devs, agentes | AR-101…AR-310 consolidados do briefing IP |
+| [`requirements/TASKS-DIVISION.md`](requirements/TASKS-DIVISION.md) | Gestão / GitHub | Épicos 002–004, sub-issues, ordem de implementação |
+
+Specs SDD detalhadas: [`../specs/README.md`](../specs/README.md).
 
 ---
 
@@ -97,3 +129,5 @@ stack do Cognite Flows). Specs de feature **consomem** estas regras; não as red
 | --- | --- |
 | `api/` | Contratos de API, schemas CDF, integrações externas |
 | `runbooks/` | Procedimentos de deploy, incidentes, rollback |
+
+> `prototype/` e `requirements/` já existem — ver seções acima.
