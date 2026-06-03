@@ -52,9 +52,9 @@ export const APP_NAV_ITEMS: readonly AppNavItem[] = [
 ];
 
 export const APP_PAGE_TITLES: Record<AppPage, string> = {
-  overview: 'Overview',
-  checklists: 'Checklists',
-  analytics: 'Analytics',
-  alerts: 'Alerts',
-  settings: 'Settings',
+  overview: 'OVERVIEW',
+  checklists: 'CHECKLISTS',
+  analytics: 'ANALYTICS',
+  alerts: 'ALERTS',
+  settings: 'SETTINGS',
 };

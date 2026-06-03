@@ -121,8 +121,7 @@ describe('AppShell', () => {
   it('shows IP logo branding in the sidebar', () => {
     renderShell();
     expect(screen.getByRole('img', { name: 'International Paper' })).toBeInTheDocument();
-    expect(screen.queryByText('InField')).not.toBeInTheDocument();
-    expect(screen.queryByText('Checklist Intelligence')).not.toBeInTheDocument();
+    expect(screen.getByText('FieldOps — IPaper')).toBeInTheDocument();
   });
 
   it('shows Radix wedge in the page header', () => {

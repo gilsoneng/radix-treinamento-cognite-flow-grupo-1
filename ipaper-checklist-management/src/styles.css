@@ -153,9 +153,9 @@
 .ip-app-sidebar__nav-button {
   border-left: 2px solid transparent;
   border-radius: 0.375rem;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.875rem;
-  font-weight: 400;
+  padding: 0.5625rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
   color: color-mix(in srgb, var(--sidebar-foreground) 80%, transparent);
 }
 

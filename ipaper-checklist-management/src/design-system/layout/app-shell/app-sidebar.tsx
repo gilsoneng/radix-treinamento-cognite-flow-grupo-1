@@ -53,7 +53,7 @@ export function AppSidebar() {
                   aria-current={active ? 'page' : undefined}
                   onClick={() => navigate(item.page)}
                 >
-                  <Icon className="h-4 w-4 shrink-0" aria-hidden />
+                  <Icon className="h-[1.125rem] w-[1.125rem] shrink-0" aria-hidden />
                   <span className="flex-1 text-left">{item.label}</span>
                   {item.page === 'alerts' && alertCount > 0 ? (
                     <Badge variant="error" className="h-5 min-w-5 justify-center px-1.5 text-[10px]">
@@ -73,7 +73,7 @@ export function AppSidebar() {
             IP
           </div>
           <div className="min-w-0 leading-tight">
-            <div className="truncate text-xs font-medium">International Paper</div>
+            <div className="truncate text-xs font-medium">IPaper</div>
             <div className="ip-app-sidebar__mill truncate text-[10px]">Riegelwood Mill · Shift A</div>
           </div>
         </div>

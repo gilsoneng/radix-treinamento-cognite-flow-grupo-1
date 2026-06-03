@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 
 import { useAppNavigation } from '../../../app/host/use-app-navigation';
 import { APP_PAGE_TITLES } from '../../../app/routing/app-view.types';
-import { RADIX_WEDGE_SRC } from '../../assets/ip-brand';
+import { APP_PRODUCT_NAME, RADIX_WEDGE_SRC } from '../../assets/ip-brand';
 import { AppFooter } from '../app-footer/app-footer';
 
 import { NotificationRuntime } from '../../../modules/checklists/presentation/components/notification-runtime/notification-runtime';
@@ -30,10 +30,8 @@ export function AppShell({ children }: AppShellProps) {
             className="ip-app-shell__radix-wedge"
           />
           <div className="ip-app-shell__header-copy">
-            <h1 className="ip-app-shell__title m-0 text-lg font-semibold tracking-tight">{pageTitle}</h1>
-            <p className="ip-app-shell__subtitle m-0 mt-1 text-sm">
-              InField Checklist Intelligence — International Paper
-            </p>
+            <h1 className="ip-app-shell__title m-0 text-lg font-semibold uppercase tracking-wide">{pageTitle}</h1>
+            <p className="ip-app-shell__subtitle m-0 mt-1 text-sm">{APP_PRODUCT_NAME}</p>
           </div>
         </header>
         <main className="ip-app-shell__main flex-1 overflow-y-auto px-6 py-6">
