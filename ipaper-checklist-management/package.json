@@ -27,6 +27,8 @@
     "seed:ingest:apm-checklists": "node scripts/seed/ingest.mjs --run latest --only apm-checklists",
     "seed:ingest:ip-schema": "node scripts/seed/ingest.mjs --run latest --only ip-schema",
     "seed:ingest:kpis": "node scripts/seed/ingest.mjs --run latest --only kpis",
+    "verify:analytics": "node scripts/verify-analytics-read.mjs",
+    "verify:analytics:pagination": "node scripts/verify-analytics-pagination.mjs",
     "seed:clean": "node scripts/seed/clean.mjs",
     "seed:clean:dry": "node scripts/seed/clean.mjs --dry-run",
     "seed:clean:ip": "node scripts/seed/clean.mjs --only ip",
@@ -51,6 +53,7 @@
     "clsx": "^2.1.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "recharts": "^2.15.4",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {

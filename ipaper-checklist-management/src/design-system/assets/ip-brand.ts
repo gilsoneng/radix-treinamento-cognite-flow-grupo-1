@@ -22,3 +22,6 @@ export const POWERED_BY_RADIX_SRC = poweredByRadix;
 
 
 export const IP_SPINNER_SRC = ipSpinner;
+
+/** Product name shown in shell header and Fusion metadata. */
+export const APP_PRODUCT_NAME = 'FieldOps — IPaper';

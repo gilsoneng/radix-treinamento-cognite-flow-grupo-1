@@ -1,6 +1,6 @@
 # Plan — Checklist KPIs
 
-> **ID:** 002-checklist-kpis
+> **ID:** 003-checklist-kpis
 > Responde: **COMO** implementar. Subordinado a `spec.md`.
 > Referenciar `AGENTS.md` em vez de reescrever padrões.
 

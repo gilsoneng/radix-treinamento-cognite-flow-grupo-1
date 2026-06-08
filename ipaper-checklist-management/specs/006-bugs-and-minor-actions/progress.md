@@ -15,4 +15,4 @@ rigor: leve
 
 | Período | Tasks concluídas | Tasks pendentes |
 |---|---|---|
-| Jun 2026 | 0 | 0 |
+| Jun 2026 | 1 | 0 |

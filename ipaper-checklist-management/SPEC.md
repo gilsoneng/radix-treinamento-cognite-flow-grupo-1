@@ -3,7 +3,7 @@
 > Fonte de verdade do produto. Leia antes de tomar decisões de feature. Mantenha em
 > sincronia com qualquer mudança de comportamento visível ao usuário.
 
-**International Paper — InField Challenge**  
+**FieldOps — IPaper** (International Paper — InField Challenge)  
 **Application Requirements:** [`docs/requirements/APPLICATION-REQUIREMENTS.md`](docs/requirements/APPLICATION-REQUIREMENTS.md)  
 **Tasks / Issues:** [`docs/requirements/TASKS-DIVISION.md`](docs/requirements/TASKS-DIVISION.md)  
 **UX Prototype (Lovable):** [`docs/prototype/LOVABLE-PROTOTYPE.md`](docs/prototype/LOVABLE-PROTOTYPE.md)
@@ -104,7 +104,7 @@ Detailed testable FRs live in each feature `spec.md`. Foundation and data seed:
 
 - [Migration from Webalo is out of scope; app enhances InField post-migration]
 - [InField mobile remains execution channel; this app is analytics/alerts hub]
-- [Scaffold welcome removido quando 001 FR-013 done; shell InField substitui]
+- [x] Scaffold welcome removido — shell InField com sidebar host-synced (spec 001, 2026-06-03)
 - Autenticação gerenciada pelo host Fusion via `@cognite/app-sdk` (sem login próprio).
 - O app é usado principalmente em tablet/desktop industrial com conectividade WiFi estável (sem modo offline v1).
 - Templates e rotas são pré-configurados no CDF pelo time de operações (não gerenciados pelo app v1).
@@ -176,11 +176,11 @@ Detailed testable FRs live in each feature `spec.md`. Foundation and data seed:
 | ID | Feature | Status |
 | --- | --- | --- |
 | 000 | technical-foundation | in-progress |
-| 001 | checklist-management (app foundation & shell) | in-progress |
-| 002 | dataseed | in-progress |
-| 003 | checklist-kpis | not-started |
-| 004 | task-result-dashboards | not-started |
-| 005 | alerts-notifications | not-started |
+| 001 | checklist-management (app foundation & shell) | done |
+| 002 | dataseed | done |
+| 003 | checklist-kpis | done |
+| 004 | task-result-dashboards | done |
+| 005 | alerts-notifications | done |
 | 006 | bugs-and-minor-actions | in-progress |
 
 See [`specs/README.md`](specs/README.md).

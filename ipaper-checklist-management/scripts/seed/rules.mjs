@@ -173,6 +173,83 @@ export function inspectionDuration(persona, routeSlug, date, itemCount) {
   return clamp(minutes, 20, 180);
 }
 
+// ─── Checklist KPI scenario (Overview palette) ────────────────────────────────
+
+/** Target distribution aligned with prototype mock-data (~20% each bucket). */
+export const CHECKLIST_KPI_SCENARIOS = [
+  ['done', 0.40],
+  ['notok', 0.15],
+  ['overdue', 0.15],
+  ['ongoing', 0.15],
+  ['todo', 0.15],
+];
+
+/**
+ * Pick a KPI bucket target for seed diversity (todo / ongoing / done / overdue / notok).
+ * @returns {'done'|'notok'|'overdue'|'ongoing'|'todo'}
+ */
+export function pickChecklistKpiScenario(rng = Math.random) {
+  const r = rng();
+  let acc = 0;
+  for (const [scenario, weight] of CHECKLIST_KPI_SCENARIOS) {
+    acc += weight;
+    if (r < acc) return scenario;
+  }
+  return 'done';
+}
+
+const RECENT_WINDOW_DAYS = 14;
+
+function isRecentDate(date, now) {
+  const cutoff = new Date(now);
+  cutoff.setUTCDate(cutoff.getUTCDate() - RECENT_WINDOW_DAYS);
+  cutoff.setUTCHours(0, 0, 0, 0);
+  const d = new Date(date);
+  d.setUTCHours(0, 0, 0, 0);
+  return d >= cutoff;
+}
+
+/**
+ * Map KPI scenario → APM checklist fields consumed by aggregateChecklistStatus.
+ * @param {'done'|'notok'|'overdue'|'ongoing'|'todo'} scenario
+ * @param {Date} date
+ * @param {string} scheduledEndTs ISO timestamp (shift deadline)
+ * @param {Date} now
+ * @returns {{ status: string, endTime: string, forceNotOk: boolean, includeItems: boolean }}
+ */
+export function resolveChecklistState(scenario, date, scheduledEndTs, now = new Date()) {
+  const deadlineMs = new Date(scheduledEndTs).getTime();
+  const isPastDue = !Number.isNaN(deadlineMs) && deadlineMs < now.getTime();
+  const recent = isRecentDate(date, now);
+
+  switch (scenario) {
+    case 'done':
+      return { status: 'completed', endTime: scheduledEndTs, forceNotOk: false, includeItems: true };
+
+    case 'notok':
+      return { status: 'completed', endTime: scheduledEndTs, forceNotOk: true, includeItems: true };
+
+    case 'overdue':
+      return { status: 'started', endTime: scheduledEndTs, forceNotOk: false, includeItems: true };
+
+    case 'ongoing':
+      if (recent && !isPastDue) {
+        return { status: 'started', endTime: scheduledEndTs, forceNotOk: false, includeItems: true };
+      }
+      // Historical dates: started + past deadline → overdue bucket in the app
+      return { status: 'started', endTime: scheduledEndTs, forceNotOk: false, includeItems: true };
+
+    case 'todo':
+      if (recent && !isPastDue) {
+        return { status: 'created', endTime: scheduledEndTs, forceNotOk: false, includeItems: false };
+      }
+      return { status: 'started', endTime: scheduledEndTs, forceNotOk: false, includeItems: true };
+
+    default:
+      return { status: 'completed', endTime: scheduledEndTs, forceNotOk: false, includeItems: true };
+  }
+}
+
 // ─── Observation severity ─────────────────────────────────────────────────────
 
 /**

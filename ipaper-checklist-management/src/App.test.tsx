@@ -1,11 +1,21 @@
 import type { ConnectToHostAppResult, HostAppAPI } from '@cognite/app-sdk';
 import { CogniteClient } from '@cognite/sdk';
+import { QueryClientProvider } from '@tanstack/react-query';
 import type { UseQueryResult } from '@tanstack/react-query';
 import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import type { ComponentProps, ReactNode } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import App from './App';
+import { createQueryClient } from './app/providers/query-client';
+import { makeChecklistKpiSummary } from './__mocks__/checklist-kpi-summary.factory';
+import type { ChecklistKpiSummary } from './modules/checklists/domain/checklist-kpi.model';
+import type { ChecklistSummary } from './modules/checklists/domain/checklist-kpi.model';
+import type { OperationalAlert } from './modules/checklists/domain/alert.model';
+import type { ChecklistRepository } from './modules/checklists/domain/checklist.repository';
+import { UseChecklistDataQueriesContext } from './modules/checklists/infrastructure/queries/use-checklist-data-queries';
+import { UseOverviewKpisViewModelContext } from './modules/checklists/presentation/view-models/use-overview-kpis.view-model';
 import type { CoreAsset } from './modules/health/domain/core-asset.model';
 import { UseHealthViewModelContext } from './modules/health/presentation/view-models/use-health.view-model';
 
@@ -34,11 +44,32 @@ function makeLoadingDeps(): AppDeps {
   };
 }
 
-function makeConnectedDeps(): AppDeps {
+function makeConnectedDeps(initialState?: string): AppDeps {
   return {
-    connectToHostApp: vi.fn<AppDeps['connectToHostApp']>(() => Promise.resolve({ api: makeApi() })),
+    connectToHostApp: vi.fn<AppDeps['connectToHostApp']>(() =>
+      Promise.resolve({ api: makeApi(), initialState }),
+    ),
     createClient: vi.fn<AppDeps['createClient']>((config) => new CogniteClient(config)),
   };
+}
+
+function makeFailingDeps(): AppDeps {
+  return {
+    connectToHostApp: vi.fn<AppDeps['connectToHostApp']>(() => Promise.reject(new Error('host failed'))),
+    createClient: vi.fn<AppDeps['createClient']>((config) => new CogniteClient(config)),
+  };
+}
+
+function fakeKpiQuery(): UseQueryResult<ChecklistKpiSummary> {
+  return {
+    isPending: false,
+    isError: false,
+    data: makeChecklistKpiSummary({
+      total: 5,
+      counts: { todo: 1, ongoing: 1, done: 2, overdue: 0, notok: 1 },
+    }),
+    refetch: vi.fn(),
+  } as Partial<UseQueryResult<ChecklistKpiSummary>> as UseQueryResult<ChecklistKpiSummary>;
 }
 
 function fakeHealthQuery(assets: CoreAsset[]): UseQueryResult<CoreAsset[]> {
@@ -50,7 +81,28 @@ function fakeHealthQuery(assets: CoreAsset[]): UseQueryResult<CoreAsset[]> {
   } as Partial<UseQueryResult<CoreAsset[]>> as UseQueryResult<CoreAsset[]>;
 }
 
-function renderConnected() {
+function makeStubRepository(): ChecklistRepository {
+  return {
+    fetchNotOkChecklistIds: vi.fn(() => Promise.resolve(new Set<string>())),
+    computeKpiSummary: vi.fn(() =>
+      Promise.resolve({
+        total: 0,
+        counts: { todo: 0, ongoing: 0, done: 0, overdue: 0, notok: 0 },
+      }),
+    ),
+    listSummariesPage: vi.fn(() =>
+      Promise.resolve({ items: [] as ChecklistSummary[], hasMore: false }),
+    ),
+    listTaskResultsPage: vi.fn(() => Promise.resolve({ items: [], hasMore: false })),
+    fetchTaskResultsSample: vi.fn(() => Promise.resolve([])),
+    listMeasurementTrends: vi.fn(() => Promise.resolve([])),
+    listRouteKpiSnapshots: vi.fn(() => Promise.resolve([])),
+    summarizeTaskResults: vi.fn(() => Promise.resolve({ ok: 0, nok: 0, observation: 0 })),
+    listOperationalAlerts: vi.fn(() => Promise.resolve([] as OperationalAlert[])),
+  };
+}
+
+function renderConnected(initialState?: string) {
   const assets: CoreAsset[] = [
     {
       space: 'asset-space',
@@ -59,12 +111,25 @@ function renderConnected() {
       description: 'Main feed pump',
     },
   ];
+  const queryClient = createQueryClient();
+  const useChecklistRepository = () => makeStubRepository();
   const Wrapper = ({ children }: { children: ReactNode }) => (
-    <UseHealthViewModelContext.Provider value={{ useHealthQuery: () => fakeHealthQuery(assets) }}>
-      {children}
-    </UseHealthViewModelContext.Provider>
+    <QueryClientProvider client={queryClient}>
+      <UseChecklistDataQueriesContext.Provider value={{ useChecklistRepository }}>
+        <UseOverviewKpisViewModelContext.Provider
+          value={{
+            useChecklistKpiQuery: () => fakeKpiQuery(),
+            useAppNavigation: () => ({ setPage: vi.fn() }),
+          }}
+        >
+          <UseHealthViewModelContext.Provider value={{ useHealthQuery: () => fakeHealthQuery(assets) }}>
+            {children}
+          </UseHealthViewModelContext.Provider>
+        </UseOverviewKpisViewModelContext.Provider>
+      </UseChecklistDataQueriesContext.Provider>
+    </QueryClientProvider>
   );
-  return render(<App deps={makeConnectedDeps()} />, { wrapper: Wrapper });
+  return render(<App deps={makeConnectedDeps(initialState)} />, { wrapper: Wrapper });
 }
 
 describe('App', () => {
@@ -77,14 +142,28 @@ describe('App', () => {
     expect(screen.getByText('Loading project...')).toBeInTheDocument();
   });
 
-  it('renders the IP page shell with app name and page title', async () => {
-    renderConnected();
-    await waitFor(() => expect(screen.getByText('Ipaper Checklist Management')).toBeInTheDocument());
-    expect(screen.getByRole('heading', { name: 'Core Assets' })).toBeInTheDocument();
+  it('renders error when host connection fails', async () => {
+    render(<App deps={makeFailingDeps()} />);
+    await waitFor(() =>
+      expect(screen.getByText('Failed to connect to Fusion host')).toBeInTheDocument(),
+    );
   });
 
-  it('renders the health module slice with Core assets', async () => {
+  it('renders the FieldOps shell with overview KPI cards by default', async () => {
     renderConnected();
+    await waitFor(() =>
+      expect(screen.getByRole('img', { name: 'International Paper' })).toBeInTheDocument(),
+    );
+    expect(screen.getByRole('heading', { name: 'OVERVIEW' })).toBeInTheDocument();
+    expect(screen.getByText('To Do')).toBeInTheDocument();
+    expect(screen.getByText('Not OK')).toBeInTheDocument();
+  });
+
+  it('renders Core assets on Settings after navigation', async () => {
+    const user = userEvent.setup();
+    renderConnected();
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Settings' })).toBeInTheDocument());
+    await user.click(screen.getByRole('button', { name: 'Settings' }));
     await waitFor(() => expect(screen.getByText('Cognite Core assets')).toBeInTheDocument());
     expect(screen.getByText('Pump A')).toBeInTheDocument();
     expect(screen.getByText('asset-1')).toBeInTheDocument();

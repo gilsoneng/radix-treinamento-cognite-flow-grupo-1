@@ -11,7 +11,8 @@ describe('createQueryClient', () => {
     const retry = defaults?.retry;
     if (typeof retry === 'function') {
       expect(retry(0, new Error('boom'))).toBe(true);
-      expect(retry(0, { status: 401 })).toBe(false);
+      const unauthorized = Object.assign(new Error('unauthorized'), { status: 401 });
+      expect(retry(0, unauthorized)).toBe(false);
       expect(retry(3, new Error('boom'))).toBe(false);
     }
   });
